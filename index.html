@@ -127,9 +127,219 @@
                 </div>
             </div>
         </section>
-    </section>
+        <!-- HOME MAP LOCATE -->
 
-    <!-- HOMEPAGE END -->
+        <section class="home__map">
+            <div class="section__top">
+                <h1 class="section__title">Start nu een zoekactie</h1>
+                <p class="section__subtitle">Hier komt een beschrijvingstekst</p>
+            </div>
+
+            <!-- MAP -->
+            <div class="search__map">
+                <div class="search__map_container">
+                    <div id="map"></div>
+                    <div class="search__map_form">
+                        <div>
+                            <img src="img/icons/map.svg" alt="map">
+                            <input id="location" type="text" class="search__map_adress" placeholder="Typ hier uw adres">
+                            <!-- HIDDEN GOOGLE FORMS -->
+                            <input type="hidden" placeholder="Apt, Suite, etc (optional)" />
+                            <input type="hidden" placeholder="City" id="locality" />
+                            <div class="half-input-container">
+                                <input type="hidden" class="half-input" placeholder="State/Province" id="administrative_area_level_1" />
+                                <input type="hidden" class="half-input" placeholder="Zip/Postal code" id="postal_code" />
+                            </div>
+                            <input type="hidden" placeholder="Country" id="country" />
+                            <!-- END -->
+                        </div>
+                        <div class="map__radius">
+                            <img src="img/homepage/test.svg" alt="Test">
+                        </div>
+                        <button class="search__map_button" id="map__button_top">Hier zoeken <img class="search__button_arrow"
+                    src="img/icons/arrow_right.svg" alt="right"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOME MAP LOCATE END -->
+
+        <!-- FIND STEP -->
+
+        <section class="find">
+            <div class="container">
+                <div class="section__top">
+                    <h1 class="section__title">Zo wordt jouw kat teruggevonden</h1>
+                </div>
+
+                <div class="find__cards">
+                    <div class="find__card">
+                        <img src="img/homepage/find_card_1.svg" alt="Card 1">
+                        <div class="find__card_text">
+                            <p class="find__card_title">Gerichte advertenties</p>
+                            <p class="find__card_subtitle">Met (betaalde) advertenties op Facebook en Instagram verschijnt jouw kat bovenaan de Facebook en Instagram van jouw buurtgenoten.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="find__card step__revert">
+                        <img src="img/homepage/find_card_2.svg" alt="Card 2">
+                        <div class="find__card_text">
+                            <p class="find__card_title">Buurtgenoten zien je kat</p>
+                            <p class="find__card_subtitle">Doordat jouw buurtgenoten je vermiste kat dagelijks voorbij zien komen vergroot je de kans enorm dat iemand jouw kat herkent.</p>
+                        </div>
+                    </div>
+                    <div class="find__card">
+                        <img src="img/homepage/find_card_3.svg" alt="Card 3">
+                        <div class="find__card_text">
+                            <p class="find__card_title">Direct tips</p>
+                            <p class="find__card_subtitle">Wanneer iemand jouw kat gespot heeft krijg je hier direct een melding van, zodat je zo snel mogelijk naar de plek toe kan waar hij of zij gespot is.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FIND STEP END -->
+
+        <!-- CURRENT MAP -->
+
+        <section class="current__map">
+            <div class="section__top">
+                <h1 class="section__title">Huidige Zoekacties</h1>
+                <p class="section__subtitle">Hier komt een beschrijvingstekst</p>
+            </div>
+
+            <!-- MAP -->
+            <div class="search__map">
+                <div class="search__map_container">
+                    <div id="current_map"></div>
+                    <div class="current__map_form">
+                        <div class="current_map_nav">
+                            <img src="img/homepage/minus.svg" alt="Plus">
+                            <img src="img/homepage/gate.svg" alt="Gate">
+                            <img src="img/homepage/plus.svg" alt="Minus">
+                        </div>
+                        <p>Alle Zoekopdrachten</p>
+                        <div class="current__map_buttons">
+                            <button class="current_left_b current__button_active">RECENT</button>
+                            <button class="current_right_b">ALLE</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CURRENT MAP END -->
+
+        <!-- REVIEWS -->
+
+        <section class="reviews">
+            <div class="section__top">
+                <h1 class="section__title">De kop van de beschrijving komt hier</h1>
+            </div>
+            <div class="reviews__body">
+                <div class="reviews__items">
+                    <img src="img/homepage/reviews.png" alt="Reviews">
+                    <!-- DONT FORGET!!!!!!!!!!!!!!!!!!!!!!!! -->
+                </div>
+                <div class="container_fluid">
+                    <div class="reviews__info">
+                        <div class="reviews__image_slider">
+                            <div class="reviews__image_wrapper">
+                                <img src="img/homepage/slider/slide1.png" alt="Slider 1">
+                                <img src="img/homepage/slider/slide1.png" alt="Slider 1">
+                                <img src="img/homepage/slider/slide1.png" alt="Slider 1">
+                                <img src="img/homepage/slider/slide1.png" alt="Slider 1">
+                            </div>
+                            <div class="reviews__slider_dots">
+                                <div class="review__slider_dot slider__dot_active" id="slider_dot_1"></div>
+                                <div class="review__slider_dot" id="slider_dot_2"></div>
+                                <div class="review__slider_dot" id="slider_dot_3"></div>
+                                <div class="review__slider_dot" id="slider_dot_4"></div>
+                            </div>
+                        </div>
+                        <div class="reviews__info_text">
+                            <h1>Hoe KattenRadar is begonnen</h1>
+                            <p>In mijn beroep als online marketeer ontdekte ik dat je advertenties op Facebook (en Instagram) precies kan laten zien in één specifieke buurt.</p>
+                            <p>Op mijn weg naar huis zag ik een poster van een lieve vermiste kat. Digitale advertenties zouden voor een klein bedrag de bekendheid van deze vermiste kat enorm kunnen vergroten.</p>
+                            <p>Samen met een vriend bouwde ik een website en niet veel later hielpen we de eerste kat terugvinden!</p>
+                            <hr class="reviews__line">
+                            <img src="img/homepage/cat_logo.svg" alt="Cat Logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- REVIEWS END -->
+
+        <!-- FAQ -->
+
+        <section class="faq">
+            <div class="section__top">
+                <h1 class="section__title">FAQ</h1>
+            </div>
+            <div class="container">
+                <div class="faq__body">
+                    <div class="faq__items">
+                        <div class="faq__item">
+                            <div class="faq__item_main">
+                                <p>Waarom kost een digitale zoekactie geld?</p>
+                                <img class="faq__open" src="img/homepage/faq_plus.svg" alt="Plus">
+                            </div>
+                            <div class="faq__item_answer">
+                                <p>Door een (kleine) beloning aan te bieden voor tips over de locatie van je vermiste kat reageren meer mensen. Als iemand de gouden tip heeft staat het je zelf vrij om deze persoon b.v. een fles wijn of bonbons te geven als
+                                    bedankje.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq__item">
+                            <div class="faq__item_main">
+                                <p>Wat is de ‘beloning voor de vinder’?</p>
+                                <img class="faq__open" src="img/homepage/faq_plus.svg" alt="Plus">
+                            </div>
+                            <div class="faq__item_answer">
+                                <p>Door een (kleine) beloning aan te bieden voor tips over de locatie van je vermiste kat reageren meer mensen. Als iemand de gouden tip heeft staat het je zelf vrij om deze persoon b.v. een fles wijn of bonbons te geven als
+                                    bedankje.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq__item">
+                            <div class="faq__item_main">
+                                <p>Heb ik zekerheid dat mijn kat teruggevonden wordt?</p>
+                                <img class="faq__open" src="img/homepage/faq_plus.svg" alt="Plus">
+                            </div>
+                            <div class="faq__item_answer">
+                                <p>Door een (kleine) beloning aan te bieden voor tips over de locatie van je vermiste kat reageren meer mensen. Als iemand de gouden tip heeft staat het je zelf vrij om deze persoon b.v. een fles wijn of bonbons te geven als
+                                    bedankje.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- FAQ END -->
+
+        <!-- PRE-FOOTER -->
+
+        <section class="prefooter">
+            <div class="prefooter__body">
+                <div class="container">
+                    <div class="prefooter__body_text">
+                        <p class="prefooter_body_left">Start een digitale zoekactie vanaf <span>€29</span></p>
+                        <img class="prefooter_line" src="img/homepage/prefooter_line.svg" alt="Line">
+                        <button class="prefooter__button">Digitale Zoekactie Starten <img src="img/homepage/button-right.svg" alt="Right"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRE-FOOTER END -->
+
+        <!-- HOMEPAGE END -->
+    </section>
 
     <!-- FOOTER -->
 
@@ -172,7 +382,7 @@
     </footer>
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cABC" async defer></script>
-    <script src="js/main.js"></script>
+    <script src="js/homepage_script.js"></script>
 </body>
 
 </html>
