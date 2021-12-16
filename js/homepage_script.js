@@ -1,3 +1,5 @@
+var trackStep = $('.map__radius_track').width();
+
 $('.faq__item').click(function() {
     console.log('5')
     var currentFaq = $(this)
@@ -46,6 +48,37 @@ setInterval(() => {
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places">
 
+$(".map__radius_draggable").draggable({
+    containment: "parent",
+    axis: "x",
+    drag: function(e, ui) {
+        x2 = ui.position.left;
+        var trackPercent = (x2 * 100) / trackStep
+        if (trackPercent > 90) {
+            $('.map__radius_draggable').text('7 km')
+            mapRadius = 9;
+        } else if (trackPercent > 75) {
+            $('.map__radius_draggable').text('6 km')
+            mapRadius = 8;
+        } else if (trackPercent > 60) {
+            $('.map__radius_draggable').text('5 km')
+            mapRadius = 7;
+        } else if (trackPercent > 45) {
+            $('.map__radius_draggable').text('4 km')
+            mapRadius = 6;
+        } else if (trackPercent > 30) {
+            $('.map__radius_draggable').text('3 km')
+            mapRadius = 5;
+        } else if (trackPercent > 15) {
+            $('.map__radius_draggable').text('2 km')
+            mapRadius = 4;
+        } else if (trackPercent < 15) {
+            $('.map__radius_draggable').text('1 km')
+            mapRadius = 3;
+        }
+    }
+});
+
 var myLatlng;
 var userEmail;
 var catAdress;
@@ -76,6 +109,7 @@ function initMap() {
         streetViewControl: false,
         disableDefaultUI: true
     });
+
     image = 'img/icons/marker.svg'
     const marker = new google.maps.Marker({ map: map, draggable: false, icon: image });
     const autocompleteInput = document.getElementById('location');
@@ -107,12 +141,14 @@ function initMap() {
         renderAddress(place);
         fillInAddress(place);
 
+        var mapRadius = 2;
+
         var markersArray = [];
         markersArray.push(
             [
                 place.name, {
                     center: place.geometry.location,
-                    population: 2,
+                    population: mapRadius,
                 }
             ]
         )
@@ -131,7 +167,7 @@ function initMap() {
                 fillOpacity: 0.3,
                 map,
                 center: markersArray[0][1].center,
-                radius: Math.sqrt(markersArray[0][1].population) * 100,
+                radius: Math.sqrt(mapRadius) * 100,
             });
             radiusOnMap = true;
             console.log(radiusOnMap)
@@ -145,6 +181,11 @@ function initMap() {
             $('.search__map_form').addClass('form_in_top')
             $('.search__map_button').text('Aanmelden')
             $('.search__map_button').attr('id', 'map__button_top')
+
+            document.cookie = "steps=2";
+            document.cookie = "adress=" + catAdress;
+            //    alert(document.cookie)
+            document.location.href = "/search.html";
         }
     }
     $('.search__map_button').click(function() {
