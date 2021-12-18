@@ -1,3 +1,83 @@
+var recentSearches = [{
+    "notFound": {
+        "991": {
+            "lat": "52.1231241",
+            "lng": "5.2773372",
+            "picLink": "https://i.imgur.com/8z7gXAY.png",
+            "acId": "991"
+        },
+        "1340": {
+            "lat": "51.6410202",
+            "lng": "4.8616901",
+            "picLink": "https://i.imgur.com/HHHj62U.png",
+            "acId": "1340"
+        },
+        "1354": {
+            "lat": "53.1929671",
+            "lng": "6.5641905",
+            "picLink": "https://i.imgur.com/JIRcg3Z.png",
+            "acId": "1354"
+        }
+    },
+    "Found": {
+        "1417": {
+            "lat": "53.1862171",
+            "lng": "6.597048699999999",
+            "picLink": "https://i.imgur.com/JxRokdY.png",
+            "acId": "1417"
+        },
+        "1342": {
+            "lat": "51.6410202",
+            "lng": "4.8646901",
+            "picLink": "https://i.imgur.com/HHHj62U.png",
+            "acId": "1340"
+        },
+    }
+}];
+
+var recentFound = recentSearches[0].Found;
+var recentNotFound = recentSearches[0].notFound;
+
+var allSearches = [{
+    "notFound": {
+        "991": {
+            "lat": "52.1231241",
+            "lng": "5.2773372",
+            "picLink": "https://i.imgur.com/8z7gXAY.png",
+            "acId": "991"
+        },
+        "1334": {
+            "lat": "52.228063",
+            "lng": "4.4471312",
+            "picLink": "https://i.imgur.com/mLY710g.png",
+            "acId": "1334"
+        },
+        "1340": {
+            "lat": "51.6410202",
+            "lng": "4.8616901",
+            "picLink": "https://i.imgur.com/HHHj62U.png",
+            "acId": "1340"
+        },
+        "1354": {
+            "lat": "53.1929671",
+            "lng": "6.5641905",
+            "picLink": "https://i.imgur.com/JIRcg3Z.png",
+            "acId": "1354"
+        }
+    }
+}]
+
+//$.ajax({
+//    url: 'https://server.kattenradar.nl/test-as',
+//    method: 'get',
+//    dataType: 'json',
+//    async: false,
+//    data: recentSearches,
+//    success: function(data) {
+//        console.log(data)
+//    }
+//});
+
 var trackStep = $('.map__radius_track').width();
 
 $('.faq__item').click(function() {
@@ -101,8 +181,8 @@ function initMap() {
         streetViewControl: false
     });
     const map2 = new google.maps.Map(document.getElementById("current_map"), {
-        zoom: 14,
-        center: { lat: 37.4221, lng: -122.0841 },
+        zoom: 8,
+        center: { lat: 52.1231241, lng: 5.2773372 },
         mapTypeControl: false,
         mapTypeId: "terrain",
         fullscreenControl: false,
@@ -110,7 +190,7 @@ function initMap() {
         disableDefaultUI: true
     });
 
-    image = 'img/icons/marker.svg'
+    image = 'img/homepage/recentSearches.svg'
     const marker = new google.maps.Marker({ map: map, draggable: false, icon: image });
     const autocompleteInput = document.getElementById('location');
     const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
@@ -118,6 +198,33 @@ function initMap() {
         types: ["address"],
 
     });
+
+    $.each(recentNotFound, (key, value) => {
+        const marker2 = new google.maps.Marker({
+            position: { lat: Number(recentNotFound[key].lat), lng: Number(recentNotFound[key].lng) },
+            map: map2,
+            icon: 'img/homepage/recentSearches.svg',
+            title: "some marker"
+        })
+    })
+    var allMarkers = [];
+    $('.current_right_b').click(function() {
+        $.each(recentFound, (key, value) => {
+            const marker3 = new google.maps.Marker({
+                position: { lat: Number(recentFound[key].lat), lng: Number(recentFound[key].lng) },
+                map: map2,
+                icon: 'img/homepage/allSearches.svg',
+                title: "some marker"
+            })
+            allMarkers.push(marker3)
+        })
+    })
+
+    $('.current_left_b').click(function() {
+        $.each(allMarkers, (key, value) => {
+            allMarkers[key].setMap(null);
+        })
+    })
 
     var radiusOnMap;
 
