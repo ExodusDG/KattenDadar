@@ -19,6 +19,7 @@ if (typeof cookieArray.steps != 'undefined') {
     var scrollWidth = $('.search__steps_container > div').width();
     var calculatedTranslate = (cookieArray.steps - 1) * scrollWidth;
     stepContainer.attr('style', 'transform: translateX(-' + calculatedTranslate + 'px)')
+    $('.chat__left_input').attr('style', 'display: none')
     $('.search__chat > h1 > span').text(cookieArray.adress)
     $('#step-1 > .search__step_circle').addClass('step__green')
     $('#step-2 > .search__step_circle').addClass('step__active')
@@ -42,9 +43,11 @@ if (typeof cookieArray.steps != 'undefined') {
 }
 
 function chatHistoryBuild() {
+    $('.chat__left_start').attr('style', 'display: none')
     $.each(cookieArray, function(key, value) {
         console.log(cookieArray)
         if (typeof cookieArray.catName != 'undefined') {
+            $('.chat__left_input').attr('style', 'display: flex')
             $('.chat__left_start').attr('style', 'display: none')
             $('.cat__name_chat').attr('style', 'display: flex').addClass('user__msg_show')
             $('#user_msg_2').find('p').text(cookieArray.catName)
