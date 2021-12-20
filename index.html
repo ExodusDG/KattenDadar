@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KattenRadar - Homepage</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <link rel="stylesheet" href="style/home_style.css">
+
 </head>
 
 <body>
@@ -238,9 +240,9 @@
                         <div id="current_map"></div>
                         <div class="current__map_form">
                             <div class="current_map_nav">
-                                <img src="img/homepage/minus.svg" alt="Plus">
+                                <img id="map_plus" src="img/homepage/minus.svg" alt="Plus">
                                 <img src="img/homepage/gate.svg" alt="Gate">
-                                <img src="img/homepage/plus.svg" alt="Minus">
+                                <img id="map_minus" src="img/homepage/plus.svg" alt="Minus">
                             </div>
                             <p>Alle Zoekopdrachten</p>
                             <div class="current__map_buttons">
@@ -445,6 +447,7 @@
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cABC" async defer></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="js/homepage_script.js"></script>
 </body>
 

@@ -50,12 +50,6 @@ var recentSearches = [{
             "picLink": "https://i.ibb.co/jLFJyyy/8z7gXAY.png",
             "acId": "1417"
         },
-        "1342": {
-            "lat": "51.6410202",
-            "lng": "4.8646901",
-            "picLink": "https://i.ibb.co/jLFJyyy/8z7gXAY.png",
-            "acId": "1340"
-        },
     }
 }];
 
@@ -142,6 +136,124 @@ setInterval(() => {
 
 }, 3000);
 
+/* LEAFLET MAP */
+
+var secondMap = L.map('current_map', {
+    zoomControl: false
+}).setView([52.1231241, 5.2773372], 8);
+
+// zoom in function
+$('#map_minus').click(function() {
+    secondMap.setZoom(secondMap.getZoom() + 1)
+});
+
+
+// zoom out function
+$('#map_plus').click(function() {
+    secondMap.setZoom(secondMap.getZoom() - 1)
+});
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FuaXN0cmF5IiwiYSI6ImNreGVueTljbTEzdTAybm1tYXRzaHBnaTYifQ.Ux9ySMRvhgcwFd7_gPXCWg', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1Ijoic2FuaXN0cmF5IiwiYSI6ImNreGVueTljbTEzdTAybm1tYXRzaHBnaTYifQ.Ux9ySMRvhgcwFd7_gPXCWg',
+}).addTo(secondMap);
+
+var mapMarker = L.icon({
+    iconUrl: 'img/homepage/recentSearches.svg',
+});
+var mapMarkerGreen = L.icon({
+    iconUrl: 'img/homepage/allSearches.svg',
+});
+
+/* MAP MARKERS */
+
+var markersList = [];
+var allMarkers = [];
+
+$.each(recentNotFound, (key, value) => {
+    markerNotFoundRed = L.marker([Number(recentNotFound[key].lat), Number(recentNotFound[key].lng)], { icon: mapMarker, title: recentNotFound[key].picLink }).addTo(secondMap);
+    markersList.push(markerNotFoundRed);
+})
+
+$.each(markersList, (key, value) => {
+    markersList[key].bindPopup("<img class='map_popup__image' src='" + markersList[key].options.title + "'><div class='map__popup_bottom'><p>Stuur tip!</p></div>", { closeButton: false });
+    markersList[key].on('mouseover', function(e) {
+        this.openPopup();
+    });
+    markersList[key].on('mouseout', function(e) {
+        this.closePopup();
+    });
+})
+
+$.each(recentFound, (key, value) => {
+    markerFoundGreen = L.marker([Number(recentFound[key].lat), Number(recentFound[key].lng)], { icon: mapMarker, title: recentFound[key].picLink }).addTo(secondMap);
+    allMarkers.push(markerFoundGreen);
+})
+
+$.each(allMarkers, (key, value) => {
+    allMarkers[key].bindPopup("<img class='map_popup__image' src='" + allMarkers[key].options.title + "'><div class='map__popup_bottom'><p>Stuur tip!</p></div>", { closeButton: false });
+    allMarkers[key].on('mouseover', function(e) {
+        this.openPopup();
+    });
+    allMarkers[key].on('mouseout', function(e) {
+        this.closePopup();
+    });
+})
+
+/* MAP MARKERS END */
+
+/* ALL MARKERS START */
+
+var AllmarkersList = [];
+var allMarker = [];
+
+$('.current_right_b').click(function() {
+    $.each(allNotFound, (key, value) => {
+        markerAllNotFound = L.marker([Number(allNotFound[key].lat), Number(allNotFound[key].lng)], { icon: mapMarker, title: allNotFound[key].picLink }).addTo(secondMap);
+        AllmarkersList.push(markerAllNotFound);
+    })
+    console.log(AllmarkersList)
+    $.each(recentFound, (key, value) => {
+        const markerAllFound = L.marker([Number(recentFound[key].lat), Number(recentFound[key].lng)], { icon: mapMarkerGreen, title: recentFound[key].picLink }).addTo(secondMap);
+        allMarker.push(markerAllFound)
+    })
+
+    $.each(AllmarkersList, (key, value) => {
+        AllmarkersList[key].bindPopup("<img class='map_popup__image' src='" + AllmarkersList[key].options.title + "'><div class='map__popup_bottom'><p>Stuur tip!</p></div>", { closeButton: false });
+        AllmarkersList[key].on('mouseover', function(e) {
+            this.openPopup();
+        });
+        AllmarkersList[key].on('mouseout', function(e) {
+            this.closePopup();
+        });
+    })
+    $.each(allMarker, (key, value) => {
+        allMarker[key].bindPopup("<img class='map_popup__image' src='" + allMarker[key].options.title + "'><div class='map__popup_bottom'><p>Stuur tip!</p></div>", { closeButton: false });
+        allMarker[key].on('mouseover', function(e) {
+            this.openPopup();
+        });
+        allMarker[key].on('mouseout', function(e) {
+            this.closePopup();
+        });
+    })
+})
+
+$('.current_left_b').click(function() {
+    $.each(allMarker, (key, value) => {
+        secondMap.removeLayer(allMarker[key]);
+    })
+    $.each(AllmarkersList, (key, value) => {
+        secondMap.removeLayer(AllmarkersList[key]);
+    })
+})
+
+/* ALL MARKERS END */
+
+
 /* GOOGLE MAP */
 
 // This example requires the Places library. Include the libraries=places + AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U
@@ -200,14 +312,6 @@ function initMap() {
         fullscreenControl: false,
         streetViewControl: false
     });
-    const map2 = new google.maps.Map(document.getElementById("current_map"), {
-        zoom: 8,
-        center: { lat: 52.1231241, lng: 5.2773372 },
-        mapTypeControl: false,
-        mapTypeId: "terrain",
-        fullscreenControl: false,
-        streetViewControl: false,
-    });
 
     image = 'img/icons/marker.svg'
     const marker = new google.maps.Marker({ map: map, draggable: false, icon: image });
@@ -217,123 +321,6 @@ function initMap() {
         types: ["address"],
 
     });
-
-    /* MAP MARKERS */
-
-    var markersList = [];
-    $.each(recentNotFound, (key, value) => {
-        marker2 = new google.maps.Marker({
-            position: { lat: Number(recentNotFound[key].lat), lng: Number(recentNotFound[key].lng) },
-            map: map2,
-            icon: 'img/homepage/recentSearches.svg',
-            title: recentNotFound[key].picLink
-        })
-        markersList.push(marker2);
-    })
-
-    $.each(markersList, (key, value) => {
-        var infowindow = new google.maps.InfoWindow({
-            content: "<div class='infoWindow'><img style='width: 300px; margin: 0 auto' src='" + markersList[key].title + "'></div>",
-        });
-
-        markersList[key].addListener('mouseover', function() {
-            infowindow.open(map, this);
-        });
-
-        markersList[key].addListener('mouseout', function() {
-            infowindow.close();
-        });
-    })
-
-    var allMarkers = [];
-    $.each(recentFound, (key, value) => {
-        const marker3 = new google.maps.Marker({
-            position: { lat: Number(recentFound[key].lat), lng: Number(recentFound[key].lng) },
-            map: map2,
-            icon: 'img/homepage/allSearches.svg',
-            title: recentFound[key].picLink
-        })
-        allMarkers.push(marker3)
-    })
-    $.each(allMarkers, (key, value) => {
-        var infowindow = new google.maps.InfoWindow({
-            content: "<div class='infoWindow'><img style='width: 300px; margin: 0 auto' src='" + allMarkers[key].title + "'></div>",
-        });
-
-        allMarkers[key].addListener('mouseover', function() {
-            infowindow.open(map2, this);
-        });
-
-        allMarkers[key].addListener('mouseout', function() {
-            infowindow.close();
-        });
-    })
-
-    /* MAP MARKERS END */
-
-    /* ALL MARKERS START */
-    var AllmarkersList = [];
-    var allMarker = [];
-    $('.current_right_b').click(function() {
-        $.each(allNotFound, (key, value) => {
-            marker2 = new google.maps.Marker({
-                position: { lat: Number(allNotFound[key].lat), lng: Number(allNotFound[key].lng) },
-                map: map2,
-                icon: 'img/homepage/recentSearches.svg',
-                title: allNotFound[key].picLink
-            })
-            AllmarkersList.push(marker2);
-        })
-
-        $.each(AllmarkersList, (key, value) => {
-            var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoWindow'><img style='width: 300px; margin: 0 auto' src='" + AllmarkersList[key].title + "'></div>",
-            });
-
-            AllmarkersList[key].addListener('mouseover', function() {
-                infowindow.open(map, this);
-            });
-
-            AllmarkersList[key].addListener('mouseout', function() {
-                infowindow.close();
-            });
-        })
-
-
-        $.each(recentFound, (key, value) => {
-            const marker3 = new google.maps.Marker({
-                position: { lat: Number(recentFound[key].lat), lng: Number(recentFound[key].lng) },
-                map: map2,
-                icon: 'img/homepage/allSearches.svg',
-                title: recentFound[key].picLink
-            })
-            allMarker.push(marker3)
-        })
-        $.each(allMarker, (key, value) => {
-            var infowindow = new google.maps.InfoWindow({
-                content: "<div class='infoWindow'><img style='width: 300px; margin: 0 auto' src='" + allMarker[key].title + "'></div>",
-            });
-
-            allMarker[key].addListener('mouseover', function() {
-                infowindow.open(map2, this);
-            });
-
-            allMarker[key].addListener('mouseout', function() {
-                infowindow.close();
-            });
-        })
-    })
-
-    $('.current_left_b').click(function() {
-        $.each(allMarker, (key, value) => {
-            allMarker[key].setMap(null);
-        })
-        $.each(AllmarkersList, (key, value) => {
-            AllmarkersList[key].setMap(null);
-        })
-    })
-
-    /* ALL MARKERS END */
 
     var radiusOnMap;
 
