@@ -978,3 +978,9 @@ footer {
 .feedbackShow {
     transform: scale(1)
 }
+
+.dash_container {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
