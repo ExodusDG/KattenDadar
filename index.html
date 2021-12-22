@@ -30,8 +30,15 @@
                         <li>
                             <a href="/about">Huidige Zoekacties</a>
                         </li>
-                        <li>
-                            <a href="/about">Dutch <img class="header__down" src="img/icons/header_down.svg" alt="Down"></a>
+                        <li class="lang__wrapper">
+                            <div class="header__current_lang">
+                                <div><img class="icon__flag" src="img/icons/flag_dutch.svg" alt="Flag"><span id="language">Dutch</span><img class="header__down" src="img/icons/header_down.svg" alt="Down"></div>
+                            </div>
+                            <div class="header__lang">
+                                <div><img class="icon__flag" id="Dutch" src="img/icons/flag_dutch.svg" alt="Flag"> Dutch</div>
+                                <div><img class="icon__flag" id="English" src="img/icons/flag_dutch.svg" alt="Flag"> English</div>
+                                <div><img class="icon__flag" id="Deutsch" src="img/icons/flag_dutch.svg" alt="Flag"> Deutsch</div>
+                            </div>
                         </li>
                     </ul>
                 </li>
@@ -41,7 +48,43 @@
             </ul>
         </div>
         <!-- HEADER END -->
-
+        <!-- STICKY HEADER -->
+        <div class="sticky__container">
+            <div class="header" id="sticky__header">
+                <ul>
+                    <li>
+                        <a href="#"> <img src="img/logotype.svg" alt="Logotype"></a>
+                    </li>
+                    <li>
+                        <ul class="header__menu_list">
+                            <li>
+                                <a href="/home">Home</a>
+                            </li>
+                            <li>
+                                <a href="/searches">Huidige Zoekacties</a>
+                            </li>
+                            <li>
+                                <a href="/about">Huidige Zoekacties</a>
+                            </li>
+                            <li class="lang__wrapper">
+                                <div class="header__current_lang">
+                                    <div><img class="icon__flag" src="img/icons/flag_dutch.svg" alt="Flag"><span id="language">Dutch</span><img class="header__down" src="img/icons/header_down.svg" alt="Down"></div>
+                                </div>
+                                <div class="header__lang">
+                                    <div><img class="icon__flag" id="Dutch" src="img/icons/flag_dutch.svg" alt="Flag"> Dutch</div>
+                                    <div><img class="icon__flag" id="English" src="img/icons/flag_dutch.svg" alt="Flag"> English</div>
+                                    <div><img class="icon__flag" id="Deutsch" src="img/icons/flag_dutch.svg" alt="Flag"> Deutsch</div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button class="header__start_search">Zoekactie starten</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- STICKY HEADER END -->
         <!-- HOMEPAGE -->
 
         <section class="homepage">
@@ -264,8 +307,73 @@
                 </div>
                 <div class="reviews__body">
                     <div class="reviews__items">
-                        <img src="img/homepage/reviews.png" alt="Reviews">
-                        <!-- DONT FORGET!!!!!!!!!!!!!!!!!!!!!!!! -->
+                        <div class="items__left_mask"></div>
+                        <div class="review__item" id="review-1">
+                            <img src="img/icons/reviews.svg" alt="Reviews">
+                            <p>Toen onze kater zoek was hebben we prettig met KattenRadar samengewerkt. Er was geregeld contact over binnengekomen tips. Meerdere bekenden gaven aan dat zij de advertenties op Facebook hadden gezien en gedeeld.</p>
+                            <div class="review__item_author">
+                                <img src="img/homepage/reviews/Piotr.png" alt="Author">
+                                <div class="review__item_author_data">
+                                    <p class="review__author_name">Piotr Jarosinski</p>
+                                    <p class="review__author_city">Drachten</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review__item" id="review-2">
+                            <img src="img/icons/reviews.svg" alt="Reviews">
+                            <p>Snel en makkelijk om je huisdier te vinden. Onze kat is binnen een paar dagen gevonden, doordat iemand hem herkende op de Facebook post! Bedankt voor de snelle hulp!</p>
+                            <div class="review__item_author">
+                                <img src="img/homepage/reviews/Lisanne.png" alt="Author">
+                                <div class="review__item_author_data">
+                                    <p class="review__author_name">Lisanne van den Berg</p>
+                                    <p class="review__author_city">Amsterdam</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review__item" id="review-3">
+                            <img src="img/icons/reviews.svg" alt="Reviews">
+                            <p>Een maand na Mini opgegeven te hebben op KattenRadar kwam er plots alsnog een tip binnen op de advertentie. Totaal onverwacht en nu is Mini weer thuis super bedankt!</p>
+                            <div class="review__item_author">
+                                <img src="img/homepage/reviews/Kristel.png" alt="Author">
+                                <div class="review__item_author_data">
+                                    <p class="review__author_name">Kristel Mollema</p>
+                                    <p class="review__author_city">Utrecht</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review__item" id="review-4">
+                            <img src="img/icons/reviews.svg" alt="Reviews">
+                            <p>Toen onze kater zoek was hebben we prettig met KattenRadar samengewerkt. Er was geregeld contact over binnengekomen tips. Meerdere bekenden gaven aan dat zij de advertenties op Facebook hadden gezien en gedeeld.</p>
+                            <div class="review__item_author">
+                                <img src="img/homepage/reviews/Piotr.png" alt="Author">
+                                <div class="review__item_author_data">
+                                    <p class="review__author_name">Piotr Jarosinski</p>
+                                    <p class="review__author_city">Drachten</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review__item" id="review-5">
+                            <img src="img/icons/reviews.svg" alt="Reviews">
+                            <p>Snel en makkelijk om je huisdier te vinden. Onze kat is binnen een paar dagen gevonden, doordat iemand hem herkende op de Facebook post! Bedankt voor de snelle hulp!</p>
+                            <div class="review__item_author">
+                                <img src="img/homepage/reviews/Lisanne.png" alt="Author">
+                                <div class="review__item_author_data">
+                                    <p class="review__author_name">Lisanne van den Berg</p>
+                                    <p class="review__author_city">Amsterdam</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review__item" id="review-6">
+                            <img src="img/icons/reviews.svg" alt="Reviews">
+                            <p>Een maand na Mini opgegeven te hebben op KattenRadar kwam er plots alsnog een tip binnen op de advertentie. Totaal onverwacht en nu is Mini weer thuis super bedankt!</p>
+                            <div class="review__item_author">
+                                <img src="img/homepage/reviews/Kristel.png" alt="Author">
+                                <div class="review__item_author_data">
+                                    <p class="review__author_name">Kristel Mollema</p>
+                                    <p class="review__author_city">Utrecht</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="container_fluid">
                         <div class="reviews__info">

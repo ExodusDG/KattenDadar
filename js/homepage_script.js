@@ -1,5 +1,56 @@
-var feedbackH = $('.feedback__popup').height()
+/* DEFAULT SCRIPTS */
+$('.header__lang div').click(function() {
+    var clickedLang = $(this).text();
 
+    $('#language').text(clickedLang);
+
+    if (clickedLang == 'Dutch') {
+
+    }
+})
+
+$.fn.isInViewport = function() {
+    var elementTop = $(this).offset().top;
+    var elementBottom = elementTop + $(this).outerHeight();
+
+    var viewportTop = $(window).scrollTop();
+    var viewportBottom = viewportTop + $(window).height();
+
+    return elementBottom > viewportTop && elementTop < viewportBottom;
+};
+
+var header = $('#sticky__header');
+
+$(window).on('resize scroll', function() {
+    if ($('.header__body').isInViewport()) {
+        header.removeClass('header__fixed')
+        header.addClass('header__hidden')
+    } else {
+        header.addClass('header__fixed')
+        header.removeClass('header__hidden')
+    }
+});
+
+/* DEFAULT SCRIPTS END */
+
+/* REVIEWS SLIDER */
+
+var numberSlider = 1;
+
+setInterval(() => {
+    var revItemWidth = 380;
+    var firstSlide = $('#review-' + numberSlider).html()
+    var translateWidth = numberSlider * revItemWidth;
+    $('.reviews__items').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
+    $('.reviews__items').append("<div class='review__item' id='review-" + (numberSlider + 6) + "'>" + firstSlide + "</div>")
+    numberSlider++
+}, 3000);
+
+/* REVIEWS SLIDER END */
+
+/* FEEDBACK POPUP */
+
+var feedbackH = $('.feedback__popup').height()
 
 $('.footer_contact').click(function() {
     $('.blur__wrapper').attr('style', 'filter: blur(10px)')
@@ -15,12 +66,17 @@ $('.popup_close').click(function() {
 $('.feedback__send').click(function() {
     feedbackClose()
 })
+$('.feedback').not('.feedback__popup').click(function() {
+    feedbackClose()
+})
 
 function feedbackClose() {
     $('.feedback__popup').removeClass('feedbackShow');
     $('.blur__wrapper').attr('style', 'filter: blur(0px)')
     $('.feedback').attr('style', 'display: none')
 }
+
+/* FEEDBACK POPUP END */
 
 var recentSearches = [{
     "notFound": {
@@ -112,28 +168,21 @@ $('.current__map_buttons button').click(function() {
     $(this).addClass('current__button_active')
 })
 
-var sliderNumber = 1;
-$('.review__slider_dot').removeClass('slider__dot_active')
-$('#slider_dot_' + sliderNumber).addClass('slider__dot_active')
+var slideNumber = 1;
+
 setInterval(() => {
-    var sliderCount = $('.reviews__image_wrapper img').length;
-    var sliderWidth = $('.reviews__image_wrapper img').width();
-    var sliderContainer = $('.reviews__image_wrapper')
-
+    var slideWidth = $('.reviews__image_wrapper > img').width();
+    var translateWidth = ((slideNumber - 1) * slideWidth)
     $('.review__slider_dot').removeClass('slider__dot_active')
-    $('#slider_dot_' + sliderNumber).addClass('slider__dot_active')
+    $('#slider_dot_' + slideNumber).addClass('slider__dot_active')
 
-    sliderNumber++;
+    $('.reviews__image_wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
 
-    var translateWidth = (sliderNumber - 1) * sliderWidth;
-    console.log(sliderCount)
-    if (sliderNumber > sliderCount) {
-        sliderNumber = 1;
-        sliderContainer.attr('style', 'transform: translateX(-' + 0 + 'px)')
-    } else {
-        sliderContainer.attr('style', 'transform: translateX(-' + translateWidth + 'px)')
+    if (slideNumber == 4) {
+        slideNumber = 0;
     }
 
+    slideNumber++
 }, 3000);
 
 /* LEAFLET MAP */
@@ -152,7 +201,9 @@ $('#map_minus').click(function() {
 $('#map_plus').click(function() {
     secondMap.setZoom(secondMap.getZoom() - 1)
 });
-
+//https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png
+//https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FuaXN0cmF5IiwiYSI6ImNreGVueTljbTEzdTAybm1tYXRzaHBnaTYifQ.Ux9ySMRvhgcwFd7_gPXCWg
+//pk.eyJ1Ijoic2FuaXN0cmF5IiwiYSI6ImNreGVueTljbTEzdTAybm1tYXRzaHBnaTYifQ.Ux9ySMRvhgcwFd7_gPXCWg
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FuaXN0cmF5IiwiYSI6ImNreGVueTljbTEzdTAybm1tYXRzaHBnaTYifQ.Ux9ySMRvhgcwFd7_gPXCWg', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
