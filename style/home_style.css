@@ -192,7 +192,7 @@ ul {
 
 @keyframes headerShow {
     from {
-        top: -100px;
+        top: -145px;
     }
     to {
         top: 0;
@@ -206,6 +206,7 @@ ul {
     transition: 0.3s;
     display: block !important;
     width: 100vw;
+    display: none;
 }
 
 @keyframes headerHide {
@@ -213,7 +214,7 @@ ul {
         top: 0;
     }
     to {
-        top: -100px;
+        top: -145px;
         display: none;
     }
 }
@@ -221,7 +222,7 @@ ul {
 #sticky__header {
     display: none;
     position: fixed;
-    top: -100px;
+    top: -145px;
 }
 
 
@@ -990,7 +991,7 @@ footer {
 .map__radius_track {
     background: #f8a45b36;
     border-radius: 44px;
-    width: 500px;
+    width: 400px;
     height: 8px;
     display: flex;
     justify-content: space-between;
