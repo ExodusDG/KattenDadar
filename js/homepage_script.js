@@ -3,6 +3,7 @@ $('.header__lang div').click(function() {
     var clickedLang = $(this).text();
 
     $('#language').text(clickedLang);
+    $('#language_sticky').text(clickedLang);
 
     if (clickedLang == 'Dutch') {
 
@@ -30,6 +31,7 @@ $(window).on('resize scroll', function() {
         header.removeClass('header__hidden')
     }
 });
+
 
 /* DEFAULT SCRIPTS END */
 
@@ -215,9 +217,15 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
 var mapMarker = L.icon({
     iconUrl: 'img/homepage/recentSearches.svg',
+    iconSize: [35, 46],
+    iconAnchor: [17, 46],
+    popupAnchor: [-3, -45] // point from which the popup should open relative to the iconAnchor
 });
 var mapMarkerGreen = L.icon({
     iconUrl: 'img/homepage/allSearches.svg',
+    iconSize: [35, 46],
+    iconAnchor: [17, 46],
+    popupAnchor: [-3, -45] // point from which the popup should open relative to the iconAnchor
 });
 
 /* MAP MARKERS */
@@ -236,7 +244,9 @@ $.each(markersList, (key, value) => {
         this.openPopup();
     });
     markersList[key].on('mouseout', function(e) {
-        this.closePopup();
+        setTimeout(() => {
+            this.closePopup();
+        }, 5000);
     });
 })
 
@@ -251,7 +261,9 @@ $.each(allMarkers, (key, value) => {
         this.openPopup();
     });
     allMarkers[key].on('mouseout', function(e) {
-        this.closePopup();
+        setTimeout(() => {
+            this.closePopup();
+        }, 5000);
     });
 })
 
@@ -311,40 +323,52 @@ $('.current_left_b').click(function() {
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places">
 
+var myLatlng;
+var userEmail;
+var catAdress;
+var mapRadius;
+
 $(".map__radius_draggable").draggable({
     containment: "parent",
     axis: "x",
     drag: function(e, ui) {
         x2 = ui.position.left;
-        var trackPercent = (x2 * 100) / trackStep
-        if (trackPercent > 90) {
+        var trackPercent = ((x2 * 100) / trackStep).toFixed(0)
+        if (trackPercent > 80) {
+            $('.map__radius_draggable').text('8 km')
+            mapRadius = 8000;
+            $(".map__radius_dot").trigger("click");
+        } else if (trackPercent > 70) {
             $('.map__radius_draggable').text('7 km')
-            mapRadius = 9;
-        } else if (trackPercent > 75) {
-            $('.map__radius_draggable').text('6 km')
-            mapRadius = 8;
+            mapRadius = 7000;
+            $(".map__radius_dot").trigger("click");
         } else if (trackPercent > 60) {
+            $('.map__radius_draggable').text('6 km')
+            mapRadius = 6000;
+            $(".map__radius_dot").trigger("click");
+        } else if (trackPercent > 50) {
             $('.map__radius_draggable').text('5 km')
-            mapRadius = 7;
-        } else if (trackPercent > 45) {
+            mapRadius = 5000;
+            $(".map__radius_dot").trigger("click");
+        } else if (trackPercent > 35) {
             $('.map__radius_draggable').text('4 km')
-            mapRadius = 6;
-        } else if (trackPercent > 30) {
+            mapRadius = 4000;
+            $(".map__radius_dot").trigger("click");
+        } else if (trackPercent > 20) {
             $('.map__radius_draggable').text('3 km')
-            mapRadius = 5;
-        } else if (trackPercent > 15) {
+            mapRadius = 3000;
+            $(".map__radius_dot").trigger("click");
+        } else if (trackPercent > 5) {
             $('.map__radius_draggable').text('2 km')
-            mapRadius = 4;
-        } else if (trackPercent < 15) {
+            mapRadius = 2000;
+            $(".map__radius_dot").trigger("click");
+        } else if (trackPercent < 1) {
             $('.map__radius_draggable').text('1 km')
-            mapRadius = 3;
+            mapRadius = 1000;
+            $(".map__radius_dot").trigger("click");
         }
     }
 });
-
-var myLatlng;
-var userEmail;
-var catAdress;
 
 function initMap() {
     const componentForm = [
@@ -356,8 +380,8 @@ function initMap() {
     ];
 
     const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 17,
-        center: { lat: 37.4221, lng: -122.0841 },
+        zoom: 8,
+        center: { lat: 52.12, lng: 5.27 },
         mapTypeControl: false,
         mapTypeId: "terrain",
         fullscreenControl: false,
@@ -395,9 +419,8 @@ function initMap() {
         renderAddress(place);
         fillInAddress(place);
 
-        var mapRadius = 2;
-
         var markersArray = [];
+
         markersArray.push(
             [
                 place.name, {
@@ -406,14 +429,22 @@ function initMap() {
                 }
             ]
         )
-        const cityCircle = new google.maps.Circle({
-
+        cityCircle = new google.maps.Circle({
+            strokeColor: "#F8A35B",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#F8A35B",
+            fillOpacity: 0.3,
+            map,
+            center: markersArray[0][1].center,
+            radius: mapRadius,
         });
-        if (radiusOnMap == true) {
-            cityCircle.setMap(null);
-            radiusOnMap = true;
-        } else {
-            const cityCircle = new google.maps.Circle({
+
+        $(".map__radius_dot").click(function() {
+            cityCircle.setMap(null)
+
+            console.log(mapRadius)
+            cityCircle = new google.maps.Circle({
                 strokeColor: "#F8A35B",
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -421,10 +452,9 @@ function initMap() {
                 fillOpacity: 0.3,
                 map,
                 center: markersArray[0][1].center,
-                radius: Math.sqrt(mapRadius) * 100,
+                radius: mapRadius,
             });
-            radiusOnMap = true;
-        }
+        })
 
         mapInput()
 
