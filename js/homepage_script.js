@@ -190,7 +190,8 @@ setInterval(() => {
 /* LEAFLET MAP */
 
 var secondMap = L.map('current_map', {
-    zoomControl: false
+    zoomControl: false,
+    gestureHandling: true
 }).setView([52.1231241, 5.2773372], 8);
 
 // zoom in function
@@ -239,7 +240,7 @@ $.each(recentNotFound, (key, value) => {
 })
 
 $.each(markersList, (key, value) => {
-    markersList[key].bindPopup("<img class='map_popup__image' src='" + markersList[key].options.title + "'><div class='map__popup_bottom'><p>Stuur tip!</p></div>", { closeButton: false });
+    markersList[key].bindPopup("<img class='map_popup__image' src='" + markersList[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div>", { closeButton: false });
     markersList[key].on('mouseover', function(e) {
         this.openPopup();
     });
@@ -256,7 +257,7 @@ $.each(recentFound, (key, value) => {
 })
 
 $.each(allMarkers, (key, value) => {
-    allMarkers[key].bindPopup("<img class='map_popup__image' src='" + allMarkers[key].options.title + "'><div class='map__popup_bottom'><p>Stuur tip!</p></div>", { closeButton: false });
+    allMarkers[key].bindPopup("<img class='map_popup__image' src='" + allMarkers[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div>", { closeButton: false });
     allMarkers[key].on('mouseover', function(e) {
         this.openPopup();
     });
@@ -326,7 +327,7 @@ $('.current_left_b').click(function() {
 var myLatlng;
 var userEmail;
 var catAdress;
-var mapRadius;
+var mapRadius = 1000;
 
 $(".map__radius_draggable").draggable({
     containment: "parent",
@@ -380,11 +381,14 @@ function initMap() {
     ];
 
     const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
+        zoom: 13,
         center: { lat: 52.12, lng: 5.27 },
         mapTypeControl: false,
         mapTypeId: "terrain",
         fullscreenControl: false,
+        zoomControl: false,
+        draggable: false,
+        scrollwheel: false,
         streetViewControl: false
     });
 
@@ -405,6 +409,9 @@ function initMap() {
             return false; //prevent duplicate submission
         }
     });
+    var map4000Zoomed;
+    var map7000Zoomed;
+    var map1000Zoomed;
 
     function adressSelect() {
         marker.setVisible(false);
@@ -429,6 +436,8 @@ function initMap() {
                 }
             ]
         )
+        $('.search__map_center').attr('style', 'display: block')
+
         cityCircle = new google.maps.Circle({
             strokeColor: "#F8A35B",
             strokeOpacity: 0.8,
@@ -439,7 +448,7 @@ function initMap() {
             center: markersArray[0][1].center,
             radius: mapRadius,
         });
-
+        map.setZoom(14)
         $(".map__radius_dot").click(function() {
             cityCircle.setMap(null)
 
@@ -454,6 +463,42 @@ function initMap() {
                 center: markersArray[0][1].center,
                 radius: mapRadius,
             });
+
+            if (mapRadius == 7000) {
+                if (map7000Zoomed == true) {
+                    return false;
+                } else {
+                    map.setZoom(11)
+                    map7000Zoomed = true;
+
+                    setTimeout(() => {
+                        map7000Zoomed = false;
+                    }, 1000);
+                }
+            } else if (mapRadius == 4000) {
+                if (map4000Zoomed == true) {
+                    return false;
+                } else {
+                    map.setZoom(12)
+                    map4000Zoomed = true;
+
+                    setTimeout(() => {
+                        map4000Zoomed = false;
+                    }, 1000);
+                }
+            } else if (mapRadius == 1000) {
+                if (map1000Zoomed == true) {
+                    return false;
+                } else {
+                    map.setZoom(12)
+                    map1000Zoomed = true;
+
+                    setTimeout(() => {
+                        map1000Zoomed = false;
+                    }, 1000);
+                }
+            }
+
         })
 
         mapInput()
@@ -506,7 +551,7 @@ function initMap() {
 
     function renderAddress(place) {
         map.setCenter(place.geometry.location);
-        marker.setPosition(place.geometry.location);
+        //    marker.setPosition(place.geometry.location);
         marker.setVisible(true);
     }
 }
