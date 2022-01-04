@@ -1,4 +1,5 @@
 /* DEFAULT SCRIPTS */
+
 $('.header__lang div').click(function() {
     var clickedLang = $(this).text();
 
@@ -8,6 +9,22 @@ $('.header__lang div').click(function() {
     if (clickedLang == 'Dutch') {
 
     }
+})
+
+$('.mb__header_lang').click(function() {
+    $('.mb__header_language').toggleClass('mb__header_language_open')
+})
+
+$('.mb__header_block').click(function() {
+    var clickedLang = $(this).attr('id').replace('lang_', '')
+    $('.mb__header_icon').attr('src', $('#image__' + clickedLang).attr('src'))
+
+    $('.mb__header_language').removeClass('mb__header_language_open')
+})
+
+$('.lang__wrapper').click(function() {
+    $('.header__lang').toggleClass('header__lang_open')
+    $('.header__down').toggleClass('header__down_open')
 })
 
 $.fn.isInViewport = function() {
@@ -32,6 +49,17 @@ $(window).on('resize scroll', function() {
     }
 });
 
+var mobileHeader = $('.mb__header_sticky');
+
+$(window).on('resize scroll', function() {
+    if ($('.header__body').isInViewport()) {
+        mobileHeader.removeClass('mb_header__fixed')
+        mobileHeader.addClass('mb_header__hidden')
+    } else {
+        mobileHeader.addClass('mb_header__fixed')
+        mobileHeader.removeClass('mb_header__hidden')
+    }
+});
 
 /* DEFAULT SCRIPTS END */
 
@@ -66,9 +94,9 @@ $('.popup_close').click(function() {
     feedbackClose()
 })
 $('.feedback__send').click(function() {
-    feedbackClose()
+    //  feedbackClose()
 })
-$('.feedback').not('.feedback__popup').click(function() {
+$('.feedback').click(function() {
     feedbackClose()
 })
 
@@ -79,77 +107,35 @@ function feedbackClose() {
 }
 
 /* FEEDBACK POPUP END */
+var recentSearches = {};
+var recentFound = [];
+var recentNotFound = [];
 
-var recentSearches = [{
-    "notFound": {
-        "991": {
-            "lat": "52.1231241",
-            "lng": "5.2773372",
-            "picLink": "https://i.ibb.co/jLFJyyy/8z7gXAY.png",
-            "acId": "991"
-        },
-        "1340": {
-            "lat": "51.6410202",
-            "lng": "4.8616901",
-            "picLink": "https://i.ibb.co/RYGDGn0/HHHj62U.png",
-            "acId": "1340"
-        },
-        "1354": {
-            "lat": "53.1929671",
-            "lng": "6.5641905",
-            "picLink": "https://i.ibb.co/jLFJyyy/8z7gXAY.png",
-            "acId": "1354"
-        }
-    },
-    "Found": {
-        "1417": {
-            "lat": "53.1862171",
-            "lng": "6.597048699999999",
-            "picLink": "https://i.ibb.co/jLFJyyy/8z7gXAY.png",
-            "acId": "1417"
-        },
+var allFound = [];
+var allNotFound = [];
+$.ajax({
+    url: 'https://server.kattenradar.nl/test-as',
+    method: 'get',
+    dataType: 'json',
+    async: false,
+    data: recentSearches,
+    success: function(data) {
+        allFound = data.Found;
+        allNotFound = data.notFound;
     }
-}];
+});
 
-var recentFound = recentSearches[0].Found;
-var recentNotFound = recentSearches[0].notFound;
-
-var allSearches = [{
-    "notFound": {
-        "991": {
-            "lat": "52.2241241",
-            "lng": "5.2773372",
-            "picLink": "https://i.ibb.co/jLFJyyy/8z7gXAY.png",
-            "acId": "991"
-        },
-        "1340": {
-            "lat": "51.7610202",
-            "lng": "4.8216901",
-            "picLink": "https://i.ibb.co/RYGDGn0/HHHj62U.png",
-            "acId": "1340"
-        },
-        "1354": {
-            "lat": "53.2629671",
-            "lng": "6.5641905",
-            "picLink": "https://i.ibb.co/jLFJyyy/8z7gXAY.png",
-            "acId": "1354"
-        }
+$.ajax({
+    url: 'https://server.kattenradar.nl/test-rs',
+    method: 'get',
+    dataType: 'json',
+    async: false,
+    data: recentSearches,
+    success: function(data) {
+        recentFound = data.Found;
+        recentNotFound = data.notFound;
     }
-}]
-
-var allFound = allSearches[0].Found;
-var allNotFound = allSearches[0].notFound;
-
-//$.ajax({
-//    url: 'https://server.kattenradar.nl/test-as',
-//    method: 'get',
-//    dataType: 'json',
-//    async: false,
-//    data: recentSearches,
-//    success: function(data) {
-//        console.log(data)
-//    }
-//});
+});
 
 var trackStep = $('.map__radius_track').width();
 
@@ -233,10 +219,10 @@ var mapMarkerGreen = L.icon({
 
 var markersList = [];
 var allMarkers = [];
-
 $.each(recentNotFound, (key, value) => {
     markerNotFoundRed = L.marker([Number(recentNotFound[key].lat), Number(recentNotFound[key].lng)], { icon: mapMarker, title: recentNotFound[key].picLink }).addTo(secondMap);
     markersList.push(markerNotFoundRed);
+    console.log('35')
 })
 
 $.each(markersList, (key, value) => {
@@ -328,44 +314,54 @@ var myLatlng;
 var userEmail;
 var catAdress;
 var mapRadius = 1000;
+var cityCircle;
 
 $(".map__radius_draggable").draggable({
     containment: "parent",
     axis: "x",
+
     drag: function(e, ui) {
         x2 = ui.position.left;
         var trackPercent = ((x2 * 100) / trackStep).toFixed(0)
         if (trackPercent > 80) {
             $('.map__radius_draggable').text('8 km')
             mapRadius = 8000;
+            cityCircle.setRadius(8000);
             $(".map__radius_dot").trigger("click");
         } else if (trackPercent > 70) {
             $('.map__radius_draggable').text('7 km')
             mapRadius = 7000;
+            cityCircle.setRadius(7000);
             $(".map__radius_dot").trigger("click");
         } else if (trackPercent > 60) {
             $('.map__radius_draggable').text('6 km')
             mapRadius = 6000;
+            cityCircle.setRadius(6000);
             $(".map__radius_dot").trigger("click");
         } else if (trackPercent > 50) {
             $('.map__radius_draggable').text('5 km')
             mapRadius = 5000;
+            cityCircle.setRadius(5000);
             $(".map__radius_dot").trigger("click");
         } else if (trackPercent > 35) {
             $('.map__radius_draggable').text('4 km')
             mapRadius = 4000;
+            cityCircle.setRadius(4000);
             $(".map__radius_dot").trigger("click");
         } else if (trackPercent > 20) {
             $('.map__radius_draggable').text('3 km')
             mapRadius = 3000;
+            cityCircle.setRadius(3000);
             $(".map__radius_dot").trigger("click");
         } else if (trackPercent > 5) {
             $('.map__radius_draggable').text('2 km')
             mapRadius = 2000;
+            cityCircle.setRadius(2000);
             $(".map__radius_dot").trigger("click");
         } else if (trackPercent < 1) {
             $('.map__radius_draggable').text('1 km')
             mapRadius = 1000;
+            cityCircle.setRadius(1000);
             $(".map__radius_dot").trigger("click");
         }
     }
@@ -411,6 +407,7 @@ function initMap() {
     });
     var map4000Zoomed;
     var map7000Zoomed;
+    var map2000Zoomed;
     var map1000Zoomed;
 
     function adressSelect() {
@@ -449,20 +446,8 @@ function initMap() {
             radius: mapRadius,
         });
         map.setZoom(14)
-        $(".map__radius_dot").click(function() {
-            cityCircle.setMap(null)
 
-            console.log(mapRadius)
-            cityCircle = new google.maps.Circle({
-                strokeColor: "#F8A35B",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#F8A35B",
-                fillOpacity: 0.3,
-                map,
-                center: markersArray[0][1].center,
-                radius: mapRadius,
-            });
+        $(".map__radius_dot").click(function() {
 
             if (mapRadius == 7000) {
                 if (map7000Zoomed == true) {
@@ -486,11 +471,22 @@ function initMap() {
                         map4000Zoomed = false;
                     }, 1000);
                 }
+            } else if (mapRadius == 2000) {
+                if (map2000Zoomed == true) {
+                    return false;
+                } else {
+                    map.setZoom(13)
+                    map2000Zoomed = true;
+
+                    setTimeout(() => {
+                        map2000Zoomed = false;
+                    }, 1000);
+                }
             } else if (mapRadius == 1000) {
                 if (map1000Zoomed == true) {
                     return false;
                 } else {
-                    map.setZoom(12)
+                    map.setZoom(14)
                     map1000Zoomed = true;
 
                     setTimeout(() => {
