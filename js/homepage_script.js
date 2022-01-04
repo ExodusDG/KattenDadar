@@ -1,3 +1,44 @@
+$('.feedback__send').click(function() {
+    var formEmail = $('#form__email').val();
+    var formPhone = $('#form__phone').val();
+    var formMSG = $('#message').val();
+    var selectedLang = $('#language').text();
+
+    grecaptcha.ready(function() {
+        grecaptcha.execute('6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C', {
+            action: 'submitForm'
+        }).then(function(token) {
+            var url = 'https://server.kattenradar.nl/test-recaptcha?token=' + token
+            var requestOptions = {
+                method: 'POST',
+                redirect: 'follow',
+            };
+            fetch(url, requestOptions)
+                .then(response => response.text())
+                .then(result => {
+                    if (result == 'failed') {
+                        console.log('failed')
+                    } else {
+                        var url = "https://server.kattenradar.nl/test-sm?email=" + formEmail + "&phone=" + formPhone + "&message=" + formMSG + "&language=" + selectedLang;
+                        console.log(url)
+                        var settings = {
+                            "url": url,
+                            "method": "POST",
+                            "timeout": 0,
+                            dataType: 'json'
+                        };
+                        $.ajax(settings).done(function(response) {
+                            console.log(response);
+                        });
+                    }
+                })
+                .catch(error => console.log('error', error));
+        });
+    });
+})
+
+//server.kattenradar.nl/test-recaptcha
+
 /* DEFAULT SCRIPTS */
 
 $('.header__lang div').click(function() {

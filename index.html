@@ -659,34 +659,13 @@
         </form>
     </div>
     <script src="js/jquery-3.6.0.min.js"></script>
+    <script async src="https://www.google.com/recaptcha/api.js?render=6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cABC" async defer></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
     <script src="js/leaflet-gesture-handling.min.js"></script>
     <script src="js/homepage_script.js"></script>
-    <script async src="https://www.google.com/recaptcha/api.js?render=6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C"></script>
-    <script>
-        $('.feedback__send').click(function() {
-            //   alert($('#form__email').val())
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C', {
-                    action: 'submitForm'
-                }).then(function(token) {
-                    var settings = {
-                        "url": "https://server.kattenradar.nl/test-recaptcha?token=" + token + "",
-                        "method": "POST",
-                        "timeout": 0,
-                    };
 
-                    $.ajax(settings).done(function(response) {
-                        console.log(response);
-                    });
-                });
-            });
-        })
-
-        //server.kattenradar.nl/test-recaptcha
-    </script>
 </body>
 
 </html>
