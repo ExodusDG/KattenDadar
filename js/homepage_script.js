@@ -37,7 +37,9 @@ $('.feedback__send').click(function() {
 
                         fetch("https://server.kattenradar.nl/test-sm", requestOptions)
                             .then(response => response.text())
-                            .then(result => console.log(result))
+                            .then(result =>
+                                $('.form__send_status').css('display', 'block')
+                            )
                             .catch(error => console.log('error', error));
                     }
                 })

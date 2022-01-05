@@ -1179,9 +1179,11 @@ footer {
     height: 50px;
     border-radius: 10px;
     border: 1px solid #F8A35B;
-    opacity: 0.5;
+    opacity: 1;
+    font-weight: 700;
     outline: none;
     padding-left: 15px;
+    font-size: 15px;
 }
 
 .feedback__form_block p {
@@ -1211,7 +1213,7 @@ footer {
 
 #message {
     background: #FFFFFF;
-    opacity: 0.5;
+    opacity: 1;
     border: 1px solid #F8A35B;
     box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.13);
     border-radius: 10px;
@@ -1311,6 +1313,39 @@ footer {
     top: 0px;
     display: none;
     z-index: 10;
+}
+
+.form__send_status {
+    text-align: left !important;
+    margin-top: 20px !important;
+    margin-bottom: 0px !important;
+    font-size: 16px !important;
+    color: #F8A35B !important;
+    display: none;
+}
+
+.grecaptcha-badge {
+    display: none;
+}
+
+.feedback__capcha_info {
+    text-align: left !important;
+    margin-top: 20px !important;
+    margin-bottom: 0px !important;
+    font-size: 12px !important;
+    color: #3F2B4F !important;
+    opacity: 0.5;
+    font-style: italic;
+}
+
+.feedback__capcha_info a {
+    text-decoration: none;
+    color: #3F2B4F !important;
+    text-decoration: underline;
+}
+
+.feedback__popup {
+    padding-bottom: 35px !important;
 }
 
 
