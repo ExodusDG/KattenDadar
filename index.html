@@ -8,10 +8,65 @@
     <title>KattenRadar - Homepage</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
     <link rel="stylesheet" href="style/leaflet-gesture-handling.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/home_style.css">
 </head>
 
 <body>
+    <!-- CONTACT -->
+    <div class="contact">
+        <div class="contact__content">
+            <a href="#" class="contact__inst">
+                <img src="img/homepage/instagram.svg" alt="Instagram">
+            </a>
+            <hr>
+            <a href="#" class="contact__fb">
+                <img src="img/homepage/facebook.svg" alt="Facebook">
+            </a>
+        </div>
+    </div>
+    <!-- STICKY HEADER -->
+    <div class="sticky__container">
+        <div class="header" id="sticky__header">
+            <ul>
+                <li>
+                    <a href="#"> <img src="img/logotype.svg" alt="Logotype"></a>
+                </li>
+                <li>
+                    <ul class="header__menu_list">
+                        <li>
+                            <a href="/home">Home</a>
+                        </li>
+                        <li>
+                            <a href="/searches">Huidige Zoekacties</a>
+                        </li>
+                        <li>
+                            <a href="/about">Over ons</a>
+                        </li>
+                        <li class="lang__wrapper" id="sticky__lang__wrapper">
+                            <div class="header__current_lang">
+                                <div><img class="icon__flag" id="icon__flag_sticky" src="img/icons/flag_dutch.svg" alt="Flag"><span id="language_sticky">NL</span><img class="header__down" src="img/icons/header_down.svg" alt="Down"></div>
+                            </div>
+                            <div class="header__lang">
+                                <div><img class="icon__flag" id="Dutch" src="img/icons/flag_dutch.svg" alt="Flag"> NL
+                                </div>
+                                <div><img class="icon__flag" id="English" src="img/icons/flag_eng.svg" alt="Flag"> EN
+                                </div>
+                                <div><img class="icon__flag" id="Deutsch" src="img/icons/flag_deu.svg" alt="Flag"> DE
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <button class="header__start_search">Zoekactie starten</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- STICKY HEADER END -->
     <div class="blur__wrapper">
         <!-- HEADER -->
         <div class="header">
@@ -32,7 +87,7 @@
                         </li>
                         <li class="lang__wrapper">
                             <div class="header__current_lang">
-                                <div><img class="icon__flag" src="img/icons/flag_dutch.svg" alt="Flag"><span id="language">NL</span><img class="header__down" src="img/icons/header_down.svg" alt="Down"></div>
+                                <div><img class="icon__flag" id="icon__flag" src="img/icons/flag_dutch.svg" alt="Flag"><span id="language">NL</span><img class="header__down" src="img/icons/header_down.svg" alt="Down"></div>
                             </div>
                             <div class="header__lang">
                                 <div><img class="icon__flag" id="Dutch" src="img/icons/flag_dutch.svg" alt="Flag"> NL
@@ -51,47 +106,6 @@
             </ul>
         </div>
         <!-- HEADER END -->
-        <!-- STICKY HEADER -->
-        <div class="sticky__container">
-            <div class="header" id="sticky__header">
-                <ul>
-                    <li>
-                        <a href="#"> <img src="img/logotype.svg" alt="Logotype"></a>
-                    </li>
-                    <li>
-                        <ul class="header__menu_list">
-                            <li>
-                                <a href="/home">Home</a>
-                            </li>
-                            <li>
-                                <a href="/searches">Huidige Zoekacties</a>
-                            </li>
-                            <li>
-                                <a href="/about">Over ons</a>
-                            </li>
-                            <li class="lang__wrapper" id="sticky__lang__wrapper">
-                                <div class="header__current_lang">
-                                    <div><img class="icon__flag" src="img/icons/flag_dutch.svg" alt="Flag"><span id="language_sticky">NL</span><img class="header__down" src="img/icons/header_down.svg" alt="Down"></div>
-                                </div>
-                                <div class="header__lang">
-                                    <div><img class="icon__flag" id="Dutch" src="img/icons/flag_dutch.svg" alt="Flag"> NL
-                                    </div>
-                                    <div><img class="icon__flag" id="English" src="img/icons/flag_eng.svg" alt="Flag"> EN
-                                    </div>
-                                    <div><img class="icon__flag" id="Deutsch" src="img/icons/flag_deu.svg" alt="Flag"> DE
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <button class="header__start_search">Zoekactie starten</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- STICKY HEADER END -->
-
         <!-- MOBILE HEADER -->
         <div class="mb__header">
             <div class="mb__header_top">
@@ -356,8 +370,8 @@
                             </div>
                             <p>Alle Zoekopdrachten</p>
                             <div class="current__map_buttons">
-                                <button class="current_left_b current__button_active">RECENT</button>
-                                <button class="current_right_b">ALLE</button>
+                                <button class="current_left_b">RECENT</button>
+                                <button class="current_right_b current__button_active">ALLE</button>
                             </div>
                         </div>
                     </div>
@@ -570,7 +584,7 @@
                         </div>
                     </div>
                     <div class="footer__info_links">
-                        <a href="#">Naar dashboard</a>
+                        <p class="footer_dashboard">Naar dashboard</p>
                         <p class="footer_contact" href="#">Neem contact met ons op</p>
                         <a href="#">KattenRadar Blog</a>
                     </div>
@@ -618,18 +632,6 @@
             <hr class="mb__footer_line">
             <p class="mb__footer_text">© kattenradar, Inc. 2021. We love our users!</p>
         </div>
-        <!-- CONTACT -->
-        <div class="contact">
-            <div class="contact__content">
-                <a href="#" class="contact__inst">
-                    <img src="img/homepage/instagram.svg" alt="Instagram">
-                </a>
-                <hr>
-                <a href="#" class="contact__fb">
-                    <img src="img/homepage/facebook.svg" alt="Facebook">
-                </a>
-            </div>
-        </div>
     </div>
     <!-- FEEDBACK -->
     <div class="feedback">
@@ -661,8 +663,34 @@
             <a href="https://policies.google.com/terms">Terms of Service</a> apply.
         </p>
     </div>
+    <!-- DASHBOARD POPUP -->
+    <div class="dashboard__popup">
+        <div class="feedback_close">
+            <img class="popup_close" src="img/homepage/close.svg" alt="Close">
+        </div>
+        <div class="dashboard__popup_start">
+            <p class="dashboard__title">To dashboard</p>
+            <p class="dashboard__desc">Je kunt het dashboard van de zoekactie openen door op 'naar dashboard' te klikken in de emails van KattenRadar.</p>
+            <p class="dashboard__desc" style="opacity: 0.6;">Kan je het niet vinden? Vul hier je email of telefoonnummer in, en wij sturen je de link nogmaals toe.</p>
+
+            <input type="email" name="email" id="dashboardEmail" placeholder="Email of telefoonnummer">
+            <button id="dashboard__send">Ontvang link naar dashboard</button>
+        </div>
+        <div class="dashboard__popup_done" style="display: none;">
+            <p class="dashboard__title">Success!</p>
+            <p class="dashboard__desc">We hebben je de nieuwe link gestuurd, check je e-mail</p>
+            <button class="dashboard__top_button">Naar startpagina</button>
+        </div>
+
+        <div class="dashboard__popup_failed" style="display: none;">
+            <p class="dashboard__title">Failed!</p>
+            <p class="dashboard__desc">Deze e-mail heeft geen gekoppelde zoekopdrachten.</p>
+            <button id="dashboard__failed_repeat">Probeer het opnieuw</button>
+            <button class="dashboard__button dashboard__top_button">Naar startpagina</button>
+        </div>
+    </div>
     <script src="js/jquery-3.6.0.min.js"></script>
-    <script async src="https://www.google.com/recaptcha/api.js?render=6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C"></script>
+    <script async src="https://www.google.com/recaptcha/api.js?render=6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C" async defer></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cABC" async defer></script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
