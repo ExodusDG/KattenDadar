@@ -281,18 +281,6 @@ var recentNotFound = [];
 var allFound = [];
 var allNotFound = [];
 $.ajax({
-    url: 'https://server.kattenradar.nl/test-as',
-    method: 'get',
-    dataType: 'json',
-    async: false,
-    data: recentSearches,
-    success: function(data) {
-        allFound = data.Found;
-        allNotFound = data.notFound;
-    }
-});
-
-$.ajax({
     url: 'https://server.kattenradar.nl/test-rs',
     method: 'get',
     dataType: 'json',
@@ -301,6 +289,21 @@ $.ajax({
     success: function(data) {
         recentFound = data.Found;
         recentNotFound = data.notFound;
+
+        console.log(recentFound)
+        console.log(recentNotFound)
+    }
+});
+
+$.ajax({
+    url: 'https://server.kattenradar.nl/test-as',
+    method: 'get',
+    dataType: 'json',
+    async: false,
+    data: recentSearches,
+    success: function(data) {
+        allFound = data.Found;
+        allNotFound = data.notFound;
     }
 });
 
@@ -393,7 +396,7 @@ $.each(recentNotFound, (key, value) => {
 })
 
 $.each(markersList, (key, value) => {
-    markersList[key].bindPopup("<img class='map_popup__image' src='" + markersList[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div>", { closeButton: false });
+    markersList[key].bindPopup("<div class='map__popup_block'> <img class='map_popup__image' src='" + markersList[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div></div>", { closeButton: false });
     markersList[key].on('mouseover', function(e) {
         this.openPopup();
     });
@@ -404,22 +407,30 @@ $.each(markersList, (key, value) => {
     });
 })
 
+var greenMarker = [];
+
 $.each(recentFound, (key, value) => {
-    markerFoundGreen = L.marker([Number(recentFound[key].lat), Number(recentFound[key].lng)], { icon: mapMarker, title: recentFound[key].picLink }).addTo(secondMap);
+    markerFoundGreen = L.marker([Number(recentFound[key].lat), Number(recentFound[key].lng)], { icon: mapMarkerGreen, title: recentFound[key].picLink }).addTo(secondMap);
     allMarkers.push(markerFoundGreen);
+    greenMarker.push(markerFoundGreen);
 })
 
-$.each(allMarkers, (key, value) => {
-    allMarkers[key].bindPopup("<img class='map_popup__image' src='" + allMarkers[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div>", { closeButton: false });
-    allMarkers[key].on('mouseover', function(e) {
-        this.openPopup();
-    });
-    allMarkers[key].on('mouseout', function(e) {
-        setTimeout(() => {
-            this.closePopup();
-        }, 5000);
-    });
-})
+allMarkersPopup()
+
+function allMarkersPopup() {
+    $.each(allMarkers, (key, value) => {
+        allMarkers[key].bindPopup("<div class='map__popup_block map__popup_green'> <img class='map_popup__image' src='" + allMarkers[key].options.title + "'><div class='map__popup_bottom popup__green'><a href='#'><button class='map__popup_green map__popup_button'>Stuur tip!</button></a></div></div></div>", { closeButton: false });
+        $('.test').hide()
+        allMarkers[key].on('mouseover', function(e) {
+            this.openPopup();
+        });
+        allMarkers[key].on('mouseout', function(e) {
+            setTimeout(() => {
+                this.closePopup();
+            }, 5000);
+        });
+    })
+}
 
 /* MAP MARKERS END */
 
@@ -428,38 +439,48 @@ $.each(allMarkers, (key, value) => {
 var AllmarkersList = [];
 var allMarker = [];
 
+
 $('.current_right_b').click(function() {
+    $.each(greenMarker, (key, value) => {
+        secondMap.removeLayer(greenMarker[key]);
+    })
+
     $.each(allNotFound, (key, value) => {
         markerAllNotFound = L.marker([Number(allNotFound[key].lat), Number(allNotFound[key].lng)], { icon: mapMarker, title: allNotFound[key].picLink }).addTo(secondMap);
         AllmarkersList.push(markerAllNotFound);
     })
-    console.log(AllmarkersList)
-    $.each(recentFound, (key, value) => {
-        const markerAllFound = L.marker([Number(recentFound[key].lat), Number(recentFound[key].lng)], { icon: mapMarkerGreen, title: recentFound[key].picLink }).addTo(secondMap);
-        allMarker.push(markerAllFound)
-    })
-
     $.each(AllmarkersList, (key, value) => {
-        AllmarkersList[key].bindPopup("<img class='map_popup__image' src='" + AllmarkersList[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div>", { closeButton: false });
+        AllmarkersList[key].bindPopup("<div class='map__popup_block'><img class='map_popup__image' src='" + AllmarkersList[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div></div>", { closeButton: false });
         AllmarkersList[key].on('mouseover', function(e) {
             this.openPopup();
         });
         AllmarkersList[key].on('mouseout', function(e) {
-            this.closePopup();
+            setTimeout(() => {
+                this.closePopup();
+            }, 5000);
         });
     })
     $.each(allMarker, (key, value) => {
-        allMarker[key].bindPopup("<img class='map_popup__image' src='" + allMarker[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div>", { closeButton: false });
+        allMarker[key].bindPopup("<div class='map__popup_block'><img class='map_popup__image' src='" + allMarker[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div></div>", { closeButton: false });
+        $('.green__popup').css('background-color', 'green !important')
         allMarker[key].on('mouseover', function(e) {
             this.openPopup();
         });
         allMarker[key].on('mouseout', function(e) {
-            this.closePopup();
+            setTimeout(() => {
+                this.closePopup();
+            }, 5000);
         });
     })
 })
 
 $('.current_left_b').click(function() {
+    $.each(recentFound, (key, value) => {
+        markerFoundGreen = L.marker([Number(recentFound[key].lat), Number(recentFound[key].lng)], { icon: mapMarkerGreen, title: recentFound[key].picLink }).addTo(secondMap);
+        allMarkers.push(markerFoundGreen);
+        greenMarker.push(markerFoundGreen);
+    })
+    allMarkersPopup()
     $.each(allMarker, (key, value) => {
         secondMap.removeLayer(allMarker[key]);
     })
@@ -476,66 +497,16 @@ $('.current_left_b').click(function() {
 // This example requires the Places library. Include the libraries=places + AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg&libraries=places">
+var map4000Zoomed;
+var map7000Zoomed;
+var map2000Zoomed;
+var map1000Zoomed;
 
 var myLatlng;
 var userEmail;
 var catAdress;
 var mapRadius = 1000;
 var cityCircle;
-
-function mapRadiusDraggeble() {
-    $(".map__radius_draggable").draggable({
-        containment: "parent",
-        axis: "x",
-
-        drag: function(e, ui) {
-
-            x2 = ui.position.left;
-            var trackPercent = ((x2 * 100) / trackStep).toFixed(0)
-            if (trackPercent > 80) {
-                $('.map__radius_draggable').text('8 km')
-                mapRadius = 8000;
-                cityCircle.setRadius(8000);
-                $(".map__radius_dot").trigger("click");
-            } else if (trackPercent > 70) {
-                $('.map__radius_draggable').text('7 km')
-                mapRadius = 7000;
-                cityCircle.setRadius(7000);
-                $(".map__radius_dot").trigger("click");
-            } else if (trackPercent > 60) {
-                $('.map__radius_draggable').text('6 km')
-                mapRadius = 6000;
-                cityCircle.setRadius(6000);
-                $(".map__radius_dot").trigger("click");
-            } else if (trackPercent > 50) {
-                $('.map__radius_draggable').text('5 km')
-                mapRadius = 5000;
-                cityCircle.setRadius(5000);
-                $(".map__radius_dot").trigger("click");
-            } else if (trackPercent > 35) {
-                $('.map__radius_draggable').text('4 km')
-                mapRadius = 4000;
-                cityCircle.setRadius(4000);
-                $(".map__radius_dot").trigger("click");
-            } else if (trackPercent > 20) {
-                $('.map__radius_draggable').text('3 km')
-                mapRadius = 3000;
-                cityCircle.setRadius(3000);
-                $(".map__radius_dot").trigger("click");
-            } else if (trackPercent > 5) {
-                $('.map__radius_draggable').text('2 km')
-                mapRadius = 2000;
-                cityCircle.setRadius(2000);
-                $(".map__radius_dot").trigger("click");
-            } else if (trackPercent < 1) {
-                $('.map__radius_draggable').text('1 km')
-                mapRadius = 1000;
-                cityCircle.setRadius(1000);
-                $(".map__radius_dot").trigger("click");
-            }
-        }
-    });
-}
 
 function initMap() {
     const componentForm = [
@@ -547,7 +518,7 @@ function initMap() {
     ];
 
     const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 13,
+        zoom: 14,
         center: { lat: 52.12, lng: 5.27 },
         mapTypeControl: false,
         mapTypeId: "terrain",
@@ -557,7 +528,17 @@ function initMap() {
         scrollwheel: false,
         streetViewControl: false
     });
-
+    cityCircle = new google.maps.Circle({
+        strokeColor: "#F8A35B",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#F8A35B",
+        fillOpacity: 0.3,
+        map,
+        center: { lat: 52.12, lng: 5.27 },
+        radius: 1000,
+    });
+    $('.search__map_center').attr('style', 'display: block')
     image = 'img/icons/marker.svg'
     const marker = new google.maps.Marker({ map: map, draggable: false, icon: image });
     const autocompleteInput = document.getElementById('location');
@@ -575,10 +556,125 @@ function initMap() {
             return false; //prevent duplicate submission
         }
     });
-    var map4000Zoomed;
-    var map7000Zoomed;
-    var map2000Zoomed;
-    var map1000Zoomed;
+
+    function mapRadiusDraggeble() {
+        $(".map__radius_draggable").draggable({
+            containment: "parent",
+            axis: "x",
+
+            drag: function(e, ui) {
+                x2 = ui.position.left;
+                var trackPercent = ((x2 * 100) / trackStep).toFixed(0)
+                if (trackPercent > 80) {
+                    $('.map__radius_draggable').text('8 km')
+                    mapRadius = 8000;
+                    cityCircle.setRadius(8000);
+                    $(".map__radius_dot").trigger("click");
+                    mapZoom()
+                } else if (trackPercent > 70) {
+                    $('.map__radius_draggable').text('7 km')
+                    mapRadius = 7000;
+                    cityCircle.setRadius(7000);
+                    $(".map__radius_dot").trigger("click");
+                    mapZoom()
+                } else if (trackPercent > 60) {
+                    $('.map__radius_draggable').text('6 km')
+                    mapRadius = 6000;
+                    cityCircle.setRadius(6000);
+                    $(".map__radius_dot").trigger("click");
+                    mapZoom()
+                } else if (trackPercent > 50) {
+                    $('.map__radius_draggable').text('5 km')
+                    mapRadius = 5000;
+                    cityCircle.setRadius(5000);
+                    $(".map__radius_dot").trigger("click");
+                    mapZoom()
+
+                } else if (trackPercent > 35) {
+                    $('.map__radius_draggable').text('4 km')
+                    mapRadius = 4000;
+                    cityCircle.setRadius(4000);
+                    $(".map__radius_dot").trigger("click");
+                    mapZoom()
+
+                } else if (trackPercent > 20) {
+                    $('.map__radius_draggable').text('3 km')
+                    mapRadius = 3000;
+                    cityCircle.setRadius(3000);
+                    $(".map__radius_dot").trigger("click");
+                    mapZoom()
+
+                } else if (trackPercent > 5) {
+                    $('.map__radius_draggable').text('2 km')
+                    mapRadius = 2000;
+                    cityCircle.setRadius(2000);
+                    $(".map__radius_dot").trigger("click");
+                    mapZoom()
+
+                } else if (trackPercent < 1) {
+                    $('.map__radius_draggable').text('1 km')
+                    mapRadius = 1000;
+                    cityCircle.setRadius(1000);
+                    $(".map__radius_dot").trigger("click");
+                    mapZoom()
+                }
+            }
+        });
+    }
+    $('.map__radius_draggable').click(function() {
+        mapZoom()
+    })
+
+    function mapZoom() {
+        if (mapRadius == 7000) {
+            if (map7000Zoomed == true) {
+                return false;
+            } else {
+
+                map7000Zoomed = true;
+
+                setTimeout(() => {
+                    map7000Zoomed = false;
+                }, 1000);
+            }
+        } else if (mapRadius == 4000) {
+            if (map4000Zoomed == true) {
+                return false;
+            } else {
+                map.setZoom(12)
+                map4000Zoomed = true;
+
+                setTimeout(() => {
+                    map4000Zoomed = false;
+                }, 1000);
+            }
+        } else if (mapRadius == 2000) {
+            if (map2000Zoomed == true) {
+                return false;
+            } else {
+                map.setZoom(13)
+                map2000Zoomed = true;
+
+                setTimeout(() => {
+                    map2000Zoomed = false;
+                }, 1000);
+            }
+        } else if (mapRadius == 1000) {
+            if (map1000Zoomed == true) {
+                return false;
+            } else {
+                map.setZoom(14)
+                map1000Zoomed = true;
+
+                setTimeout(() => {
+                    map1000Zoomed = false;
+                }, 1000);
+            }
+        }
+    }
+    $('#location').click(function() {
+        mapRadiusDraggeble()
+    });
 
     function adressSelect() {
         marker.setVisible(false);
@@ -603,7 +699,7 @@ function initMap() {
                 }
             ]
         )
-        $('.search__map_center').attr('style', 'display: block')
+
 
         cityCircle = new google.maps.Circle({
             strokeColor: "#F8A35B",
@@ -617,59 +713,10 @@ function initMap() {
         });
         map.setZoom(14)
 
-        $(".map__radius_dot").click(function() {
-
-            if (mapRadius == 7000) {
-                if (map7000Zoomed == true) {
-                    return false;
-                } else {
-                    map.setZoom(11)
-                    map7000Zoomed = true;
-
-                    setTimeout(() => {
-                        map7000Zoomed = false;
-                    }, 1000);
-                }
-            } else if (mapRadius == 4000) {
-                if (map4000Zoomed == true) {
-                    return false;
-                } else {
-                    map.setZoom(12)
-                    map4000Zoomed = true;
-
-                    setTimeout(() => {
-                        map4000Zoomed = false;
-                    }, 1000);
-                }
-            } else if (mapRadius == 2000) {
-                if (map2000Zoomed == true) {
-                    return false;
-                } else {
-                    map.setZoom(13)
-                    map2000Zoomed = true;
-
-                    setTimeout(() => {
-                        map2000Zoomed = false;
-                    }, 1000);
-                }
-            } else if (mapRadius == 1000) {
-                if (map1000Zoomed == true) {
-                    return false;
-                } else {
-                    map.setZoom(14)
-                    map1000Zoomed = true;
-
-                    setTimeout(() => {
-                        map1000Zoomed = false;
-                    }, 1000);
-                }
-            }
-
-        })
-
         mapInput()
 
         function mapInput() {
+
             var mapButton = $('.search__map_button')
             mapButton.css('background', '#f8a45b').css('color', 'white')
             mapButton.addClass('button__2step')
@@ -685,8 +732,6 @@ function initMap() {
     }
     $('.search__map_button').click(function() {
         adressSelect()
-
-        mapRadiusDraggeble()
     })
 
     function fillInAddress(place) { // optional parameter
@@ -718,10 +763,10 @@ function initMap() {
     }
 
     function renderAddress(place) {
+
         map.setCenter(place.geometry.location);
         //    marker.setPosition(place.geometry.location);
         marker.setVisible(true);
     }
 }
-
 /* GOOGLE MAP END */
