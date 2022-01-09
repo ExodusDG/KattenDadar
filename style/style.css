@@ -1384,3 +1384,121 @@ textarea::-webkit-scrollbar {
     left: 2px;
     top: 2px;
 }
+
+
+/* RANGE POPUP */
+
+.feedbackShow {
+    transform: scale(1) !important
+}
+
+.range__popup {
+    box-shadow: 0px 3px 11px rgba(98, 98, 98, 0.13);
+    width: 830px;
+    height: auto;
+    padding: 50px;
+    background: white;
+    margin: 0 auto;
+    top: 20vh;
+    position: fixed;
+    opacity: 1;
+    transform: scale(0);
+    transition: 0.3s;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.range__popup {
+    position: fixed;
+    left: calc((100vw - 830px)/2);
+    z-index: 999999;
+}
+
+.range__subtitle_failed {
+    display: flex;
+    text-align: left;
+    width: 90% !important;
+}
+
+.range__popup_failed {
+    margin-top: 20px;
+}
+
+.range__subtitle_failed img {
+    margin-right: 20px;
+}
+
+.range__subtitle_failed {
+    width: 100%;
+}
+
+.feedback {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.feedback_close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.popup_close {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.range__popup_title {
+    color: #000;
+    font-weight: 700;
+    font-size: 32px;
+}
+
+.range__popup_subtitle {
+    color: rgba(63, 43, 79, 0.6);
+    font-weight: 600;
+    font-size: 18px;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+
+.range__popup_subtitle a {
+    color: #F8A35B;
+}
+
+.range__popup_ball {
+    animation-name: rolling;
+    animation-duration: 5s;
+    animation-timing-function: ease-in-out;
+    Animation-iteration-count: 5000;
+    animation-delay: 0s;
+    /* Tells the animation what to-do outside */
+    animation-fill-mode: both;
+    animation-direction: alternate;
+    position: relative;
+    right: 100px;
+}
+
+@keyframes rolling {
+    0% {
+        transform: translateX(0) rotate(-.1turn);
+    }
+    20% {
+        transform: translateX(100px) rotate(.1turn);
+    }
+    40% {
+        transform: translateX(0) rotate(-.1turn);
+    }
+    70% {
+        transform: translateX(200px) rotate(1turn);
+    }
+    100% {
+        transform: translateX(0) rotate(-.1turn);
+    }
+}

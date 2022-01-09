@@ -794,6 +794,11 @@
     border-radius: 15px;
 }
 
+.chat_file_upload {
+    width: 200px;
+    height: 200px;
+}
+
 .dashboard__popup {
     position: fixed;
     left: calc((100vw - 830px)/2);
