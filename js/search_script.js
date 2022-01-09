@@ -1,4 +1,6 @@
 var radiusPrice = 29;
+var productType = 1;
+var rangeData; //step 3 info array;
 
 /* IMAGE SEND TO SERVER */
 
@@ -31,6 +33,7 @@ function encodeImage(element) {
                 var result = result.replace('"', '').replace('"', '');
                 $('.chat_file_upload').attr('src', result),
                     $('.chat__phone__cat').attr('src', result)
+                $('.chat__phone__cat').attr('style', 'display: block')
                 afterImageSend()
 
                 document.cookie = "catImage=" + result;
@@ -261,7 +264,6 @@ function initMap2() {
         center: { lat: Number(cookieArray.lat), lng: Number(cookieArray.lng) },
         radius: mapRadius,
     });
-    console.log(mapRadius)
 
     var rangePrice;
     /* RANGE DRAGGABLE */
@@ -310,6 +312,7 @@ function initMap2() {
 
     function dragData() {
         mapRadius = $('.range__km').text().replace(' km', '') + '000';
+        productType = $('.range__km').text().replace(' km', '');
         rangePrice = Number($('.range__km').text().replace(' km', '')) * radiusPrice;
         $('.range__price').text(rangePrice + ' €')
         $('.map__price_count span').text(rangePrice)
@@ -318,11 +321,10 @@ function initMap2() {
     /* RANGE DRAGGABLE END */
 
     $('.map__range_button').click(function() {
-        var rangeData = {
-            radius: mapRadius,
-            price: rangePrice
+        rangeData = {
+            productType: productType
         }
-        console.log(rangeData)
+        rangeDataSend()
     })
 }
 
@@ -474,14 +476,6 @@ function initMap() {
     }
 
 }
-
-$('.search__map_button').click(function() {
-    if ($('.search__map_form').hasClass('form_in_top')) {
-
-    } else {
-        return false;
-    }
-})
 
 /* SEND DATA TO SERVER */
 
@@ -831,3 +825,86 @@ $('.chat__left_n_error').click(function() {
 
     document.cookie = "steps=2";
 })
+
+/* RANGE DATA SEND */
+
+function rangeDataSend() {
+    getCookie()
+    var catName = cookieArray.catName;
+
+    var settings = {
+        "url": "https://server.kattenradar.nl/test-payment",
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+            "id": "none",
+            "catName": catName,
+            "productType": rangeData.productType
+        }
+    };
+    console.log(settings.data)
+    $.ajax(settings).done(function(response) {
+
+        if (response != 'failed') {
+            rangePopupOpen()
+
+            setTimeout(() => {
+                window.open(response);
+            }, 500);
+        }
+
+        console.log(response);
+    });
+
+    /* RANGE POPUP */
+
+    function rangePopupOpen() {
+        $('.blur__wrapper').attr('style', 'filter: blur(10px)')
+        $('.feedback').attr('style', 'display: block')
+        header.removeClass('header__fixed')
+        header.addClass('header__hidden')
+        setTimeout(() => {
+            $('.range__popup').addClass('feedbackShow');
+        }, 100);
+    }
+
+    $('.popup_close').click(function() {
+        dashboardClose()
+    })
+    $('.feedback__send').click(function() {
+        //  dashboardClose()
+    })
+    $('.feedback').click(function() {
+        dashboardClose()
+    })
+
+    function dashboardClose() {
+        $('.range__popup').removeClass('feedbackShow');
+        $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+        $('.feedback').attr('style', 'display: none')
+
+        header.addClass('header__fixed')
+        header.removeClass('header__hidden')
+    }
+
+    var serverResponse = 'true';
+    if (serverResponse == 'failed') {
+        failedPayment()
+    }
+
+    /* RANGE POPUP END */
+}
+
+/* RANGE DATA SEND END */
+
+/* FAILED PAYMENT */
+
+function failedPayment() {
+    $('.range__popup_process').attr('style', 'display: none')
+    $('.range__popup_failed').attr('style', 'display: block')
+}
+
+/* FAILED PAYMENT END */
