@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KattenRadar - Search</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/default_styles.css">
 </head>
@@ -573,10 +574,65 @@
                     </div>
                 </div>
             </div>
-
-
         </section>
         <!-- SEARCH END -->
+
+        <!-- SIGNUP BODY -->
+        <section class="signup" style="display: none;">
+            <div class="container">
+                <div class="signup__body">
+                    <h1 class="signup__title">Betaling geslaagd, zoekactie gaat van start</h1>
+                    <p class="signup__subtitle">We hebben je een bevestigingsmail gestuurd. Soms komen onze emails in de spamfolder terecht. Ontvang je niks neem contact met ons op.</p>
+                    <div class="signup__form">
+                        <p>Gelieve te reageren op een eenvoudige vraag Hierna wordt u doorgestuurd naar uw dashboard</p>
+
+                        <input type="name" id="signup_name" placeholder="Wat is je voornaam?*">
+                        <div class="signup__list">
+                            <div class="signup__input">
+                                <div id="signup_how">
+                                    <p class="signup_how_text">Waarvan ken je KattenRadar?</p>
+                                </div>
+                                <img src="img/icons/down_input.svg" alt="Down">
+                            </div>
+                            <div class="signup__dropdown">
+                                <div class="signup_dropdown_item">
+                                    <p>Tip gekregen van een bekende </p>
+                                    <hr>
+                                </div>
+                                <div class="signup_dropdown_item">
+                                    <p>Zoekactie op Facebook / Instagram gezien </p>
+                                    <hr>
+                                </div>
+                                <div class="signup_dropdown_item">
+                                    <p>Google zoekopdracht </p>
+                                    <hr>
+                                </div>
+                                <div class="signup_dropdown_item">
+                                    <p>Anders... </p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="signup__dashboard orange_button" disabled="disabled">Naar dashboard</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIGNUP BODY -->
+        <section class="signup failed__payment" style="display: none;">
+            <div class="container">
+                <div class="signup__body">
+                    <h1 class="signup__title">Er is iets misgegaan met de betaling.</h1>
+                    <p class="failed__subtitle">Wij zijn hiervan op de hoogte en proberen dit zo snel mogelijk op te lossen. We nemen contact met je op wanneer dit nodig is, je kunt ons ook bereiken via <a href="mailto:info@kattenradar.nl" class="phone">info@kattenradar.nl</a> of
+                        <a class="phone" href="tel:+31627655321">+31 6 276 553 21</a>.</p>
+                    <p class="failed__subtitle">Bedankt voor het geduld.</p>
+                    <div class="signup__form">
+                        <div class="signup__list">
+                            <a href="#"> <button class="signup__dashboard orange_button">Naar startpagina</button></a>
+                        </div>
+                    </div>
+                </div>
+        </section>
 
         <!-- FOOTER -->
 
@@ -653,33 +709,33 @@
             <hr class="mb__footer_line">
             <p class="mb__footer_text">© kattenradar, Inc. 2021. We love our users!</p>
         </div>
-        </footer>
-    </div>
-    <!-- RANGE POPUP -->
-    <div class="feedback">
-    </div>
-    <div class="range__popup">
-        <div class="feedback_close">
-            <img class="popup_close" src="img/homepage/close.svg" alt="Close">
         </div>
-        <div class="range__popup_process">
-            <p class="range__popup_title">Wachten op betaling...</p>
-            <p class="range__popup_subtitle">Maak de betaling af in de geopende pagina. Zie je geen betalingspagina? <a href="#">Klik hier.</a></p>
-            <img class="range__popup_ball" src="img/ball.svg" alt="Ball">
+        <!-- RANGE POPUP -->
+        <div class="feedback">
         </div>
-        <div class="range__popup_failed" style="display: none;">
-            <p class="range__popup_title"> Betaling mislukt</p>
-            <div class="range__popup_subtitle range__subtitle_failed">
-                <img src="img/info.svg" alt="Info">
-                <p>Er is iets misgegaan met de betaling... Probeer het nog een keer, of neem contact met ons op via <a href="mailto:info@kattenradar.nl">info@kattenradar.nl</a> of <a href="tel:+31627655321">+31 6 276 553 21</a>.</p>
+        <div class="range__popup">
+            <div class="feedback_close">
+                <img class="popup_close" src="img/homepage/close.svg" alt="Close">
+            </div>
+            <div class="range__popup_process">
+                <p class="range__popup_title">Wachten op betaling...</p>
+                <p class="range__popup_subtitle">Maak de betaling af in de geopende pagina. Zie je geen betalingspagina? <a href="#">Klik hier.</a></p>
+                <img class="range__popup_ball" src="img/ball.svg" alt="Ball">
+            </div>
+            <div class="range__popup_failed" style="display: none;">
+                <p class="range__popup_title"> Betaling mislukt</p>
+                <div class="range__popup_subtitle range__subtitle_failed">
+                    <img src="img/info.svg" alt="Info">
+                    <p>Er is iets misgegaan met de betaling... Probeer het nog een keer, of neem contact met ons op via <a href="mailto:info@kattenradar.nl">info@kattenradar.nl</a> of <a href="tel:+31627655321">+31 6
+                        276 553 21</a>.</p>
+                </div>
             </div>
         </div>
-    </div>
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-    <script src="js/default_script.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cABC" async defer></script>
-    <script src="js/search_script.js"></script>
+        <script src="js/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+        <script src="js/default_script.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cABC" async defer></script>
+        <script src="js/search_script.js"></script>
 
 </body>
 
