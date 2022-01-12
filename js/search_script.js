@@ -827,6 +827,9 @@ $('.chat__left_n_error').click(function() {
 })
 
 /* RANGE DATA SEND */
+var userIp;
+var paymentStatus = 'pending';
+var userName;
 
 function rangeDataSend() {
     getCookie()
@@ -848,11 +851,19 @@ function rangeDataSend() {
     console.log(settings.data)
     $.ajax(settings).done(function(response) {
 
+        userIp = response.ip;
+        console.log(response)
+
         if (response != 'failed') {
             rangePopupOpen()
 
             setTimeout(() => {
-                window.open(response);
+                window.open(response.redirectLink);
+
+                setInterval(() => {
+                    checkPaymentStatus()
+                }, 1000);
+
             }, 500);
         }
 
@@ -908,3 +919,83 @@ function failedPayment() {
 }
 
 /* FAILED PAYMENT END */
+
+/* CHECK PAYMENT STATUS */
+
+function checkPaymentStatus() {
+    if (paymentStatus == 'pending') {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("id", userIp);
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
+        };
+
+        fetch("https://server.kattenradar.nl/test-payment-status", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+    } else if (paymentStatus == 'failed') {
+        //FAILED PAYMENT
+        failedPayment()
+    } else if (paymentStatus == 'expired') {
+        //EXPIRED PAYMENT
+    } else {
+        //SUCCESS PAYMENT
+        successPayment()
+    }
+}
+
+/* CHECK PAYMENT STATUS END */
+
+/* SUCCESS PAYMENT */
+
+function successPayment() {
+    dashboardClose()
+    $('.search').attr('display', 'none');
+    $('.signup').attr('display', 'block');
+}
+
+/* SUCCESS PAYMENT END */
+
+/* FAILED PAYMENT */
+
+function failedPayment() {
+    dashboardClose()
+    $('.search').attr('display', 'none');
+    $('.failed__payment').attr('display', 'block');
+}
+
+/* FAILED PAYMENT END */
+
+/* SIGNUP INPUT */
+
+$('.signup__input').click(function() {
+    $('.signup__input img').toggleClass('signup__image_rotate')
+    $('.signup__dropdown').toggleClass('signup__dropdown_show')
+})
+
+$('.signup_dropdown_item').click(function() {
+    $('.signup_how_text').css('opacity', '1')
+    $('.signup_how_text').text($(this).text())
+    $('.signup__dropdown').removeClass('signup__dropdown_show')
+    $('.signup__input img').removeClass('signup__image_rotate')
+})
+
+$('#signup_name').keyup(function() {
+    var userName = $(this).val();
+    console.log(userName.length)
+    if (userName.length == 0) {
+        $('.signup__dashboard').prop("disabled", true);
+    } else {
+        $('.signup__dashboard').prop("disabled", false);
+    }
+});
+
+/* SIGNUP INPUT END*/

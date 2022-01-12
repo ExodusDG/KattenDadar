@@ -129,6 +129,20 @@ footer {
 
 /* FOOTER END */
 
+.orange_button:hover {
+    background: white;
+    color: #F8A35B;
+    border: 1px solid #F8A35B;
+}
+
+button {
+    transition: 0.3s;
+}
+
+button:disabled {
+    opacity: 0.5;
+}
+
 
 /* FOOTER */
 
