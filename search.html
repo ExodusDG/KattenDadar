@@ -731,6 +731,60 @@
                 </div>
             </div>
         </div>
+        <!-- FEEDBACK -->
+        <div class="feedback__popup">
+            <div class="feedback_close">
+                <img class="popup_close" src="img/homepage/close.svg" alt="Close">
+            </div>
+            <p>Neem contact op</p>
+            <div class="feedback__form">
+                <div class="feedback__form_block">
+                    <p>Email <span> *</span></p>
+                    <input type="email" id="form__email" placeholder="Email">
+                </div>
+                <div class="feedback__form_block">
+                    <p>Telefoon</p>
+                    <input type="phone" id="form__phone" placeholder="Telefoonnummer (optioneel)">
+                </div>
+            </div>
+            <div class="feedback__textarea">
+                <p>Bericht</p>
+                <textarea name="message" id="message"></textarea>
+            </div>
+            <input type="hidden" name="token" value="" id="token">
+            <p class="form__send_status">Your message has been successfully sent!</p>
+            <button class="feedback__send" class="g-recaptcha" data-sitekey="6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C" data-callback='onSubmit' data-action='submitForm'>Versturen</button>
+            <p class="feedback__capcha_info">This site is protected by reCAPTCHA and the Google
+                <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+                <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+            </p>
+        </div>
+        <!-- DASHBOARD POPUP -->
+        <div class="dashboard__popup">
+            <div class="feedback_close">
+                <img class="popup_close" src="img/homepage/close.svg" alt="Close">
+            </div>
+            <div class="dashboard__popup_start">
+                <p class="dashboard__title">To dashboard</p>
+                <p class="dashboard__desc">Je kunt het dashboard van de zoekactie openen door op 'naar dashboard' te klikken in de emails van KattenRadar.</p>
+                <p class="dashboard__desc" style="opacity: 0.6;">Kan je het niet vinden? Vul hier je email of telefoonnummer in, en wij sturen je de link nogmaals toe.</p>
+
+                <input type="email" name="email" id="dashboardEmail" placeholder="Email of telefoonnummer">
+                <button id="dashboard__send">Ontvang link naar dashboard</button>
+            </div>
+            <div class="dashboard__popup_done" style="display: none;">
+                <p class="dashboard__title">Success!</p>
+                <p class="dashboard__desc">We hebben je de nieuwe link gestuurd, check je e-mail</p>
+                <button class="dashboard__top_button">Naar startpagina</button>
+            </div>
+
+            <div class="dashboard__popup_failed" style="display: none;">
+                <p class="dashboard__title">Failed!</p>
+                <p class="dashboard__desc">Deze e-mail heeft geen gekoppelde zoekopdrachten.</p>
+                <button id="dashboard__failed_repeat">Probeer het opnieuw</button>
+                <button class="dashboard__button dashboard__top_button">Naar startpagina</button>
+            </div>
+        </div>
         <script src="js/jquery-3.6.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
         <script src="js/default_script.js"></script>

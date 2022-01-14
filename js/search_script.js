@@ -1,6 +1,7 @@
 var radiusPrice = 29;
 var productType = 1;
 var rangeData; //step 3 info array;
+var catImgName;
 
 /* IMAGE SEND TO SERVER */
 
@@ -30,12 +31,17 @@ function encodeImage(element) {
         fetch("https://server.kattenradar.nl/test-upload-image", requestOptions)
             .then(response => response.text())
             .then(result => {
+                catImgName = $('#send__image_hidden').val().replace('C:\\fakepath', '');
+                console.log(catImgName.replace('C:', ''))
+                $('.chat__user_img_name').text(catImgName)
                 var result = result.replace('"', '').replace('"', '');
-                $('.chat_file_upload').attr('src', result),
-                    $('.chat__phone__cat').attr('src', result)
+                $('.chat__user_image img').attr('src', result)
+                $('.chat__phone__cat').attr('src', result)
+                $('#user_msg_3').attr('style', 'display: none');
+                $('#user_msg_4').attr('style', 'display: flex');
                 $('.chat__phone__cat').attr('style', 'display: block')
                 afterImageSend()
-
+                document.cookie = "catImgName=" + catImgName;
                 document.cookie = "catImage=" + result;
 
 
@@ -72,6 +78,8 @@ function getCookie() {
 
 
 var chatMessageArray = [];
+
+console.log(cookieArray)
 
 if (typeof cookieArray.steps != 'undefined') {
     var stepContainer = $('.search__steps_container');
@@ -130,9 +138,9 @@ function chatHistoryBuild() {
                 $('.chat__phone__cat').attr('src', cookieArray.catImage);
                 $('.chat__phone__cat').attr('style', 'display: flex')
 
-
-                $('.chat__phone__cat').attr('src', cookieArray.catImage)
-                $('.chat__phone__cat').attr('display', 'block')
+                $('.chat__user_img_name').text(cookieArray.catImgName)
+                $('.chat__user_image img').attr('src', cookieArray.catImage)
+                $('.chat__user_image img').attr('display', 'block')
 
                 if (typeof cookieArray.userEmail != 'undefined') {
                     $('.user_email_chat').attr('style', 'display: flex').addClass('user__msg_show');

@@ -693,6 +693,7 @@ function initMap() {
                 document.getElementById(component).value = getAddressComp(component);
             }
         }
+
     }
 
     function renderAddress(place) {
