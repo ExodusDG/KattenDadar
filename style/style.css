@@ -1681,6 +1681,11 @@ textarea::-webkit-scrollbar {
     color: #F8A35B;
 }
 
+#user_msg_4 .chat__user_image {
+    position: relative;
+    left: 10px;
+}
+
 @media (max-width: 1140px) {
     .search__steps {
         background-size: 60%;
