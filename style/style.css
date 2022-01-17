@@ -1962,3 +1962,80 @@ textarea::-webkit-scrollbar {
         top: 0;
     }
 }
+
+@media (max-width: 600px) {
+    .search__steps {
+        background-position-x: 58px;
+        background-position-y: 10px;
+        background-size: 90%;
+    }
+    .search__map_button {
+        width: 90vw;
+        height: 50px;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 10px;
+        top: 30px;
+        position: relative;
+        padding-left: 30%;
+        padding-right: 30%;
+        align-items: center;
+    }
+    .search__map_form {
+        width: 90vw;
+        height: 50px;
+        padding-left: 0px;
+        border-bottom-right-radius: 0px;
+        border-bottom-left-radius: 0px;
+    }
+    .search__map_form {
+        display: block;
+    }
+    .search__map_form>div {
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+    .search h1 {
+        font-size: 28px;
+    }
+    .chat__left_controls {
+        width: 90vw;
+        left: 5vw;
+    }
+    .chat__start_repeat {
+        width: 48%;
+    }
+    .chat__start_where {
+        width: 48%;
+    }
+    .chat__user_message {
+        right: 20%;
+    }
+    .chat__left_input {
+        left: 18%;
+        width: 60%;
+    }
+    .chat__left_buttons {
+        width: 90vw;
+    }
+    .chat__left_buttons_email {
+        width: 90vw;
+    }
+    .chat__left_buttons_notif {
+        width: 90vw;
+    }
+    .chat__left_buttons_phone {
+        width: 90vw;
+    }
+    .chat__input_big {
+        left: 18%;
+        width: 60%;
+    }
+    .chat__left_input_email {
+        left: 18%;
+        width: 60%;
+    }
+    .chat__left_final button {
+        font-size: 12px;
+    }
+}

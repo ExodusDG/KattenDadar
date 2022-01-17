@@ -1522,6 +1522,22 @@
         background: #F8A35B;
         margin-top: 40px;
     }
+    .search__map_form {
+        width: 90vw;
+        height: 181px;
+        position: absolute;
+        display: block;
+        left: 5vw;
+        bottom: -120px;
+    }
+    .search__map_form>div {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 25px;
+    }
+    .search__map_button {
+        width: 100%;
+    }
 }
 
 @media (max-width: 490px) {
