@@ -968,7 +968,9 @@ footer {
 
 .chat__user_image>img {
     width: 262px;
+    border-top-left-radius: 10px;
     height: 250px;
+    border-top-right-radius: 10px;
 }
 
 .chat__user_img_name {
@@ -1346,6 +1348,13 @@ textarea::-webkit-scrollbar {
     left: 0;
 }
 
+.map__radius_dottrack {
+    display: flex;
+    width: 90%;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+
 .map__radius_draggable hr {
     background: white;
     border: none;
@@ -1383,6 +1392,129 @@ textarea::-webkit-scrollbar {
     position: relative;
     left: 2px;
     top: 2px;
+}
+
+.number__code_selected {
+    display: flex;
+    width: 70px;
+    margin-left: 10px;
+    margin-right: 0px;
+    border-right: 1px solid #F8A35B;
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    top: 7px;
+}
+
+#phone {
+    padding-left: 80px;
+    color: #F8A35B;
+    font-size: 15px;
+}
+
+#number__code {
+    color: #F8A35B;
+    margin-left: 5px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+#number_code_selected {
+    color: #F8A35B;
+    margin-left: 5px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.number__code_list {
+    width: 100%;
+    background: white;
+    position: absolute;
+    z-index: 999;
+    top: 30px;
+    padding-left: 10px;
+    box-shadow: 0px 10px 35px rgba(90, 90, 90, 0.17);
+    border-radius: 5px;
+    display: none;
+    opacity: 0;
+    transition: 0.3s;
+    height: 105px;
+    overflow-y: scroll;
+}
+
+.number__code_list_active {
+    display: block !important;
+    opacity: 1 !important;
+}
+
+.number__code_item span {
+    font-weight: 700;
+}
+
+.number__code_item {
+    display: flex;
+    height: 35px;
+    align-items: center;
+    border-top: 1px solid #3f2b4f31;
+    cursor: pointer;
+}
+
+.number__code_item #number__code {
+    color: #3F2B4F;
+    border-right: 1px solid #F8A35B;
+    width: 40px;
+}
+
+.number__code_item span {
+    margin-left: 10px;
+}
+
+.chat__left_text_1 {
+    position: relative;
+}
+
+.number__code img {
+    width: 25px;
+}
+
+.number__code_item {
+    transition: 0.3s;
+}
+
+.number__code_item:hover {
+    color: #F8A35B;
+}
+
+.number__code_item:hover #number__code {
+    color: #F8A35B;
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #FBC89C;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #F9B57C;
 }
 
 
@@ -1711,5 +1843,122 @@ textarea::-webkit-scrollbar {
     footer {
         width: 90vw;
         margin: 0 auto;
+    }
+    .search__chat {
+        min-width: 100%;
+    }
+    .search__chat_box {
+        display: block;
+    }
+    .chat__left_side {
+        height: auto;
+    }
+    .chat__right_side {
+        padding-top: 100px;
+        margin: 0 auto;
+        text-align: center;
+        background-image: none;
+        display: none;
+    }
+    .chat__left_side {
+        position: relative;
+        height: 700px;
+        /* top: 500px; */
+        margin: 0 auto;
+    }
+    .search__steps_list {
+        width: 1110px;
+        margin: 0 auto;
+        overflow-x: unset;
+        margin-bottom: 100px;
+    }
+    .search__steps_container {
+        height: auto;
+    }
+    .chat__left_side {
+        min-width: 100vw;
+    }
+    .chat__left_messages {
+        padding-left: 10%;
+    }
+    .chat__left_side {
+        width: 700px;
+        height: 822px;
+        position: relative;
+    }
+    .chat__left_side {
+        position: relative;
+        height: 700px;
+        margin: unset;
+    }
+    .chat__left_controls {
+        position: absolute;
+        bottom: 40px;
+        width: 70%;
+        left: 15%;
+    }
+    .chat__left_start {
+        width: 100%;
+    }
+    .chat__start_repeat {
+        width: 45%;
+    }
+    .chat__start_where {
+        width: 45%;
+    }
+    .chat__left_buttons {
+        width: 620px;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+    }
+    .chat__left_buttons_email {
+        width: 620px;
+        justify-content: space-between;
+        margin: 0 auto;
+    }
+    .chat__left_buttons_notif {
+        margin: 0 auto;
+    }
+    .chat__left_buttons_phone {
+        margin: 0 auto;
+    }
+    .chat__left_final {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+    .range {
+        min-width: 100vw;
+        margin: 0 auto;
+        margin-top: 70px;
+    }
+    .search__map_container {
+        width: 100vw;
+    }
+    .search__chat {
+        min-width: 100vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .search__steps {
+        display: flex;
+        justify-content: space-around;
+        background-image: url(../img/step__line_1.svg);
+        background-repeat: no-repeat;
+        background-position-x: 72px;
+        background-position-y: 0px;
+        background-size: 90%;
+    }
+    .chat__left_controls {
+        position: absolute;
+        bottom: 40px;
+        width: 80%;
+        left: 10%;
+    }
+    .map__price_count {
+        right: 0px;
+        top: 0;
     }
 }

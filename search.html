@@ -413,7 +413,39 @@
                                     <div class="chat__user_message" id="user_msg_9">
                                         <div class="chat__user_message_text">
                                             <div class="chat__left_text_1">
-                                                <input type="text" name="phone" id="phone" placeholder="Typ hier...">
+                                                <!-- NUMBER COUNTRY CODE -->
+
+                                                <div class="number__code">
+                                                    <div class="number__code_selected">
+                                                        <img class="selected__flag_image" src="img/flags/netherlands.svg" alt="Flag">
+                                                        <p class="number__code" id="number_code_selected">+31</p>
+                                                    </div>
+                                                    <div class="number__code_list">
+                                                        <div class="number__code_item">
+                                                            <img src="img/flags/netherlands.svg" alt="Flag">
+                                                            <p id="number__code">+31</p>
+                                                            <span>Netherlands</span>
+                                                        </div>
+                                                        <div class="number__code_item">
+                                                            <img src="img/flags/belgium.svg" alt="Flag">
+                                                            <p id="number__code">+32</p>
+                                                            <span>Belgium</span>
+                                                        </div>
+                                                        <div class="number__code_item">
+                                                            <img src="img/flags/germany.svg" alt="Flag">
+                                                            <p id="number__code">+49</p>
+                                                            <span>Germany</span>
+                                                        </div>
+                                                        <div class="number__code_item">
+                                                            <img src="img/flags/romania.svg" alt="Flag">
+                                                            <p id="number__code">+40</p>
+                                                            <span>Romania</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- NUMBER COUNTRY CODE END-->
+                                                <input type="text" name="phone" id="phone">
                                                 <img class="email__number_send" id="number__send" src="img/icons/send.svg" alt="Send">
                                             </div>
                                             <p class="chat__back chat__back_2" id="mob__back"><img src="img/icons/back.svg" alt="back"> Vorige</p>
@@ -555,16 +587,18 @@
                                     <div class="map__radius_draggable">
                                         <p class="range__km">1 km</p>
                                         <hr>
-                                        <p class="range__price">30 €</p>
+                                        <p class="range__price">29 €</p>
                                     </div>
-                                    <div class="map__radius_dot"></div>
-                                    <div class="map__radius_dot"></div>
-                                    <div class="map__radius_dot"></div>
-                                    <div class="map__radius_dot"></div>
-                                    <div class="map__radius_dot"></div>
-                                    <div class="map__radius_dot"></div>
-                                    <div class="map__radius_dot"></div>
-                                    <div class="map__radius_dot"></div>
+                                    <div class="map__radius_dottrack">
+                                        <div class="map__radius_dot"></div>
+                                        <div class="map__radius_dot"></div>
+                                        <div class="map__radius_dot"></div>
+                                        <div class="map__radius_dot"></div>
+                                        <div class="map__radius_dot"></div>
+                                        <div class="map__radius_dot"></div>
+                                        <div class="map__radius_dot"></div>
+                                        <div class="map__radius_dot"></div>
+                                    </div>
                                 </div>
                                 <div class="map__range_line"></div>
                                 <button class="map__range_button">Betaal en start zoekactie <img
@@ -578,7 +612,7 @@
         <!-- SEARCH END -->
 
         <!-- SIGNUP BODY -->
-        <section class="signup" style="display: none;">
+        <section class="signup done__payment" style="display: none;">
             <div class="container">
                 <div class="signup__body">
                     <h1 class="signup__title">Betaling geslaagd, zoekactie gaat van start</h1>
@@ -719,7 +753,7 @@
             </div>
             <div class="range__popup_process">
                 <p class="range__popup_title">Wachten op betaling...</p>
-                <p class="range__popup_subtitle">Maak de betaling af in de geopende pagina. Zie je geen betalingspagina? <a href="#">Klik hier.</a></p>
+                <p class="range__popup_subtitle">Maak de betaling af in de geopende pagina. Zie je geen betalingspagina? <a target="_blank" href="#">Klik hier.</a></p>
                 <img class="range__popup_ball" src="img/ball.svg" alt="Ball">
             </div>
             <div class="range__popup_failed" style="display: none;">
