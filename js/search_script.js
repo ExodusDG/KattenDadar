@@ -3,6 +3,22 @@ var productType = 1;
 var rangeData; //step 3 info array;
 var catImgName;
 
+/* SELECT COUNTRY CODE */
+
+$('.number__code_selected').click(function() {
+    $('.number__code_list').toggleClass('number__code_list_active')
+})
+
+$('.number__code_item').click(function() {
+    $('#number_code_selected').text($(this).find('#number__code').text())
+    $('.selected__flag_image').attr('src', $(this).find('img').attr('src'))
+
+    $('.number__code_list').removeClass('number__code_list_active')
+
+})
+
+/* SELECT COUNTRY CODE END */
+
 /* IMAGE SEND TO SERVER */
 
 var imageData;
@@ -150,9 +166,9 @@ function chatHistoryBuild() {
                         $('.user_number_chat').attr('style', 'display: flex').addClass('user__msg_show');
                         $('#bot_msg_9').find('p > span').text(cookieArray.userNumber)
                         $('#bot_msg_10').addClass('user__msg_show')
-
                     } else {
                         $('.chat__left_buttons_email').attr('style', 'display: flex')
+                        $('#bot_msg_7').find('span').text(cookieArray.catName)
                     }
                 } else {
                     $('.chat__left_input_email').attr('style', 'display: block')
@@ -275,7 +291,7 @@ function initMap2() {
 
     var rangePrice;
     /* RANGE DRAGGABLE */
-    var trackStep = $('.map__radius_track').width();
+    var trackStep = $('.map__radius_dottrack').width();
 
     $(".map__radius_draggable").draggable({
         containment: "parent",
@@ -283,34 +299,35 @@ function initMap2() {
 
         drag: function(e, ui) {
             x2 = ui.position.left;
-            var trackPercent = ((x2 * 110) / trackStep).toFixed(0)
-            if (trackPercent > 80) {
+            var trackPercent = ((x2 * 100) / trackStep).toFixed(0)
+            console.log(trackPercent)
+            if (trackPercent > (11 * 8.5)) {
                 $('.range__km').text('8 km')
                 map.setZoom(11)
                 dragData()
-            } else if (trackPercent > 70) {
+            } else if (trackPercent > (11 * 7)) {
                 $('.range__km').text('7 km')
                 map.setZoom(11)
                 dragData()
-            } else if (trackPercent > 60) {
+            } else if (trackPercent > (11 * 6)) {
                 $('.range__km').text('6 km')
                 dragData()
-            } else if (trackPercent > 50) {
+            } else if (trackPercent > (11 * 4)) {
                 $('.range__km').text('5 km')
                 map.setZoom(11)
                 dragData()
-            } else if (trackPercent > 40) {
+            } else if (trackPercent > (11 * 3)) {
                 $('.range__km').text('4 km')
                 dragData()
-            } else if (trackPercent > 30) {
+            } else if (trackPercent > (11 * 2)) {
                 $('.range__km').text('3 km')
                 map.setZoom(12)
                 dragData()
-            } else if (trackPercent > 20) {
+            } else if (trackPercent > (6 * 2)) {
                 $('.range__km').text('2 km')
                 map.setZoom(13)
                 dragData()
-            } else if (trackPercent > 10) {
+            } else if (trackPercent > (11 * 1)) {
                 $('.range__km').text('1 km')
                 map.setZoom(14)
                 dragData()
@@ -719,7 +736,7 @@ $('.chat__left_e_done').click(function() {
 
     setTimeout(() => {
 
-        $('#bot_msg_7').find('p > span').text(catName)
+        $('#bot_msg_7').find('span').text(catName)
         $('#bot_msg_7').attr('style', 'display: flex')
         $('#bot_msg_7').addClass('chat__msg_bot')
 
@@ -762,7 +779,7 @@ $('#number__send').click(function() {
 })
 
 function phoneSend() {
-    userNumber = $('#phone').val();
+    userNumber = $('#number_code_selected').text() + $('#phone').val();
     document.cookie = "userNumber=" + userNumber;
 
     var sendedData = [];
@@ -867,7 +884,7 @@ function rangeDataSend() {
 
             setTimeout(() => {
                 window.open(response.redirectLink);
-
+                $('.range__popup_subtitle a').attr('href', response.redirectLink)
                 setInterval(() => {
                     checkPaymentStatus()
                 }, 1000);
@@ -931,6 +948,8 @@ function failedPayment() {
 /* CHECK PAYMENT STATUS */
 
 function checkPaymentStatus() {
+
+
     if (paymentStatus == 'pending') {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -962,12 +981,22 @@ function checkPaymentStatus() {
 
 /* CHECK PAYMENT STATUS END */
 
+function dashboardClose() {
+    $('.range__popup').removeClass('feedbackShow');
+    $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+    $('.feedback').attr('style', 'display: none')
+
+    header.addClass('header__fixed')
+    header.removeClass('header__hidden')
+}
+
 /* SUCCESS PAYMENT */
 
 function successPayment() {
     dashboardClose()
-    $('.search').attr('display', 'none');
-    $('.signup').attr('display', 'block');
+    $('.search').attr('style', 'display: none');
+    $('.done__payment').attr('style', 'display:block');
+
 }
 
 /* SUCCESS PAYMENT END */
@@ -976,8 +1005,8 @@ function successPayment() {
 
 function failedPayment() {
     dashboardClose()
-    $('.search').attr('display', 'none');
-    $('.failed__payment').attr('display', 'block');
+    $('.search').attr('style', 'display: none');
+    $('.failed__payment').attr('style', 'display: block');
 }
 
 /* FAILED PAYMENT END */
