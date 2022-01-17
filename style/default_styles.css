@@ -981,22 +981,6 @@ button:disabled {
     .step__item_header {
         width: 360px;
     }
-    .search__map_form {
-        width: 90vw;
-        height: 181px;
-        position: absolute;
-        display: block;
-        left: 5vw;
-        bottom: -120px;
-    }
-    .search__map_form>div {
-        width: 80%;
-        margin: 0 auto;
-        margin-bottom: 25px;
-    }
-    .search__map_button {
-        width: 100%;
-    }
     .map__radius {
         width: 100% !important;
     }
