@@ -853,7 +853,7 @@ $('.chat__left_n_error').click(function() {
 
 /* RANGE DATA SEND */
 var userIp;
-var paymentStatus = 'pending';
+var paymentStatus = '"pending"';
 var userName;
 
 function rangeDataSend() {
@@ -948,9 +948,9 @@ function failedPayment() {
 /* CHECK PAYMENT STATUS */
 
 function checkPaymentStatus() {
+    var paymentStatus;
 
-
-    if (paymentStatus == 'pending') {
+    if (paymentStatus == '"pending"') {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
@@ -966,13 +966,17 @@ function checkPaymentStatus() {
 
         fetch("https://server.kattenradar.nl/test-payment-status", requestOptions)
             .then(response => response.text())
-            .then(result => console.log(result))
+            .then(result => {
+                paymentStatus = result;
+            })
             .catch(error => console.log('error', error));
-    } else if (paymentStatus == 'failed') {
+
+    } else if (paymentStatus == '"failed"') {
         //FAILED PAYMENT
         failedPayment()
-    } else if (paymentStatus == 'expired') {
+    } else if (paymentStatus == '"paid"') {
         //EXPIRED PAYMENT
+        successPayment()
     } else {
         //SUCCESS PAYMENT
         successPayment()
