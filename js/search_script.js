@@ -257,7 +257,6 @@ function step3Active() {
     $('#step-2').removeClass('step_inactive')
     step2.removeClass('step__active')
     step2.addClass('step__green')
-
     step3.addClass('step__active')
 }
 var mapRadius = 1000
@@ -290,6 +289,20 @@ function initMap2() {
     });
 
     var rangePrice;
+    var productTypes = [];
+
+    $.ajax({
+        url: 'https://server.kattenradar.nl/get-product-types',
+        method: 'get',
+        dataType: 'json',
+        async: false,
+        data: productTypes,
+        success: function(data) {
+            productTypes = data
+        }
+    });
+    console.log(productTypes)
+
     /* RANGE DRAGGABLE */
     var trackStep = $('.map__radius_dottrack').width();
 
@@ -302,47 +315,63 @@ function initMap2() {
             var trackPercent = ((x2 * 100) / trackStep).toFixed(0)
             console.log(trackPercent)
             if (trackPercent > (11 * 8.5)) {
+                var radiusKM = 8;
                 $('.range__km').text('8 km')
                 map.setZoom(11)
-                dragData()
+                productTypesArr(radiusKM)
             } else if (trackPercent > (11 * 7)) {
+                var radiusKM = 7;
                 $('.range__km').text('7 km')
                 map.setZoom(11)
-                dragData()
+                productTypesArr(radiusKM)
             } else if (trackPercent > (11 * 6)) {
+                var radiusKM = 6;
                 $('.range__km').text('6 km')
-                dragData()
-            } else if (trackPercent > (11 * 4)) {
+                productTypesArr(radiusKM)
+            } else if (trackPercent > (10 * 5)) {
+                var radiusKM = 5;
                 $('.range__km').text('5 km')
                 map.setZoom(11)
-                dragData()
-            } else if (trackPercent > (11 * 3)) {
+                productTypesArr(radiusKM)
+            } else if (trackPercent > (10 * 4)) {
+                var radiusKM = 4;
                 $('.range__km').text('4 km')
-                dragData()
+                productTypesArr(radiusKM)
             } else if (trackPercent > (11 * 2)) {
+                var radiusKM = 3;
                 $('.range__km').text('3 km')
                 map.setZoom(12)
-                dragData()
-            } else if (trackPercent > (6 * 2)) {
-                $('.range__km').text('2 km')
-                map.setZoom(13)
-                dragData()
-            } else if (trackPercent > (11 * 1)) {
+                productTypesArr(radiusKM)
+            } else if (trackPercent > (5 * 2)) {
+                var radiusKM = 2;
+                $('.range__km').text(radiusKM + ' km')
+                map.setZoom(13.5)
+                productTypesArr(radiusKM)
+            } else if (trackPercent > (10 * 1)) {
+                var radiusKM = 1;
                 $('.range__km').text('1 km')
                 map.setZoom(14)
-                dragData()
+                productTypesArr(radiusKM)
+            } else if (trackPercent < (10 * 1)) {
+                var radiusKM = 1;
+                $('.range__km').text('1 km')
+                map.setZoom(14)
+                productTypesArr(radiusKM)
             }
         }
     });
 
-    function dragData() {
-        mapRadius = $('.range__km').text().replace(' km', '') + '000';
-        productType = $('.range__km').text().replace(' km', '');
-        rangePrice = Number($('.range__km').text().replace(' km', '')) * radiusPrice;
-        $('.range__price').text(rangePrice + ' €')
-        $('.map__price_count span').text(rangePrice)
-        cityCircle.setRadius(Number(mapRadius));
+    function productTypesArr(radiusKM) {
+        $.each(productTypes, function(key, value) {
+            if (value.radius == radiusKM) {
+                $('.range__price').text(value.price + ' €')
+                $('.map__price_count span').text(value.discount)
+                $('.search__map_radius').text(value.impressions)
+                cityCircle.setRadius(Number(radiusKM + '000'));
+            }
+        })
     }
+
     /* RANGE DRAGGABLE END */
 
     $('.map__range_button').click(function() {
@@ -857,6 +886,7 @@ var paymentStatus = '"pending"';
 var userName;
 
 function rangeDataSend() {
+    var productType = $('.range__km').text().replace(' km', '')
     getCookie()
     var catName = cookieArray.catName;
 
@@ -870,7 +900,7 @@ function rangeDataSend() {
         "data": {
             "id": "none",
             "catName": catName,
-            "productType": rangeData.productType
+            "productType": productType
         }
     };
     console.log(settings.data)
@@ -1027,6 +1057,12 @@ $('.signup_dropdown_item').click(function() {
     $('.signup_how_text').text($(this).text())
     $('.signup__dropdown').removeClass('signup__dropdown_show')
     $('.signup__input img').removeClass('signup__image_rotate')
+
+    if ($(this).attr('id') == 'signup__select_others') {
+        $('#signup__others').attr('style', 'display: block')
+    } else {
+        $('#signup__others').attr('style', 'display: none')
+    }
 })
 
 $('#signup_name').keyup(function() {
