@@ -109,8 +109,9 @@ $('.footer_dashboard').click(function() {
     }, 100);
 })
 
-$('.popup_close').click(function() {
+$('.popup_close_dash').click(function() {
     dashboardClose()
+    $('.dashboard__popup').removeClass('feedbackShow');
 })
 $('.feedback__send').click(function() {
     //  dashboardClose()
@@ -120,7 +121,7 @@ $('.feedback').click(function() {
 })
 
 function dashboardClose() {
-    $('.dashboard__popup').removeClass('feedbackShow');
+    $('.dashboard__popup').addClass('feedbackShow1');
     $('.blur__wrapper').attr('style', 'filter: blur(0px)')
     $('.feedback').attr('style', 'display: none')
 

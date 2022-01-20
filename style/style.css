@@ -601,6 +601,7 @@ footer {
     width: 250px;
     text-align: left;
     font-size: 10px;
+    overflow: hidden;
 }
 
 .chat__cat_desc span {
@@ -1130,6 +1131,7 @@ footer {
     align-items: center;
     position: relative;
     left: 67%;
+    height: 150px;
 }
 
 #cat_desc {
@@ -1144,11 +1146,11 @@ footer {
 }
 
 .chat__input_big>.chat__left_text {
-    height: 100px !important;
+    height: 150px !important;
 }
 
 .chat__left_text textarea {
-    height: 65px;
+    height: 125px;
     resize: none;
 }
 
@@ -1157,7 +1159,7 @@ textarea::-webkit-scrollbar {
 }
 
 .chat__input_big>.chat__send_avatar {
-    bottom: -5px;
+    bottom: 20px;
 }
 
 #user_msg_5 {
@@ -1396,7 +1398,7 @@ textarea::-webkit-scrollbar {
 
 .number__code_selected {
     display: flex;
-    width: 70px;
+    width: 80px;
     margin-left: 10px;
     margin-right: 0px;
     border-right: 1px solid #F8A35B;
@@ -1407,7 +1409,7 @@ textarea::-webkit-scrollbar {
 }
 
 #phone {
-    padding-left: 80px;
+    padding-left: 90px;
     color: #F8A35B;
     font-size: 15px;
 }
@@ -1462,7 +1464,7 @@ textarea::-webkit-scrollbar {
 .number__code_item #number__code {
     color: #3F2B4F;
     border-right: 1px solid #F8A35B;
-    width: 40px;
+    width: 50px;
 }
 
 .number__code_item span {
