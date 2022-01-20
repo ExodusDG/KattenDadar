@@ -3,22 +3,6 @@ var productType = 1;
 var rangeData; //step 3 info array;
 var catImgName;
 
-/* SELECT COUNTRY CODE */
-
-$('.number__code_selected').click(function() {
-    $('.number__code_list').toggleClass('number__code_list_active')
-})
-
-$('.number__code_item').click(function() {
-    $('#number_code_selected').text($(this).find('#number__code').text())
-    $('.selected__flag_image').attr('src', $(this).find('img').attr('src'))
-
-    $('.number__code_list').removeClass('number__code_list_active')
-
-})
-
-/* SELECT COUNTRY CODE END */
-
 /* IMAGE SEND TO SERVER */
 
 var imageData;
@@ -47,7 +31,7 @@ function encodeImage(element) {
         fetch("https://server.kattenradar.nl/test-upload-image", requestOptions)
             .then(response => response.text())
             .then(result => {
-                catImgName = $('#send__image_hidden').val().replace('C:\\fakepath', '');
+                catImgName = $('#send__image_hidden').val().replace('C:\\fakepath', '').replace(/\\/, "");
                 console.log(catImgName.replace('C:', ''))
                 $('.chat__user_img_name').text(catImgName)
                 var result = result.replace('"', '').replace('"', '');
@@ -660,10 +644,10 @@ $('.chat__left_b_done').click(function() {
     $('#user_msg_5_1').addClass('user__msg_show');
     $('.chat__left_buttons').attr('style', 'display:none')
     $('.chat__input_big').attr('style', 'display:flex')
+    $('.chat__left_messages').css('bottom', '190px')
     $('#cat_desc').val(`opgesloten in schuren of bij  gebou-wen. Erg mens vriendelijke kat makkelijk. Opgesloten in schuren of bij gebouwen. Erg mens vriendelijke kat makkelijk. Mogelijk opgesloten in schuren of bij  gebou-wen. Erg mens vriendelijke kat makkelijk. Opgesloten in schuren of bij gebouwen. Erg mens vriendelijke kat makkelijk`)
 
 })
-
 $('#desc__back').click(function() {
     $('.chat__input_big').attr('style', 'display: none');
 
@@ -674,7 +658,7 @@ $('#desc__back').click(function() {
 $('.chat__cat_send_1').click(function() {
     catDesc = $('#cat_desc').val();
     document.cookie = "catDesc=" + catDesc;
-
+    $('.chat__left_messages').css('bottom', '120px')
     var sendedData = [];
 
     sendedData = {
@@ -1076,3 +1060,38 @@ $('#signup_name').keyup(function() {
 });
 
 /* SIGNUP INPUT END*/
+
+/* GENERATE COUNTRY MOBILE LIST */
+let numbersArray = [];
+
+$.ajax({
+    url: 'js/numbers.json',
+    method: 'get',
+    dataType: 'json',
+    async: false,
+    data: '1',
+    success: function(data) {
+        numbersArray = data
+    }
+});
+
+$.each(numbersArray, function(key, value) {
+        var imagePath = '<img src="https://flagcdn.com/' + value.code.toLowerCase() + '.svg" alt="Flag">';
+        $('.number__code_list').append(`<div class='number__code_item'>` + imagePath + `<p id="number__code">` + value.dial_code + `</p><span>` + value.name + `</span>`)
+        console.log($(`<div class='number__code_item'>` + imagePath + `<p id="number__code">` + value.dial_code + `</p><span>` + value.name + `</span>`))
+    })
+    /* SELECT COUNTRY CODE */
+
+$('.number__code_selected').click(function() {
+    $('.number__code_list').toggleClass('number__code_list_active')
+})
+
+$('.number__code_item').click(function() {
+    $('#number_code_selected').text($(this).find('#number__code').text())
+    $('.selected__flag_image').attr('src', $(this).find('img').attr('src'))
+
+    $('.number__code_list').removeClass('number__code_list_active')
+
+})
+
+/* SELECT COUNTRY CODE END */
