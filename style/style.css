@@ -1428,20 +1428,57 @@ textarea::-webkit-scrollbar {
     transition: 0.3s;
 }
 
+.number__dropdown {
+    position: absolute;
+    top: 30px;
+    z-index: 9999;
+    display: none;
+    width: 100%;
+}
+
 .number__code_list {
     width: 100%;
     background: white;
-    position: absolute;
+    position: relative;
     z-index: 999;
-    top: 30px;
     padding-left: 10px;
     box-shadow: 0px 10px 35px rgba(90, 90, 90, 0.17);
     border-radius: 5px;
-    display: none;
-    opacity: 0;
+    display: block;
+    opacity: 1;
     transition: 0.3s;
     height: 105px;
     overflow-y: scroll;
+}
+
+#phone__search {
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    font-family: Roboto;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 100%;
+    /* identical to box height, or 14px */
+    color: #F8A35B;
+}
+
+#phone__search::placeholder {
+    color: #C4C4C4;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.number__code_search {
+    top: 0;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    background: white;
+    border-top: 1px solid #f8a45b7e;
+    border-bottom: 1px solid #f8a45b7e;
 }
 
 .number__code_list_active {
