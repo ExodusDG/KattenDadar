@@ -1076,21 +1076,45 @@ $.ajax({
 });
 
 $.each(numbersArray, function(key, value) {
-        var imagePath = '<img src="https://flagcdn.com/' + value.code.toLowerCase() + '.svg" alt="Flag">';
-        $('.number__code_list').append(`<div class='number__code_item'>` + imagePath + `<p id="number__code">` + value.dial_code + `</p><span>` + value.name + `</span>`)
-        console.log($(`<div class='number__code_item'>` + imagePath + `<p id="number__code">` + value.dial_code + `</p><span>` + value.name + `</span>`))
-    })
-    /* SELECT COUNTRY CODE */
+    //    $('.number__code_list').html()
+    var imagePath = '<img src="https://flagcdn.com/' + value.code.toLowerCase() + '.svg" alt="Flag">';
+    $('.number__code_list').append(`<div class='number__code_item' id='` + value.code + `'>` + imagePath + `<p id="number__code">` + value.dial_code + `</p><span>` + value.name + `</span>`)
+})
 
-$('.number__code_selected').click(function() {
-    $('.number__code_list').toggleClass('number__code_list_active')
+$('#phone__search').keyup(function() {
+    var phoneKey = $(this).val();
+    // console.log(phoneKey)
+
+    buildPhoneList(phoneKey)
+});
+
+function buildPhoneList(phoneKey) {
+    var numbersArrayFiltered = [];
+    $.each(numbersArray, function(key, value) {
+        if (value.name.startsWith(phoneKey)) {
+            numbersArrayFiltered.push(this)
+        }
+    })
+    $('.number__code_item').hide();
+    $.each(numbersArrayFiltered, function(key, value) {
+
+        $('#' + value.code).show();
+        console.log('#' + value.code)
+    })
+
+}
+
+/* SELECT COUNTRY CODE */
+
+$('.number__code_selected, #phone').click(function() {
+    $('.number__dropdown').toggleClass('number__code_list_active')
 })
 
 $('.number__code_item').click(function() {
     $('#number_code_selected').text($(this).find('#number__code').text())
     $('.selected__flag_image').attr('src', $(this).find('img').attr('src'))
 
-    $('.number__code_list').removeClass('number__code_list_active')
+    $('.number__dropdown').removeClass('number__code_list_active')
 
 })
 
