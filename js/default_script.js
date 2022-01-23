@@ -117,6 +117,9 @@ $('.feedback__send').click(function() {
     //  dashboardClose()
 })
 $('.feedback').click(function() {
+    $('.dashboard__popup').removeClass('feedbackShow');
+    $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+    $('.feedback').attr('style', 'display: none')
     dashboardClose()
 })
 

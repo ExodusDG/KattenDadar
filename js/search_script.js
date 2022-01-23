@@ -2,12 +2,13 @@ var radiusPrice = 29;
 var productType = 1;
 var rangeData; //step 3 info array;
 var catImgName;
-
+var isNumberEntered;
 /* IMAGE SEND TO SERVER */
 
 var imageData;
 
 $(".chat_file_upload").click(function() {
+    $('#send__image_hidden').prop('value', null);
     $("input[type='file'").trigger('click');
 });
 
@@ -88,7 +89,7 @@ if (typeof cookieArray.steps != 'undefined') {
     stepContainer.attr('style', 'transform: translateX(-' + calculatedTranslate + 'px)')
     $('.chat__left_input').attr('style', 'display: none')
     $('.search__chat > h1 > span').text(cookieArray.adress)
-    $('.chat__last_loc > span').text(cookieArray.adress)
+    $('.chat__last_loc > span').text(cookieArray.adress + ' in ' + cookieArray.catAdressCity)
     $('#step-1 > .search__step_circle').addClass('step__green')
     $('#step-2 > .search__step_circle').addClass('step__active')
 
@@ -130,7 +131,7 @@ function chatHistoryBuild() {
             $('.chat__catname > span').text(cookieArray.catName)
             $('.chat__see_cat span').text(cookieArray.catName)
             $('.chat__cat_desc > span').text(cookieArray.adress)
-            $('.chat__last_loc > span').text(cookieArray.adress)
+            $('.chat__last_loc > span').text(cookieArray.adress + ' in ' + cookieArray.catAdressCity)
             $('.chat__cat_desc').html('<span>kattenradar </span>' + cookieArray.catDesc)
             if (typeof cookieArray.catImage != 'undefined') {
                 $('#user_msg_3').attr('style', 'display: none').removeClass('user__msg_show')
@@ -150,6 +151,7 @@ function chatHistoryBuild() {
                         $('.user_number_chat').attr('style', 'display: flex').addClass('user__msg_show');
                         $('#bot_msg_9').find('p > span').text(cookieArray.userNumber)
                         $('#bot_msg_10').addClass('user__msg_show')
+                        $('.chat__left_final').attr('style', 'display: flex')
                     } else {
                         $('.chat__left_buttons_email').attr('style', 'display: flex')
                         $('#bot_msg_7').find('span').text(cookieArray.catName)
@@ -169,37 +171,73 @@ function chatHistoryBuild() {
 }
 
 
+$('#step-1').click(function() {
+    $('#map').addClass('map__blured');
+    $('.search__map_button').attr('style', 'border-top-right-radius: 10px')
+    $('.search__map_form').removeClass('form_in_top')
+    $('.search__map_button').text('Hier zoeken ')
+    $('.search__map_button').attr('id', 'map__button_top')
+})
+
 /* SEARCH */
 $('#map__button_top').click(function() {
     if ($('.search__map_form').hasClass('form_in_top')) {
-        $('.search__steps').attr('style', 'background-image: url(./img/step__line_2.svg)')
-        $('#step-1').find('.search__step_circle').addClass('step__done')
 
-        $('#step-2').removeClass('step_inactive')
+        if (typeof cookieArray.adress != 'undefined') {
+            $('.search__steps').attr('style', 'background-image: url(./img/step__line_2.svg)')
+            $('#step-1').find('.search__step_circle').addClass('step__done')
 
-        $('.search__steps_container').attr('style', 'transform: translateX(-1110px)')
+            $('#step-2').removeClass('step_inactive')
 
-        $('.chat__last_loc > span').text(catAdress)
-        document.cookie = "steps=2";
-        document.cookie = "adress=" + catAdress;
+            $('.search__steps_container').attr('style', 'transform: translateX(-1110px)')
 
-        $('#bot_msg_1').attr('style', 'display: flex');
-        $('#bot_msg_1').addClass('chat__msg_bot');
-        $('.chat__left_input').attr('style', 'display:flex');
+            $('.chat__last_loc > span').text(catAdress + ' in ' + catAdressCity)
+            document.cookie = "steps=2";
+            document.cookie = "adress=" + catAdress;
+            document.cookie = "catAdressCity=" + catAdressCity;
 
-        var sendedData = [];
+            var sendedData = [];
 
-        sendedData = {
-            'chatFlow': 'a',
-            'lat': adressLat,
-            'lng': adressLng,
-            'street': catAdress,
-            'city': city,
-        };
-        sendData(sendedData)
+            sendedData = {
+                'chatFlow': 'a',
+                'lat': adressLat,
+                'lng': adressLng,
+                'street': catAdress,
+                'city': city,
+            };
+            sendData(sendedData)
+            document.cookie = "lat=" + adressLat;
+            document.cookie = "lng=" + adressLng;
+        } else {
+            $('.search__steps').attr('style', 'background-image: url(./img/step__line_2.svg)')
+            $('#step-1').find('.search__step_circle').addClass('step__done')
 
-        document.cookie = "lat=" + adressLat;
-        document.cookie = "lng=" + adressLng;
+            $('#step-2').removeClass('step_inactive')
+
+            $('.search__steps_container').attr('style', 'transform: translateX(-1110px)')
+
+            $('.chat__last_loc > span').text(catAdress + ' in ' + catAdressCity)
+            document.cookie = "steps=2";
+            document.cookie = "adress=" + catAdress;
+            document.cookie = "catAdressCity=" + catAdressCity;
+
+            $('#bot_msg_1').attr('style', 'display: flex');
+            $('#bot_msg_1').addClass('chat__msg_bot');
+            $('.chat__left_input').attr('style', 'display:flex');
+
+            var sendedData = [];
+            sendedData = {
+                'chatFlow': 'a',
+                'lat': adressLat,
+                'lng': adressLng,
+                'street': catAdress,
+                'city': city,
+            };
+            sendData(sendedData)
+
+            document.cookie = "lat=" + adressLat;
+            document.cookie = "lng=" + adressLng;
+        }
     }
 })
 
@@ -224,6 +262,7 @@ var userEmail;
 
 /* MAP - INFO SEND */
 var catAdress;
+var catAdressCity;
 var adressLat;
 var adressLng;
 var city;
@@ -267,6 +306,7 @@ function initMap2() {
         strokeWeight: 2,
         fillColor: "#F8A35B",
         fillOpacity: 0.3,
+        clickable: false,
         map,
         center: { lat: Number(cookieArray.lat), lng: Number(cookieArray.lng) },
         radius: mapRadius,
@@ -376,7 +416,7 @@ function initMap() {
     ];
 
     map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 17,
+        zoom: 18,
         center: { lat: 37.4221, lng: -122.0841 },
         mapTypeControl: false,
         mapTypeId: "terrain",
@@ -419,6 +459,8 @@ function initMap() {
         marker.setVisible(false);
         const place = autocomplete.getPlace();
         catAdress = place.name;
+        catAdressCity = place.address_components[2].long_name;
+        console.log(catAdressCity)
         if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
             // pressed the Enter key, or the Place Details request failed.
@@ -433,7 +475,7 @@ function initMap() {
             [
                 place.name, {
                     center: place.geometry.location,
-                    population: 2,
+                    population: 1,
                 }
             ]
         )
@@ -442,7 +484,7 @@ function initMap() {
         });
         if (radiusOnMap == true) {
             cityCircle.setMap(null);
-            radiusOnMap = true;
+            radiusOnMap = false;
         } else {
             const cityCircle = new google.maps.Circle({
                 strokeColor: "#F8A35B",
@@ -450,15 +492,14 @@ function initMap() {
                 strokeWeight: 2,
                 fillColor: "#F8A35B",
                 fillOpacity: 0.3,
+                clickable: false,
                 map,
                 center: markersArray[0][1].center,
                 radius: Math.sqrt(markersArray[0][1].population) * 100,
             });
+            console.log(markersArray[0][1].population)
             radiusOnMap = true;
-            console.log(radiusOnMap)
         }
-
-
 
         catAdress = catAdress;
         adressLat = place.geometry.location.lat();
@@ -695,6 +736,7 @@ $('#email__back').click(function() {
 
     $('#user_msg_3').attr('style', 'display: flex')
     $('#user_msg_3').addClass('user__msg_show')
+
 })
 
 $('.email__cat_send').click(function() {
@@ -762,6 +804,12 @@ $('.chat__left_n_error').click(function() {
 })
 
 $('#mob__back').click(function() {
+    isNumberEntered = false;
+
+
+    $('.chat__left_input_email').attr('style', 'display: flex')
+    $('.chat__left_buttons_phone').attr('style', 'display: none')
+    $('#bot_msg_9').attr('style', 'display: none')
     $('#user_msg_9').attr('style', 'display: none')
     $('#bot_msg_8').attr('style', 'display: none')
     $('#user_msg_8').attr('style', 'display: none')
@@ -769,7 +817,6 @@ $('#mob__back').click(function() {
     $('#user_msg_7').attr('style', 'display: none')
     $('#bot_msg_5').attr('style', 'display: none')
     $('#user_msg_6').attr('style', 'display: none')
-    $('.chat__left_input_email').attr('style', 'display: flex')
 })
 
 $('.chat__left_n_done').click(function() {
@@ -788,6 +835,8 @@ $('.chat__left_n_done').click(function() {
 var userNumber;
 
 $('#number__send').click(function() {
+    isNumberEntered = true;
+    $('.number__dropdown').removeClass('number__code_list_active')
     phoneSend()
 })
 
@@ -1093,6 +1142,8 @@ function buildPhoneList(phoneKey) {
     $.each(numbersArray, function(key, value) {
         if (value.name.startsWith(phoneKey)) {
             numbersArrayFiltered.push(this)
+        } else if ((value.name).toLowerCase().startsWith(phoneKey)) {
+            numbersArrayFiltered.push(this)
         }
     })
     $('.number__code_item').hide();
@@ -1101,13 +1152,15 @@ function buildPhoneList(phoneKey) {
         $('#' + value.code).show();
         console.log('#' + value.code)
     })
-
 }
 
 /* SELECT COUNTRY CODE */
-
 $('.number__code_selected, #phone').click(function() {
-    $('.number__dropdown').toggleClass('number__code_list_active')
+    if (isNumberEntered == true) {
+        return false
+    } else {
+        $('.number__dropdown').toggleClass('number__code_list_active')
+    }
 })
 
 $('.number__code_item').click(function() {
