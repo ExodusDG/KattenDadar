@@ -1064,6 +1064,8 @@ footer {
     width: 620px;
     display: flex;
     justify-content: space-between;
+    position: relative;
+    top: 15px;
 }
 
 .chat__left_buttons_phone {
@@ -1265,6 +1267,22 @@ textarea::-webkit-scrollbar {
     margin-top: 40px;
 }
 
+.unselectable {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Chrome/Safari/Opera */
+    -khtml-user-select: none;
+    /* Konqueror */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                    not supported by any browser */
+}
+
 
 /* RANGE */
 
@@ -1283,6 +1301,7 @@ textarea::-webkit-scrollbar {
 
 #range_map {
     height: 660px;
+    border-radius: 10px;
 }
 
 .map__price_count {

@@ -3,6 +3,7 @@ var productType = 1;
 var rangeData; //step 3 info array;
 var catImgName;
 var isNumberEntered;
+document.cookie = "radius=" + Number(1000);
 /* IMAGE SEND TO SERVER */
 
 var imageData;
@@ -208,6 +209,8 @@ $('#map__button_top').click(function() {
             sendData(sendedData)
             document.cookie = "lat=" + adressLat;
             document.cookie = "lng=" + adressLng;
+
+            $('.search__chat > h1 > span').text(catAdress)
         } else {
             $('.search__steps').attr('style', 'background-image: url(./img/step__line_2.svg)')
             $('#step-1').find('.search__step_circle').addClass('step__done')
@@ -237,9 +240,12 @@ $('#map__button_top').click(function() {
 
             document.cookie = "lat=" + adressLat;
             document.cookie = "lng=" + adressLng;
+
+            $('.search__chat > h1 > span').text(catAdress)
         }
     }
 })
+
 
 $('.search__step').hover(
     function() {
@@ -287,8 +293,22 @@ var mapRadius = 1000
 function initMap2() {
     getCookie()
 
+    var zoomNumber = 14;
+
+    if (Number(cookieArray.radius) == 1000) {
+        zoomNumber = 14;
+    } else if (Number(cookieArray.radius) == 2000) {
+        zoomNumber = 13;
+    } else if (Number(cookieArray.radius) == 4000) {
+        zoomNumber = 12;
+    } else if (Number(cookieArray.radius) == 6000) {
+        zoomNumber = 11;
+    } else if (Number(cookieArray.radius) == 8000) {
+        zoomNumber = 10;
+    }
+
     map = new google.maps.Map(document.getElementById("range_map"), {
-        zoom: 14,
+        zoom: Number(zoomNumber),
         center: { lat: Number(cookieArray.lat), lng: Number(cookieArray.lng) },
         mapTypeControl: false,
         mapTypeId: "terrain",
@@ -309,7 +329,7 @@ function initMap2() {
         clickable: false,
         map,
         center: { lat: Number(cookieArray.lat), lng: Number(cookieArray.lng) },
-        radius: mapRadius,
+        radius: Number(cookieArray.radius),
     });
 
     var rangePrice;
@@ -382,8 +402,13 @@ function initMap2() {
                 map.setZoom(14)
                 productTypesArr(radiusKM)
             }
+            getCookie()
+                //    console.log(cookieArray.radius)
         }
     });
+    $('#step-3').click(function() {
+        cityCircle.setRadius(Number(cookieArray.radius));
+    })
 
     function productTypesArr(radiusKM) {
         $.each(productTypes, function(key, value) {
@@ -392,6 +417,7 @@ function initMap2() {
                 $('.map__price_count span').text(value.discount)
                 $('.search__map_radius').text(value.impressions)
                 cityCircle.setRadius(Number(radiusKM + '000'));
+                document.cookie = "radius=" + Number(radiusKM + '000');
             }
         })
     }
@@ -427,7 +453,7 @@ function initMap() {
         streetViewControl: false
     });
 
-    $('.chat__left_final_orange').click(function() {
+    $('.chat__left_final_orange, #step-3').click(function() {
         document.cookie = "steps=3";
         console.log(document.cookie)
         initMap2();
@@ -458,9 +484,9 @@ function initMap() {
     function adressSelect() {
         marker.setVisible(false);
         const place = autocomplete.getPlace();
-        catAdress = place.name;
-        catAdressCity = place.address_components[2].long_name;
-        console.log(catAdressCity)
+        catAdress = place.address_components[0].long_name;
+        catAdressCity = place.address_components[1].long_name;
+        console.log(place.address_components)
         if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
             // pressed the Enter key, or the Place Details request failed.
@@ -805,7 +831,7 @@ $('.chat__left_n_error').click(function() {
 
 $('#mob__back').click(function() {
     isNumberEntered = false;
-
+    $('#phone').attr('readonly', false)
 
     $('.chat__left_input_email').attr('style', 'display: flex')
     $('.chat__left_buttons_phone').attr('style', 'display: none')
@@ -838,10 +864,12 @@ $('#number__send').click(function() {
     isNumberEntered = true;
     $('.number__dropdown').removeClass('number__code_list_active')
     phoneSend()
+
 })
 
 function phoneSend() {
     userNumber = $('#number_code_selected').text() + $('#phone').val();
+    $('#phone').attr('readonly', true)
     document.cookie = "userNumber=" + userNumber;
 
     var sendedData = [];
@@ -1172,3 +1200,14 @@ $('.number__code_item').click(function() {
 })
 
 /* SELECT COUNTRY CODE END */
+
+$('#all__back').click(function() {
+    $('.chat__left_final').attr('style', 'display: none')
+    $('#bot_msg_10').attr('style', 'display: none')
+    $('#user_msg_10').attr('style', 'display: none')
+    $('#bot_msg_9').attr('style', 'display: none')
+    $('#bot_msg_8').addClass('user__msg_show')
+    $('#user_msg_9').addClass('user__msg_show')
+    $('#bot_msg_8').attr('style', 'display: flex')
+    $('#user_msg_9').attr('style', 'display: flex')
+})
