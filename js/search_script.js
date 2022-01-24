@@ -895,6 +895,8 @@ function phoneSend() {
 $('#phone').keypress(function(e) {
     if (e.which == 13) {
         phoneSend()
+        isNumberEntered = true;
+        $('.number__dropdown').removeClass('number__code_list_active')
         return false; //prevent duplicate submission
     }
 });
