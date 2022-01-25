@@ -4,6 +4,8 @@ var rangeData; //step 3 info array;
 var catImgName;
 var isNumberEntered;
 document.cookie = "radius=" + Number(1000);
+var userLat;
+var userLng;
 /* IMAGE SEND TO SERVER */
 
 var imageData;
@@ -45,8 +47,6 @@ function encodeImage(element) {
                 afterImageSend()
                 document.cookie = "catImgName=" + catImgName;
                 document.cookie = "catImage=" + result;
-
-
 
                 var sendedData = [];
 
@@ -287,6 +287,7 @@ function step3Active() {
     step2.removeClass('step__active')
     step2.addClass('step__green')
     step3.addClass('step__active')
+    $('.search__steps_container').attr('style', 'transform: translateX(-2220px)')
 }
 var mapRadius = 1000
 
@@ -318,7 +319,6 @@ function initMap2() {
         scrollwheel: false,
         streetViewControl: false
     });
-    $('.search__steps_container').attr('style', 'transform: translateX(-2220px)')
 
     const cityCircle = new google.maps.Circle({
         strokeColor: "#F8A35B",
@@ -441,9 +441,12 @@ function initMap() {
         'postal_code',
     ];
 
+
+    var myLatLng = new google.maps.LatLng(38.8977, -77.0365);
+
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 18,
-        center: { lat: 37.4221, lng: -122.0841 },
+        center: myLatLng,
         mapTypeControl: false,
         mapTypeId: "terrain",
         fullscreenControl: false,
@@ -453,27 +456,41 @@ function initMap() {
         streetViewControl: false
     });
 
+    navigator.geolocation.getCurrentPosition(function(position) {
+        userLat = position.coords.latitude;
+        userLng = position.coords.longitude;
+        console.log(userLat)
+        map.setCenter(new google.maps.LatLng(userLat, userLng));
+    });
+
     $('.chat__left_final_orange, #step-3').click(function() {
-        document.cookie = "steps=3";
+        //    document.cookie = "steps=3";
         console.log(document.cookie)
         initMap2();
+    })
+    $('.chat__left_final_orange').click(function() {
+        document.cookie = "steps=3";
     })
     if (cookieArray.steps == '3') {
         step3Active()
         initMap2()
     }
 
+    var userCountry;
+
     image = 'img/icons/marker.svg'
     const marker = new google.maps.Marker({ map: map, draggable: false, icon: image });
     const autocompleteInput = document.getElementById('location');
     const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
         fields: ["address_components", "geometry", "name"],
-        types: ["address"],
+        types: ["address"]
 
+    });
+    map.addListener('bounds_changed', function() {
+        autocomplete.setBounds(map.getBounds());
     });
 
     var radiusOnMap;
-
     $('#location').keypress(function(e) {
         if (e.which == 13) {
             adressSelect()
