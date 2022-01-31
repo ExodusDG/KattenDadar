@@ -52,7 +52,8 @@ function encodeImage(element) {
 
                 sendedData = {
                     'chatFlow': 'f',
-                    'img': result
+                    'img': result,
+                    'id': cookieArray.id
                 };
                 sendData(sendedData)
             })
@@ -199,13 +200,25 @@ $('#map__button_top').click(function() {
 
             var sendedData = [];
 
-            sendedData = {
-                'chatFlow': 'a',
-                'lat': adressLat,
-                'lng': adressLng,
-                'street': catAdress,
-                'city': city,
-            };
+            if (cookieArray.id == 'undefined') {
+                sendedData = {
+                    'chatFlow': 'a',
+                    'lat': adressLat,
+                    'lng': adressLng,
+                    'street': catAdress,
+                    'city': city,
+                };
+            } else {
+                sendedData = {
+                    'chatFlow': 'a',
+                    'lat': adressLat,
+                    'lng': adressLng,
+                    'street': catAdress,
+                    'city': city,
+                    'id': cookieArray.id
+                };
+            }
+
             sendData(sendedData)
             document.cookie = "lat=" + adressLat;
             document.cookie = "lng=" + adressLng;
@@ -235,6 +248,7 @@ $('#map__button_top').click(function() {
                 'lng': adressLng,
                 'street': catAdress,
                 'city': city,
+                'id': cookieArray.id
             };
             sendData(sendedData)
 
@@ -672,7 +686,8 @@ function catNameSend() {
 
     sendedData = {
         'chatFlow': 'b',
-        'catName': catName
+        'catName': catName,
+        'id': cookieArray.id
     };
     sendData(sendedData)
 
@@ -747,7 +762,8 @@ $('.chat__cat_send_1').click(function() {
 
     sendedData = {
         'chatFlow': 'c',
-        'postMsg': catDesc
+        'postMsg': catDesc,
+        'id': cookieArray.id
     };
     sendData(sendedData)
 
@@ -794,7 +810,8 @@ function emailSend() {
 
     sendedData = {
         'chatFlow': 'd',
-        'email': userEmail
+        'email': userEmail,
+        'id': cookieArray.id
     };
     sendData(sendedData)
 
@@ -893,7 +910,8 @@ function phoneSend() {
 
     sendedData = {
         'chatFlow': 'e',
-        'phoneNr': userNumber
+        'phoneNr': userNumber,
+        'id': cookieArray.id
     };
     sendData(sendedData)
 
