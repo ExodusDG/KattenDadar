@@ -24,6 +24,8 @@ function encodeImage(element) {
 
         var urlencoded = new URLSearchParams();
         urlencoded.append("img", reader.result);
+        urlencoded.append("chatFlow", "f");
+        urlencoded.append("id", cookieArray.id);
 
         var requestOptions = {
             method: 'POST',
@@ -55,6 +57,7 @@ function encodeImage(element) {
                     'img': result,
                     'id': cookieArray.id
                 };
+                
                 sendData(sendedData)
             })
             .catch(error => console.log('error', error));
