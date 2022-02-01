@@ -21,11 +21,12 @@ function encodeImage(element) {
     reader.onloadend = function() {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
+        getCookie()
         var urlencoded = new URLSearchParams();
+        console.log(cookieArray)
         urlencoded.append("img", reader.result);
         urlencoded.append("chatFlow", "f");
-        urlencoded.append("id", cookieArray.id);
+        urlencoded.append("id", userID);
 
         var requestOptions = {
             method: 'POST',
@@ -49,15 +50,15 @@ function encodeImage(element) {
                 afterImageSend()
                 document.cookie = "catImgName=" + catImgName;
                 document.cookie = "catImage=" + result;
-
+                getCookie()
                 var sendedData = [];
 
                 sendedData = {
                     'chatFlow': 'f',
                     'img': result,
-                    'id': cookieArray.id
+                    'id': userID
                 };
-                
+
                 sendData(sendedData)
             })
             .catch(error => console.log('error', error));
@@ -200,7 +201,7 @@ $('#map__button_top').click(function() {
             document.cookie = "steps=2";
             document.cookie = "adress=" + catAdress;
             document.cookie = "catAdressCity=" + catAdressCity;
-
+            getCookie()
             var sendedData = [];
 
             if (cookieArray.id == 'undefined') {
@@ -243,7 +244,7 @@ $('#map__button_top').click(function() {
             $('#bot_msg_1').attr('style', 'display: flex');
             $('#bot_msg_1').addClass('chat__msg_bot');
             $('.chat__left_input').attr('style', 'display:flex');
-
+            getCookie()
             var sendedData = [];
             sendedData = {
                 'chatFlow': 'a',
@@ -619,6 +620,7 @@ function initMap() {
 /* SEND DATA TO SERVER */
 
 function sendData(arr) {
+
     var settings = {
         "url": "https://server.kattenradar.nl/test-su-data",
         "method": "POST",
@@ -632,6 +634,7 @@ function sendData(arr) {
 
     $.ajax(settings).done(function(response) {
         console.log(response);
+        document.cookie = "id=" + response.id;
     });
 }
 
@@ -681,16 +684,22 @@ $('.chat__cat_send').click(function() {
     }, 0);
 })
 
+var userID;
+
 function catNameSend() {
     catName = $('#cat_name').val()
     document.cookie = "catName=" + catName;
 
+
+    getCookie()
+    userID = cookieArray.id
+        // console.log(cookieArray)
     var sendedData = [];
 
     sendedData = {
         'chatFlow': 'b',
         'catName': catName,
-        'id': cookieArray.id
+        'id': userID
     };
     sendData(sendedData)
 
@@ -761,12 +770,13 @@ $('.chat__cat_send_1').click(function() {
     catDesc = $('#cat_desc').val();
     document.cookie = "catDesc=" + catDesc;
     $('.chat__left_messages').css('bottom', '120px')
+    getCookie()
     var sendedData = [];
 
     sendedData = {
         'chatFlow': 'c',
         'postMsg': catDesc,
-        'id': cookieArray.id
+        'id': userID
     };
     sendData(sendedData)
 
@@ -808,13 +818,13 @@ $('.email__cat_send').click(function() {
 function emailSend() {
     userEmail = $('#email').val();
     document.cookie = "userEmail=" + userEmail;
-
+    getCookie()
     var sendedData = [];
 
     sendedData = {
         'chatFlow': 'd',
         'email': userEmail,
-        'id': cookieArray.id
+        'id': userID
     };
     sendData(sendedData)
 
@@ -908,13 +918,13 @@ function phoneSend() {
     userNumber = $('#number_code_selected').text() + $('#phone').val();
     $('#phone').attr('readonly', true)
     document.cookie = "userNumber=" + userNumber;
-
+    getCookie()
     var sendedData = [];
 
     sendedData = {
         'chatFlow': 'e',
         'phoneNr': userNumber,
-        'id': cookieArray.id
+        'id': userID
     };
     sendData(sendedData)
 
