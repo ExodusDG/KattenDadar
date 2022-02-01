@@ -50,16 +50,6 @@ function encodeImage(element) {
                 afterImageSend()
                 document.cookie = "catImgName=" + catImgName;
                 document.cookie = "catImage=" + result;
-                getCookie()
-                var sendedData = [];
-
-                sendedData = {
-                    'chatFlow': 'f',
-                    'img': result,
-                    'id': userID
-                };
-
-                sendData(sendedData)
             })
             .catch(error => console.log('error', error));
     }
@@ -1009,7 +999,7 @@ function rangeDataSend() {
             "Content-Type": "application/x-www-form-urlencoded"
         },
         "data": {
-            "id": "none",
+            "id": userID,
             "catName": catName,
             "productType": productType
         }
