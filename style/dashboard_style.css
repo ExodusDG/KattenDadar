@@ -82,7 +82,7 @@
 
 .dash__controls_step {
     margin-top: 40px;
-    background: url('/img/dashboard/icons/step_line.svg');
+    background: url('../img/dashboard/icons/step_line.svg');
     height: 260px;
     background-repeat: no-repeat;
     width: 100%;
