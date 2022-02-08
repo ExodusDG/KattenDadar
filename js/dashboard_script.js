@@ -1,3 +1,19 @@
+/* COOKIE DATA  */
+var cookieArray;
+getCookie()
+
+function getCookie() {
+    var str = document.cookie;
+
+    cookieArray = str.split(/[;] */).reduce(function(result, pairStr) {
+        var arr = pairStr.split('=');
+        if (arr.length === 2) { result[arr[0]] = arr[1]; }
+        return result;
+    }, {});
+}
+
+var userID = cookieArray.id
+
 /* GET DASHBOARD DATA */
 
 var dashData = {};
@@ -31,13 +47,18 @@ function generateHTML(arr) {
     tipsGenerate(tipsArray)
     searchAreas(searchArray)
     statsGenerate(statsArray)
-        //console.log(arr)
+    console.log(arr)
 
     $('.dash__title span').text(arr.userName)
     $('#facebook_ad').attr('href', arr.fbPost)
     $('#instagram_ad').attr('href', arr.instaPost)
 
-
+    if (arr.searchStatus == 2) {
+        $('#dash_step_2').removeClass('step__incative')
+    } else if (arr.searchStatus == 3) {
+        $('#dash_step_2').removeClass('step__incative')
+        $('#dash_step_3').removeClass('step__incative')
+    }
 }
 
 function searchAreas(arr) {
@@ -92,8 +113,6 @@ function tipsGenerate(arr) {
 
 
 function statsGenerate(arr) {
-    console.log(arr)
-
     //VIEWS
     const ctxViews = document.getElementById('viewsChart').getContext('2d');
     const chartViews = new Chart(ctxViews, {
@@ -397,21 +416,25 @@ $('.review_star').click(function() {
     if (clickedStar == 1) {
         $('.review_star').find('path').attr('fill-opacity', '0.1')
         $('#star_1').find('path').attr('fill-opacity', '1')
+        leaveFeedback()
     } else if (clickedStar == 2) {
         $('.review_star').find('path').attr('fill-opacity', '0.1')
         $('#star_1').find('path').attr('fill-opacity', '1')
         $('#star_2').find('path').attr('fill-opacity', '1')
+        leaveFeedback()
     } else if (clickedStar == 3) {
         $('.review_star').find('path').attr('fill-opacity', '0.1')
         $('#star_1').find('path').attr('fill-opacity', '1')
         $('#star_2').find('path').attr('fill-opacity', '1')
         $('#star_3').find('path').attr('fill-opacity', '1')
+        leaveFeedback()
     } else if (clickedStar == 4) {
         $('.review_star').find('path').attr('fill-opacity', '0.1')
         $('#star_1').find('path').attr('fill-opacity', '1')
         $('#star_2').find('path').attr('fill-opacity', '1')
         $('#star_3').find('path').attr('fill-opacity', '1')
         $('#star_4').find('path').attr('fill-opacity', '1')
+        leaveFeedback()
     } else if (clickedStar == 5) {
         $('.review_star').find('path').attr('fill-opacity', '0.1')
         $('#star_1').find('path').attr('fill-opacity', '1')
@@ -419,6 +442,7 @@ $('.review_star').click(function() {
         $('#star_3').find('path').attr('fill-opacity', '1')
         $('#star_4').find('path').attr('fill-opacity', '1')
         $('#star_5').find('path').attr('fill-opacity', '1')
+        reviewStep();
     }
 
 })
@@ -427,3 +451,63 @@ $('.catfound_orange').click(function() {
     $('.catfound__block').attr('style', 'display: none')
     $('.feedback__stars').attr('style', 'display: block')
 })
+
+function reviewStep() {
+    $('.catfound').addClass('catfound__big')
+    $('.catfound__block').attr('style', 'display: none')
+    $('.feedback__stars').attr('style', 'display: none')
+    $('.feedback_review').attr('style', 'display: block')
+    $('.feedback_reviews').attr('style', 'display: none')
+}
+
+function leaveFeedback() {
+    $('.catfound').addClass('catfound__big')
+    $('.catfound__block').attr('style', 'display: none')
+    $('.feedback__stars').attr('style', 'display: none')
+
+    $('.feedback_reviews').attr('style', 'display: block')
+}
+
+$('.feedback__send').click(function() {
+    reviewStep()
+})
+
+
+/* EDIT DATA  */
+
+var imageData;
+
+$(".data__edit_photo img").click(function() {
+    $('#send__image_hidden').prop('value', null);
+    $("input[type='file'").trigger('click');
+});
+
+function encodeImage(element) {
+    var file = element.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function() {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+        var urlencoded = new URLSearchParams();
+        urlencoded.append("img", reader.result);
+        urlencoded.append("id", userID);
+        //urlencoded.append("text", $('#desc__change').val());
+
+        console.log($('#desc__change').val())
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
+        };
+
+        fetch("https://server.kattenradar.nl/test-edit-search", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                console.log(result)
+            })
+            .catch(error => console.log('error', error));
+    }
+    reader.readAsDataURL(file);
+}
