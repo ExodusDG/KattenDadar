@@ -540,3 +540,117 @@ $('#dash__edit_button').click(function() {
     header.addClass('header__hidden')
     $('.blur__wrapper').attr('style', 'filter: blur(10px)')
 })
+
+/* LEAFLET MAP */
+
+var secondMap = L.map('tip__mapbox', {
+    zoomControl: false,
+    gestureHandling: true
+}).setView([52.1231241, 5.2773372], 8);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FuaXN0cmF5IiwiYSI6ImNreGVueTljbTEzdTAybm1tYXRzaHBnaTYifQ.Ux9ySMRvhgcwFd7_gPXCWg', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1Ijoic2FuaXN0cmF5IiwiYSI6ImNreGVueTljbTEzdTAybm1tYXRzaHBnaTYifQ.Ux9ySMRvhgcwFd7_gPXCWg',
+}).addTo(secondMap);
+
+var mapMarker = L.icon({
+    iconUrl: 'img/dashboard/icons/dash_edit_marker.svg',
+    iconSize: [35, 46],
+    iconAnchor: [17, 46],
+    popupAnchor: [-3, -45] // point from which the popup should open relative to the iconAnchor
+});
+
+var markersList = [];
+
+
+
+$.each(markersList, (key, value) => {
+    var markerNotFoundRed = L.marker([Number(markersList[key].lat), Number(markersList[key].lng)], { icon: mapMarker }).addTo(secondMap);
+})
+var tipAray = [];
+
+function tipsGenerate(arr) {
+    $.each(arr, function(key, value) {
+        var avatarName;
+        var tipName;
+        tipAray = arr;
+        if (value.platform == 'FB') {
+            avatarName = 'FacebookTip'
+            tipName = 'Facebook Tip'
+        } else if (value.platform == 'IG') {
+            avatarName = 'InstaTip'
+            tipName = 'Instagram Tip'
+        } else {
+            avatarName = 'KattenTip'
+            tipName = 'KattenRadar Tip'
+        }
+
+        $('.tips__list').append(`<div class="tips__items" id=tip_` + key + `>
+        <img src="img/dashboard/icons/` + avatarName + `.svg" alt="Tip">
+        <div class="tips__title">
+        <h1>` + tipName + `</h1>
+        <p>` + value.date + `</p>
+        </div>
+        <div class="tips__item">
+        <img src="img/dashboard/icons/Bubble.svg" alt="Bubble">
+        <div class="tips__text">
+                                        <p>` + value.content + `</p>
+        </div>
+        </div>
+        </div>`)
+    })
+    $('.tips__list > div').click(function() {
+
+        var clikedTip = Number($(this).attr('id').replace('tip_', ''))
+        var thisTip = tipAray[clikedTip]
+        console.log(thisTip)
+        $('.tip__desc').text(thisTip.content)
+
+        if (typeof thisTip.location != 'undefined') {
+            $('.tips__loc').attr('style', 'display: block')
+            $('.tip__data_adress p').text(thisTip.location.name)
+        } else {
+            $('.tips__loc').attr('style', 'display: none')
+        }
+
+        var date = thisTip.date;
+        console.log(date)
+        var dateYear = date.substr(0, 4)
+        date = date.replace(dateYear + '-', '')
+        var dateMonth = date.substr(0, 2)
+        date = date.replace(dateMonth + '-', '')
+        var dateDay = date.substr(0, 2)
+        date = date.replace(dateDay, '')
+        console.log(date)
+        var timeDay = date.substr(1, 5)
+
+        $('#tip_day').text(dateDay)
+        $('#tip_month').text(dateMonth)
+        $('#tip_year').text(dateYear)
+        $('#tip_time').text(timeDay)
+
+        if (typeof thisTip.contactDetails != 'undefined') {
+            $('.tip_contact').attr('style', 'display: flex')
+            $('.tip_contact p').text(thisTip.contactDetails)
+        } else {
+            $('.tip_contact').attr('style', 'display: none')
+        }
+
+        setTimeout(() => {
+            $('.tips__info').addClass('feedbackShow')
+        }, 100);
+
+        header.addClass('header__fixed')
+        header.removeClass('header__hidden')
+        $('.blur__wrapper').attr('style', 'filter: blur(10px)')
+    })
+    $('.popup_close_tips').click(function() {
+        $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+        $('.tips__info').removeClass('feedbackShow')
+
+    })
+}

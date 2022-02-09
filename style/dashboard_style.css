@@ -1370,6 +1370,26 @@
     z-index: 9999;
 }
 
+.tips__info {
+    padding: 30px;
+    width: 1140px;
+    height: 80vh;
+    position: fixed;
+    left: calc((100vw - 1140px)/2);
+    top: 15vh;
+    bottom: 0;
+    background: #FFFFFF;
+    box-shadow: 0px 3px 11px rgba(98, 98, 98, 0.13);
+    border-radius: 10px;
+    transform: scale(0);
+    transition: 0.3s;
+    z-index: 9999999;
+}
+
+.popup_close_tips {
+    cursor: pointer;
+}
+
 .data__edit_subtitle {
     font-family: Montserrat;
     font-style: normal;
@@ -1545,6 +1565,127 @@
     margin: 0 auto;
     padding-left: 30%;
     padding-right: 30%;
+}
+
+.tip__data_title {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    /* Headline Color */
+    color: #3F2B4F;
+    opacity: 0.6;
+}
+
+.tip__data_text {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    /* or 144% */
+    /* Headline Color */
+    color: #3F2B4F;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.tip__data_adress {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.tip__data_adress img {
+    margin-right: 20px;
+}
+
+.tip__data_adress p {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    /* Primary Katten */
+    color: #F8A35B;
+}
+
+.tip__data_time {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.tip__data_block {
+    display: flex;
+    width: 160px;
+    justify-content: space-between;
+}
+
+.tip_time {
+    margin-right: 50px;
+}
+
+.tip__data_text {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    /* Headline Color */
+    color: #3F2B4F;
+    opacity: 1;
+}
+
+.center__data {
+    width: 70px;
+    border-left: 1px solid #3f2b4f9a;
+    border-right: 1px solid #3f2b4f9a;
+}
+
+.tip__data_name {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    text-align: center;
+    /* Headline Color */
+    color: #3F2B4F;
+}
+
+.tip_contact {
+    display: flex;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height, or 144% */
+    /* Headline Color */
+    color: #3F2B4F;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.tip_contact svg {
+    margin-right: 20px;
+}
+
+#tip__mapbox {
+    height: 300px;
+}
+
+.tip_map {
+    position: relative;
+    max-width: 100%;
+    max-height: 300px;
+    overflow: hidden;
 }
 
 @media (max-width: 1024px) {
