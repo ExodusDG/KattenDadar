@@ -478,36 +478,65 @@ $('.feedback__send').click(function() {
 var imageData;
 
 $(".data__edit_photo img").click(function() {
-    $('#send__image_hidden').prop('value', null);
     $("input[type='file'").trigger('click');
 });
+
+var base64Img;
 
 function encodeImage(element) {
     var file = element.files[0];
     var reader = new FileReader();
     reader.onloadend = function() {
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-        var urlencoded = new URLSearchParams();
-        urlencoded.append("img", reader.result);
-        urlencoded.append("id", userID);
-        //urlencoded.append("text", $('#desc__change').val());
-
-        console.log($('#desc__change').val())
-
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: urlencoded,
-            redirect: 'follow'
-        };
-
-        fetch("https://server.kattenradar.nl/test-edit-search", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                console.log(result)
-            })
-            .catch(error => console.log('error', error));
+        $('.cat_image').attr('src', 'data:image/jpeg;base64' + reader.result)
+        base64Img = reader.result;
+        $('.image__photo_upload').attr('style', 'display: none')
+        $('.imagebox').attr('style', 'display: block')
     }
     reader.readAsDataURL(file);
 }
+
+$('#removeImg').click(function() {
+    $('#file').prop('value', null);
+    $('.imagebox').attr('style', 'display: none')
+    $('.image__photo_upload').attr('style', 'display: block')
+
+})
+
+$('.data__edit_send').click(function() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("img", base64Img);
+    urlencoded.append("id", 'nw9Ih938nGl');
+    urlencoded.append("text", $('#desc__change').val());
+
+    console.log($('#desc__change').val())
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: urlencoded,
+        redirect: 'follow'
+    };
+
+    fetch("https://server.kattenradar.nl/test-edit-search", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            alert(result)
+
+
+            $('.data__edit').removeClass('feedbackShow')
+            $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+        })
+        .catch(error => console.log('error', error));
+})
+
+$('#dash__edit_button').click(function() {
+
+    setTimeout(() => {
+        $('.data__edit').addClass('feedbackShow')
+    }, 100);
+    header.removeClass('header__fixed')
+    header.addClass('header__hidden')
+    $('.blur__wrapper').attr('style', 'filter: blur(10px)')
+})
