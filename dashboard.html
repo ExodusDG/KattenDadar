@@ -210,7 +210,7 @@
                     <div class="dash__controls_item dash__ads">
                         <div class="dash__controls_header" style="display: flex; justify-content: space-between;">
                             <p>Uw advertenties</p>
-                            <p style="color: #F8A35B; margin-right: 20px; cursor: pointer;">Edit</p>
+                            <p id="dash__edit_button" style="color: #F8A35B; margin-right: 20px; cursor: pointer;">Edit</p>
                         </div>
                         <div class="dash__ads_items">
                             <div class="dash__ad">
@@ -691,8 +691,13 @@
                 </div>
                 <div class="data__edit_photo">
                     <p class="data__edit_subtitle">Change the Photo</p>
-                    <input type="file" name="file" id="" style="display: none;" onchange="encodeImage(this)">
-                    <img src="img/dashboard/icons/update_image.svg" alt="Upload">
+                    <input type="file" name="file" id="file" style="display: none;" onchange="encodeImage(this)">
+                    <img class="image__photo_upload" src="img/dashboard/icons/update_image.svg" alt="Upload">
+
+                    <div class="imagebox" style="display: none;">
+                        <img class="cat_image" src="img/dashboard/icons/cat_dashboard.png" alt="Cat Image">
+                        <div id="removeImg"><img src="img/dashboard/icons/trash.svg" alt="Trash"> Verwijderen</div>
+                    </div>
                 </div>
                 <div class="data__edit_price">
                     <p>Verwerkingskosten</p>
@@ -722,6 +727,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- TIPS INFO -->
+
+    <div class="tips__info">
+        <p class="catfound__title" style="text-align: left; margin-bottom: 20px;">Tip via website</p>
     </div>
 
     <script src="js/jquery-3.6.0.min.js"></script>
