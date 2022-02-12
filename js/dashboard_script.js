@@ -59,6 +59,28 @@ function generateHTML(arr) {
         $('#dash_step_2').removeClass('step__incative')
         $('#dash_step_3').removeClass('step__incative')
     }
+
+    $('.dash__info_desc span').text(arr.catName)
+    $('.targetReach').text(arr.targetReach)
+
+    /* SUMMA */
+    var impressions = 0;
+    $.each(arr.stats.impressions, function(key, value) {
+        impressions = impressions + Number(value);
+    })
+    $('.views > p > span').text(impressions)
+
+    var interactions = 0;
+    $.each(arr.stats.interactions, function(key, value) {
+        interactions = interactions + Number(value);
+    })
+    $('.smiles > p > span').text(interactions)
+
+    var likes = 0;
+    $.each(arr.stats.likes, function(key, value) {
+        likes = likes + Number(value);
+    })
+    $('.likes > p > span').text(likes)
 }
 
 function searchAreas(arr) {
@@ -113,89 +135,188 @@ function tipsGenerate(arr) {
 
 
 function statsGenerate(arr) {
-    //VIEWS
-    const ctxViews = document.getElementById('viewsChart').getContext('2d');
-    const chartViews = new Chart(ctxViews, {
-        type: 'line',
-        data: {
-            labels: ['14', '15', '16', '17', '18', '19', '20'],
-            datasets: [{
-                label: '# of Votes',
-                data: arr.impressions,
+    viewsGenerate(arr)
+    likesGenerate(arr)
+    SmilesGenerate(arr)
 
-                backgroundColor: [
-                    'rgba(248,163,91, 1)',
-                ],
-                borderColor: [
-                    'rgba(248,163,91, 1)',
-                ],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    function viewsGenerate() {
+        //VIEWS
+        var firstArray = [];
+        var secondArray = [];
+        var Arrcounter = 0;
+        $.each(arr.impressions, function(key, value) {
+            if (Arrcounter < 7) {
+                firstArray.push(value)
+            } else {
+                secondArray.push(value)
+            }
+            Arrcounter++
+        })
+
+        const ctxViews = document.getElementById('viewsChart').getContext('2d');
+        const chartViews = new Chart(ctxViews, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: firstArray,
+
+                    backgroundColor: [
+                        'rgba(248,163,91, 1)',
+                    ],
+                    borderColor: [
+                        'rgba(248,163,91, 1)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 }
             }
-        }
-    });
+        });
 
-    //Likes
-    const ctxLikes = document.getElementById('likesChart').getContext('2d');
-    const chartLikes = new Chart(ctxLikes, {
-        type: 'line',
-        data: {
-            labels: ['14', '15', '16', '17', '18', '19', '20'],
-            datasets: [{
-                label: '# of Votes',
-                data: arr.likes,
+        $('#dash__arrow_right').click(function() {
+            $('.week__info').text('2')
 
-                backgroundColor: [
-                    'rgba(248,163,91, 1)',
-                ],
-                borderColor: [
-                    'rgba(248,163,91, 1)',
-                ],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+            chartViews.data.datasets[0].data = secondArray
+            chartViews.update();
+        })
+
+        $('#dash__arrow_left').click(function() {
+            $('.week__info').text('1')
+
+            chartViews.data.datasets[0].data = firstArray
+            chartViews.update();
+        })
+    }
+
+    function likesGenerate() {
+        var firstArray = [];
+        var secondArray = [];
+        var Arrcounter = 0;
+        $.each(arr.likes, function(key, value) {
+                if (Arrcounter < 7) {
+                    firstArray.push(value)
+                } else {
+                    secondArray.push(value)
+                }
+                Arrcounter++
+            })
+            //Likes
+        const ctxLikes = document.getElementById('likesChart').getContext('2d');
+        const chartLikes = new Chart(ctxLikes, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: firstArray,
+
+                    backgroundColor: [
+                        'rgba(248,163,91, 1)',
+                    ],
+                    borderColor: [
+                        'rgba(248,163,91, 1)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 }
             }
-        }
-    });
+        });
+        $('#dash__arrow_right').click(function() {
+            $('.week__info').text('2')
 
-    //Smiles
-    const ctxSmiles = document.getElementById('smilesChart').getContext('2d');
-    const chartSmiles = new Chart(ctxSmiles, {
-        type: 'line',
-        data: {
-            labels: ['14', '15', '16', '17', '18', '19', '20'],
-            datasets: [{
-                label: '# of Votes',
-                data: arr.interactions,
+            chartLikes.data.datasets[0].data = secondArray
+            chartLikes.update();
+        })
 
-                backgroundColor: [
-                    'rgba(248,163,91, 1)',
-                ],
-                borderColor: [
-                    'rgba(248,163,91, 1)',
-                ],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        $('#dash__arrow_left').click(function() {
+            $('.week__info').text('1')
+
+            chartLikes.data.datasets[0].data = firstArray
+            chartLikes.update();
+        })
+    }
+
+    function SmilesGenerate() {
+        var firstArray = [];
+        var secondArray = [];
+        var Arrcounter = 0;
+        $.each(arr.interactions, function(key, value) {
+                if (Arrcounter < 7) {
+                    firstArray.push(value)
+                } else {
+                    secondArray.push(value)
+                }
+                Arrcounter++
+            })
+            //Likes
+        const ctxSmiles = document.getElementById('smilesChart').getContext('2d');
+        const chartSmiles = new Chart(ctxSmiles, {
+            type: 'line',
+            data: {
+                labels: ['1', '2', '3', '4', '5', '6', '7'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: firstArray,
+
+                    backgroundColor: [
+                        'rgba(248,163,91, 1)',
+                    ],
+                    borderColor: [
+                        'rgba(248,163,91, 1)',
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 }
             }
-        }
-    });
+        });
+        $('#dash__arrow_right').click(function() {
+            $('.week__info').text('2')
+
+            chartSmiles.data.datasets[0].data = secondArray
+            chartSmiles.update();
+        })
+
+        $('#dash__arrow_left').click(function() {
+            $('.week__info').text('1')
+
+            chartSmiles.data.datasets[0].data = firstArray
+            chartSmiles.update();
+        })
+    }
 }
 
 
@@ -354,6 +475,8 @@ function initMap() {
     }
 }
 
+
+
 $('.dash__stats_link').click(function() {
     var clickedSlide;
 
@@ -384,6 +507,36 @@ $('.dash__stats_link').click(function() {
     $('.canvas__wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
 })
 
+
+$('.dash__stats_info div').click(function() {
+    var clickedSlide;
+
+    if ($(this).attr('id') == 'views_link') {
+        clickedSlide = 0;
+
+        $('.dash__stats_info > div').removeClass('stats__active')
+        $('.views').addClass('stats__active')
+
+    } else if ($(this).attr('id') == 'likes_link') {
+        clickedSlide = 1;
+
+        $('.dash__stats_info > div').removeClass('stats__active')
+        $('.likes').addClass('stats__active')
+
+    } else {
+        clickedSlide = 2;
+
+        $('.dash__stats_info > div').removeClass('stats__active')
+        $('.smiles').addClass('stats__active')
+    }
+
+    $('.dash__stats_link').removeClass('stats__active')
+    $(this).addClass('stats__active')
+
+    var translateWidth = clickedSlide * $('canvas').width();
+
+    $('.canvas__wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
+})
 $('.catfound__button, .dash__stop_button button').click(function() {
     setTimeout(() => {
         $('.catfound').addClass('feedbackShow');
@@ -541,16 +694,17 @@ $('#dash__edit_button').click(function() {
     $('.blur__wrapper').attr('style', 'filter: blur(10px)')
 })
 
-/* LEAFLET MAP */
 
-var secondMap = L.map('tip__mapbox', {
+/* LEAFLET MAP */
+var secondMap;
+secondMap = L.map('tip__mapbox', {
     zoomControl: false,
     gestureHandling: true
-}).setView([52.1231241, 5.2773372], 8);
+}).setView([0, 0], 16);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic2FuaXN0cmF5IiwiYSI6ImNreGVueTljbTEzdTAybm1tYXRzaHBnaTYifQ.Ux9ySMRvhgcwFd7_gPXCWg', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
+    maxZoom: 64,
     id: 'mapbox/streets-v11',
     tileSize: 512,
     zoomOffset: -1,
@@ -564,14 +718,7 @@ var mapMarker = L.icon({
     popupAnchor: [-3, -45] // point from which the popup should open relative to the iconAnchor
 });
 
-var markersList = [];
-
-
-
-$.each(markersList, (key, value) => {
-    var markerNotFoundRed = L.marker([Number(markersList[key].lat), Number(markersList[key].lng)], { icon: mapMarker }).addTo(secondMap);
-})
-var tipAray = [];
+var lastTipDate;
 
 function tipsGenerate(arr) {
     $.each(arr, function(key, value) {
@@ -589,11 +736,30 @@ function tipsGenerate(arr) {
             tipName = 'KattenRadar Tip'
         }
 
+        var date = value.date;
+
+        var dateYear = date.substr(0, 4)
+        date = date.replace(dateYear + '-', '')
+        var dateMonth = date.substr(0, 2)
+        date = date.replace(dateMonth + '-', '')
+        var dateDay = date.substr(0, 2)
+        date = date.replace(dateDay, '')
+        var timeDay = date.substr(1, 5)
+
+        if (lastTipDate != dateDay + '.' + dateMonth + '.' + dateYear) {
+            $('.tips__list').append(`<div class="tip__date">
+            <div>
+                <p>` + dateDay + '.' + dateMonth + '.' + dateYear + `</p>
+            </div>
+            <hr>
+        </div>`)
+        }
+
         $('.tips__list').append(`<div class="tips__items" id=tip_` + key + `>
         <img src="img/dashboard/icons/` + avatarName + `.svg" alt="Tip">
         <div class="tips__title">
         <h1>` + tipName + `</h1>
-        <p>` + value.date + `</p>
+        <p>` + dateDay + ' / ' + dateMonth + ' / ' + dateYear + ' | ' + timeDay + `</p>
         </div>
         <div class="tips__item">
         <img src="img/dashboard/icons/Bubble.svg" alt="Bubble">
@@ -602,12 +768,28 @@ function tipsGenerate(arr) {
         </div>
         </div>
         </div>`)
-    })
-    $('.tips__list > div').click(function() {
 
+        lastTipDate = dateDay + '.' + dateMonth + '.' + dateYear;
+    })
+    var thisTip;
+    $('.tips__list > div').click(function() {
         var clikedTip = Number($(this).attr('id').replace('tip_', ''))
-        var thisTip = tipAray[clikedTip]
+        thisTip = tipAray[clikedTip]
         console.log(thisTip)
+
+        if (typeof thisTip.location != 'undefined') {
+            $('.tip_map').attr('style', 'display: block')
+
+            var markersList = [];
+            markersList.push(thisTip.location.lat)
+            markersList.push(thisTip.location.lng)
+            secondMap.setView([thisTip.location.lat, thisTip.location.lng], 16);
+            var marker = L.marker([Number(markersList[0]), Number(markersList[1])], { icon: mapMarker }).addTo(secondMap);
+
+        } else {
+            $('.tip_map').attr('style', 'display: none')
+        }
+
         $('.tip__desc').text(thisTip.content)
 
         if (typeof thisTip.location != 'undefined') {
@@ -617,21 +799,29 @@ function tipsGenerate(arr) {
             $('.tips__loc').attr('style', 'display: none')
         }
 
-        var date = thisTip.date;
-        console.log(date)
-        var dateYear = date.substr(0, 4)
-        date = date.replace(dateYear + '-', '')
-        var dateMonth = date.substr(0, 2)
-        date = date.replace(dateMonth + '-', '')
-        var dateDay = date.substr(0, 2)
-        date = date.replace(dateDay, '')
-        console.log(date)
-        var timeDay = date.substr(1, 5)
+        if (typeof thisTip.sightingDate != 'undefined') {
+            $('.tip__data_time').attr('style', 'display: flex')
 
-        $('#tip_day').text(dateDay)
-        $('#tip_month').text(dateMonth)
-        $('#tip_year').text(dateYear)
-        $('#tip_time').text(timeDay)
+            var date = thisTip.sightingDate;
+            console.log(date)
+            var dateYear = date.substr(0, 4)
+            date = date.replace(dateYear + '-', '')
+            var dateMonth = date.substr(0, 2)
+            date = date.replace(dateMonth + '-', '')
+            var dateDay = date.substr(0, 2)
+            date = date.replace(dateDay, '')
+            console.log(date)
+            var timeDay = date.substr(1, 5)
+
+            $('#tip_day').text(dateDay)
+            $('#tip_month').text(dateMonth)
+            $('#tip_year').text(dateYear)
+            $('#tip_time').text(timeDay)
+        } else {
+            $('.tip__data_time').attr('style', 'display: none')
+        }
+
+
 
         if (typeof thisTip.contactDetails != 'undefined') {
             $('.tip_contact').attr('style', 'display: flex')
@@ -639,6 +829,8 @@ function tipsGenerate(arr) {
         } else {
             $('.tip_contact').attr('style', 'display: none')
         }
+        var tipsH = $('.tips__info').height()
+        $('.tips__info').attr('style', 'top: calc((100vh - ' + tipsH + 'px)/2)')
 
         setTimeout(() => {
             $('.tips__info').addClass('feedbackShow')
@@ -651,6 +843,12 @@ function tipsGenerate(arr) {
     $('.popup_close_tips').click(function() {
         $('.blur__wrapper').attr('style', 'filter: blur(0px)')
         $('.tips__info').removeClass('feedbackShow')
-
     })
 }
+
+$('.blur__wrapper').click(function() {
+    if ($('.tips__info').hasClass('feedbackShow')) {
+        $('.tips__info').removeClass('feedbackShow')
+        $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+    }
+})
