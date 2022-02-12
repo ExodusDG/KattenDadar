@@ -55,7 +55,7 @@
         </div>
     </div>
     <!-- STICKY HEADER END -->
-    <div class="blur__wrapper">
+    <div class="blur__wrapper" style="filter: blur(0px)">
         <!-- HEADER -->
         <div class="header default_header">
             <ul>
@@ -201,9 +201,10 @@
                                 <div class="dash__info">
                                     <div class="dash__info_header">
                                         <div class="dash__info_circle">3</div>
-                                        <p class="dash__info__title">4000 buurtgenoten bereikt</p>
+                                        <p class="dash__info__title"><span class="targetReach"></span> buurtgenoten bereikt</p>
                                     </div>
-                                    <p class="dash__info_desc">Het vermist bericht van Simba heeft 4000 buurtgenoten bereikt. De zoekactie is nog te vinden op Facebook en Instagram, maar de versnelde promotie is afgelopen. Bij nieuwe tips stellen we je meteen op de hoogte.</p>
+                                    <p class="dash__info_desc">Het vermist bericht van <span></span> heeft <span class="targetReach"></span> buurtgenoten bereikt. De zoekactie is nog te vinden op Facebook en Instagram, maar de versnelde promotie is afgelopen. Bij nieuwe tips stellen
+                                        we je meteen op de hoogte.</p>
                                 </div>
                             </div>
                         </div>
@@ -273,7 +274,7 @@
                             <p>Statistieken</p>
                         </div>
                         <div class="dash__stats_list">
-                            <div class="dash__stats_link" id="views_link">
+                            <div class="dash__stats_link stats__active" id="views_link">
                                 <img src="img/dashboard/icons/eye.svg " alt="">
                                 <p>Weergaven</p>
                             </div>
@@ -291,14 +292,14 @@
                             <hr>
                         </div>
                         <div class="dash__stats_date">
-                            <div class="dash__stats_arrow">
+                            <div class="dash__stats_arrow" id="dash__arrow_left">
                                 <img src="img/dashboard/icons/arrow-left.svg" alt="">
                             </div>
                             <div>
-                                <h1>Week 1 van zoekactie</h1>
+                                <h1>Week <span class="week__info">1</span> van zoekactie</h1>
                                 <p>November</p>
                             </div>
-                            <div class="dash__stats_arrow">
+                            <div class="dash__stats_arrow" id="dash__arrow_right">
                                 <img src="img/dashboard/icons/arrow-right.svg" alt="">
                             </div>
                         </div>
@@ -310,17 +311,17 @@
                             </div>
                         </div>
                         <div class="dash__stats_info">
-                            <div class="views stats__active">
+                            <div class="views stats__active" id="views_link">
                                 <img src="img/dashboard/icons/eye.svg" alt="">
-                                <p>792 Views</p>
+                                <p><span></span> Views</p>
                             </div>
-                            <div class="likes">
+                            <div class="likes" id="likes_link">
                                 <img src="img/dashboard/icons/heart.svg" alt="">
-                                <p>792 Likes</p>
+                                <p><span></span> Likes</p>
                             </div>
                             <div class="smiles">
                                 <img src="img/dashboard/icons/smile.svg" alt="">
-                                <p>792 Interactions</p>
+                                <p><span></span> Interactions</p>
                             </div>
                         </div>
                     </div>
