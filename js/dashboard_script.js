@@ -15,7 +15,7 @@ function getCookie() {
 var userID = cookieArray.id
 
 /* GET DASHBOARD DATA */
-
+var targetReach;
 var dashData = {};
 
 var settings = {
@@ -43,15 +43,16 @@ function generateHTML(arr) {
     var tipsArray = arr.tips
     var searchArray = arr.searchareas;
     var statsArray = arr.stats
-
+    targetReach = arr.targetReach
     tipsGenerate(tipsArray)
     searchAreas(searchArray)
     statsGenerate(statsArray)
     console.log(arr)
-
+    $('.edit__cat_image').attr('src', arr.catImage)
+    $('.chat__cat_desc').html('<span>kattenradar </span>' + arr.textContent)
     $('.dash__title span').text(arr.userName)
     $('#facebook_ad').attr('href', arr.fbPost)
-    $('#instagram_ad').attr('href', arr.instaPost)
+    $('#insta_ad').attr('href', arr.instaPost)
 
     if (arr.searchStatus == 2) {
         $('#dash_step_2').removeClass('step__incative')
@@ -199,6 +200,7 @@ function statsGenerate(arr) {
             chartViews.update();
         })
     }
+    $('.search__map_radius').text(targetReach + ' + ' + 4000)
 
     function likesGenerate() {
         var firstArray = [];
@@ -320,13 +322,6 @@ function statsGenerate(arr) {
 }
 
 
-
-
-
-
-
-
-
 $('.arrow').hover(function() {
     imagePath = $(this).find('img').attr('src').replace('.svg', '');
     $(this).find('img').attr('src', imagePath + '_hover.svg');
@@ -373,24 +368,6 @@ function initMap() {
         radius: Number(1000),
     });
 
-    $('.dash__places_block').click(function() {
-        //    alert('34')
-        map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
-        cityCircle.setMap(null);
-
-        cityCircle = new google.maps.Circle({
-            strokeColor: "#F8A35B",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#F8A35B",
-            fillOpacity: 0.3,
-            clickable: false,
-            map,
-            center: { lat: Number($(this).attr('lat')), lng: Number($(this).attr('lng')) },
-            radius: Number($(this).attr('radius') + '000'),
-        });
-    })
-
     var productTypes = [];
 
     $.ajax({
@@ -414,7 +391,7 @@ function initMap() {
 
         drag: function(e, ui) {
             x2 = ui.position.left;
-            var trackPercent = ((x2 * 100) / trackStep).toFixed(0)
+            var trackPercent = ((x2 * 110) / trackStep).toFixed(0)
             if (trackPercent > (11 * 8.5)) {
                 var radiusKM = 8;
                 $('.range__km').text('8 km')
@@ -468,14 +445,33 @@ function initMap() {
             if (value.radius == radiusKM) {
                 $('.range__price').text(value.price + ' €')
                 $('.map__price_count span').text(value.discount)
-                $('.search__map_radius').text(value.impressions)
+                $('.search__map_radius').text(targetReach + ' + ' + value.impressions)
                 cityCircle.setRadius(Number(radiusKM + '000'));
             }
         })
     }
+    $('.dash__places_items').delegate('.dash__places_block', 'click', function() {
+        if ($(this).attr('on-map') == 'true') {
+            map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
+        } else {
+            map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
+            cityCircle.setMap(null);
+            $(this).attr('on-map', 'true')
+            cityCircle = new google.maps.Circle({
+                strokeColor: "#F8A35B",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#F8A35B",
+                fillOpacity: 0.3,
+                clickable: false,
+                map,
+                center: { lat: Number($(this).attr('lat')), lng: Number($(this).attr('lng')) },
+                radius: Number($(this).attr('radius') + '000'),
+            });
+
+        }
+    })
 }
-
-
 
 $('.dash__stats_link').click(function() {
     var clickedSlide;
@@ -538,6 +534,7 @@ $('.dash__stats_info div').click(function() {
     $('.canvas__wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
 })
 $('.catfound__button, .dash__stop_button button').click(function() {
+    $('.catfound__button, .dash__stop_button button').text('Geef ons een beoordeling')
     setTimeout(() => {
         $('.catfound').addClass('feedbackShow');
     }, 100);
@@ -622,7 +619,7 @@ function leaveFeedback() {
 }
 
 $('.feedback__send').click(function() {
-    reviewStep()
+    catFoundClose()
 })
 
 
@@ -676,7 +673,6 @@ $('.data__edit_send').click(function() {
         .then(response => response.text())
         .then(result => {
             alert(result)
-
 
             $('.data__edit').removeClass('feedbackShow')
             $('.blur__wrapper').attr('style', 'filter: blur(0px)')
@@ -851,4 +847,23 @@ $('.blur__wrapper').click(function() {
         $('.tips__info').removeClass('feedbackShow')
         $('.blur__wrapper').attr('style', 'filter: blur(0px)')
     }
+
+    if ($('.data__edit').hasClass('feedbackShow')) {
+        $('.data__edit').removeClass('feedbackShow')
+        $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+    }
 })
+
+$('.popup_close_cat').click(function() {
+    $('.data__edit').removeClass('feedbackShow')
+    $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+})
+
+var backendText = $('.chat_edit_cat_text').text()
+$('#desc__change').val(backendText.replace('kattenradar ', ''))
+
+$('#desc__change').keyup(function() {
+    var userText = $(this).val();
+
+    $('.chat_edit_cat_text').html('<span>kattenradar</span>' + userText)
+});
