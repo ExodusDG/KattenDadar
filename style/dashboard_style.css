@@ -729,6 +729,14 @@
     opacity: 1 !important;
 }
 
+.data__edit_left {
+    width: 60%;
+}
+
+.data__edit_right {
+    width: 35%;
+}
+
 .canvas_block {
     width: 90%;
     overflow-x: hidden;
@@ -870,6 +878,20 @@
 
 .red__path {
     fill: white;
+}
+
+.red_3 {
+    background: transparent;
+    color: #D80202;
+    border: 2px solid #D80202;
+}
+
+.red_3:hover .red__path {
+    fill: #D80202;
+}
+
+.red_3 .red__path {
+    fill: #D80202;
 }
 
 .catfound__title {
@@ -1328,7 +1350,7 @@
 }
 
 .chat__right_phone {
-    height: 480px;
+    height: 490px;
 }
 
 .chat__phone__cat {
@@ -1350,10 +1372,14 @@
 }
 
 .chat__cat_desc {
-    top: 370px;
+    top: 380px;
     left: 25px;
     width: 180px;
-    font-size: 8px;
+    font-size: 10px;
+}
+
+.search__map_radius_block {
+    display: flex;
 }
 
 .data__edit {
