@@ -49,9 +49,10 @@ function generateHTML(arr) {
     statsGenerate(statsArray)
     console.log(arr)
     $('.edit__cat_image').attr('src', arr.catImage)
-    $('.chat__cat_desc').html('<span>kattenradar </span>' + arr.textContent)
+    $('.chat__inst_text').html('<span>kattenradar </span>' + arr.textContent)
+    $('.chat__fb_text').html(arr.textContent)
     $('.dash__title span').text(arr.userName)
-    $('#facebook_ad').attr('href', arr.fbPost)
+    $('.facebook_ad').attr('href', arr.fbPost)
     $('#insta_ad').attr('href', arr.instaPost)
     catName = arr.catName;
     if (arr.searchStatus == 2) {
@@ -82,6 +83,14 @@ function generateHTML(arr) {
         likes = likes + Number(value);
     })
     $('.likes > p > span').text(likes)
+
+    if (arr.searchStatus == 3) {
+        return false;
+    } else {
+        $('#targetReach__text').attr('style', 'display:none')
+    }
+    //   $('#fb__phone').attr('src', arr.fbMockup)
+    //  $('#insta__phone').attr('src', arr.igMockup)
 }
 
 function searchAreas(arr) {
@@ -643,7 +652,6 @@ $('.dash__stats_info div').click(function() {
     $('.canvas__wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
 })
 $('.catfound__button, .dash__stop_button button').click(function() {
-    $('.catfound__button, .dash__stop_button button').text('Geef ons een beoordeling')
     setTimeout(() => {
         $('.catfound').addClass('feedbackShow');
     }, 100);
@@ -659,7 +667,22 @@ $('.popup_close_cat').click(function() {
 $('.feedback').click(function() {
     catFoundClose()
 })
+$('.blur__wrapper').click(function() {
 
+
+    if ($('.catfound').hasClass('feedbackShow')) {
+        catFoundClose()
+    }
+})
+
+$('.catfound_orange').click(function() {
+
+    $('.catfound__button, .dash__stop_button button').text('Geef ons een beoordeling')
+})
+$('.catfound_2').click(function() {
+
+    $('.catfound__button, .dash__stop_button button').text('Geef ons een beoordeling')
+})
 
 function catFoundClose() {
     $('.catfound').removeClass('feedbackShow');
@@ -742,17 +765,30 @@ $(".data__edit_photo img").click(function() {
 
 var base64Img;
 
+var imageReplace = false;
+var textReplace = false;
+
 function encodeImage(element) {
     var file = element.files[0];
     var reader = new FileReader();
     reader.onloadend = function() {
         $('.cat_image').attr('src', 'data:image/jpeg;base64' + reader.result)
+
+        $('.edit__cat_image').attr('src', 'data:image/jpeg;base64' + reader.result)
         base64Img = reader.result;
         $('.image__photo_upload').attr('style', 'display: none')
         $('.imagebox').attr('style', 'display: block')
+
+        if (imageReplace == false) {
+            var currentPrice = Number($('.data_edit_price').text().replace('€', ''))
+            $('.data_edit_price').text('€' + Number(currentPrice + 2))
+            imageReplace = true;
+        }
     }
     reader.readAsDataURL(file);
 }
+
+
 
 $('#removeImg').click(function() {
     $('#file').prop('value', null);
@@ -877,6 +913,7 @@ function tipsGenerate(arr) {
         lastTipDate = dateDay + '.' + dateMonth + '.' + dateYear;
     })
     var thisTip;
+    console.log(thisTip)
     $('.tips__list > div').click(function() {
         var clikedTip = Number($(this).attr('id').replace('tip_', ''))
         thisTip = tipAray[clikedTip]
@@ -903,6 +940,16 @@ function tipsGenerate(arr) {
         } else {
             $('.tips__loc').attr('style', 'display: none')
         }
+
+        if (thisTip.platform == 'FB') {
+            $('.tip__title_popup').text('Tip via Facebook')
+        } else if (thisTip.platform == 'IG') {
+            $('.tip__title_popup').text('Tip via Instagram')
+        } else {
+            $('.tip__title_popup').text('Tip via KattenRadar')
+        }
+
+
 
         if (typeof thisTip.sightingDate != 'undefined') {
             $('.tip__data_time').attr('style', 'display: flex')
@@ -975,4 +1022,22 @@ $('#desc__change').keyup(function() {
     var userText = $(this).val();
 
     $('.chat_edit_cat_text').html('<span>kattenradar</span>' + userText)
+});
+
+var editText = $('#desc__change').val();
+
+$('#desc__change').keyup(function() {
+    if (textReplace == false) {
+        var currentPrice = Number($('.data_edit_price').text().replace('€', ''))
+        $('.data_edit_price').text('€' + Number(currentPrice + 2))
+        textReplace = true;
+    }
+
+    var currentText = $(this).val();
+
+    if (currentText = !editText) {
+        $('.data__edit_send').prop("disabled", true);
+    } else {
+        $('.data__edit_send').prop("disabled", false);
+    }
 });
