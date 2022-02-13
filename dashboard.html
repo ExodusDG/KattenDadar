@@ -328,17 +328,37 @@
                             <hr>
                         </div>
                         <div class="dash__places">
-                            <div class="dash__places_items" style="display: flex; align-items: center;">
-                                <div class="arrow">
-                                    <img src="img/dashboard/icons/arrow-left.svg" alt="">
-                                </div>
+                            <div class="dash__places_lists">
+                                <div class="dash__places_items" style="display: flex; align-items: center;">
+                                    <div class="arrow">
+                                        <img src="img/dashboard/icons/arrow-left.svg" alt="">
+                                    </div>
 
-                                <div class="arrow" style>
-                                    <img src="img/dashboard/icons/arrow-right.svg" alt="">
+                                    <div class="arrow" style>
+                                        <img src="img/dashboard/icons/arrow-right.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="dash__places_button">
+                                    <button>Voeg locatie toe</button>
                                 </div>
                             </div>
-                            <div class="dash__places_button">
-                                <button>Voeg locatie toe</button>
+                            <div class="dash__places_select" style="display: none;">
+                                <div class="dash__places__input">
+                                    <img src="img/icons/marker.svg" alt="Marker">
+                                    <input id="dash__location" type="text" class="search__map_adress" placeholder="Typ hier uw adres">
+                                    <!-- HIDDEN GOOGLE FORMS -->
+                                    <input type="hidden" placeholder="Apt, Suite, etc (optional)" />
+                                    <input type="hidden" placeholder="City" id="locality" />
+                                    <div class="half-input-container">
+                                        <input type="hidden" class="half-input" placeholder="State/Province" id="administrative_area_level_1" />
+                                        <input type="hidden" class="half-input" placeholder="Zip/Postal code" id="postal_code" />
+                                    </div>
+                                    <input type="hidden" placeholder="Country" id="country" />
+                                    <!-- END -->
+                                </div>
+                                <div class="dash__places_button">
+                                    <button class="select__new_zone">Voeg locatie toe</button>
+                                </div>
                             </div>
                         </div>
                         <div class="dash__map_photo">

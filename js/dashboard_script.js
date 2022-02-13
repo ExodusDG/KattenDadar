@@ -12,7 +12,7 @@ function getCookie() {
     }, {});
 }
 
-var userID = cookieArray.id
+var userID = 'nw9Ih938nGl'
 
 /* GET DASHBOARD DATA */
 var targetReach;
@@ -26,7 +26,7 @@ var settings = {
         "Content-Type": "application/x-www-form-urlencoded"
     },
     "data": {
-        "id": "nw9Ih938nGl"
+        "id": userID
     }
 };
 
@@ -37,7 +37,7 @@ $.ajax(settings).done(function(response) {
 });
 
 /* GET DASHBOARD DATA END */
-
+var catName;
 
 function generateHTML(arr) {
     var tipsArray = arr.tips
@@ -53,7 +53,7 @@ function generateHTML(arr) {
     $('.dash__title span').text(arr.userName)
     $('#facebook_ad').attr('href', arr.fbPost)
     $('#insta_ad').attr('href', arr.instaPost)
-
+    catName = arr.catName;
     if (arr.searchStatus == 2) {
         $('#dash_step_2').removeClass('step__incative')
     } else if (arr.searchStatus == 3) {
@@ -341,7 +341,13 @@ setTimeout(() => {
 }, 1000);
 
 function initMap() {
-
+    const componentForm = [
+        'location',
+        'locality',
+        'administrative_area_level_1',
+        'country',
+        'postal_code',
+    ];
     var zoomNumber = 14;
 
     map = new google.maps.Map(document.getElementById("dash_map"), {
@@ -371,20 +377,94 @@ function initMap() {
     var productTypes = [];
 
     $.ajax({
-        url: 'https://server.kattenradar.nl/get-product-types',
+        url: 'https://server.kattenradar.nl/get-extension-product-types',
         method: 'get',
         dataType: 'json',
         async: false,
         data: productTypes,
         success: function(data) {
-            productTypes = data
+            productTypes = data.extendArea;
+            console.log(productTypes)
         }
     });
 
+    $('.dash__places_items').delegate('.dash__places_block', 'click', function() {
+        if ($(this).attr('on-map') == 'true') {
+            map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
+        } else {
+            map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
+            cityCircle.setMap(null);
+            $(this).attr('on-map', 'true')
+            cityCircle = new google.maps.Circle({
+                strokeColor: "#F8A35B",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#F8A35B",
+                fillOpacity: 0.3,
+                clickable: false,
+                map,
+                center: { lat: Number($(this).attr('lat')), lng: Number($(this).attr('lng')) },
+                radius: Number($(this).attr('radius') + '000'),
+            });
+
+        }
+    })
+
+    const autocompleteInput = document.getElementById('dash__location');
+    const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
+        fields: ["address_components", "geometry", "name"],
+        types: ["address"],
+
+    });
+    var cityCircleNew;
+
+    function adressSelect() {
+        //    marker.setVisible(false);
+        const place = autocomplete.getPlace();
+        if (!place.geometry) {
+            // User entered the name of a Place that was not suggested and
+            // pressed the Enter key, or the Place Details request failed.
+            window.alert('No details available for input: \'' + place.name + '\'');
+            return;
+        }
+        renderAddress(place);
+        //  fillInAddress(place);
+
+        var markersArray = [];
+
+        markersArray.push(
+            [
+                place.name, {
+                    center: place.geometry.location,
+                    population: mapRadius,
+                }
+            ]
+        )
+        console.log(markersArray)
+        cityCircleNew = new google.maps.Circle({
+            strokeColor: "#F8A35B",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#F8A35B",
+            fillOpacity: 0.3,
+            map,
+            center: markersArray[0][1].center,
+            radius: Math.sqrt(markersArray[0][1].population) * 100,
+        });
+    }
+
+
+    function renderAddress(place) {
+
+        map.setCenter(place.geometry.location);
+        //    marker.setPosition(place.geometry.location);
+        //  marker.setVisible(true);
+    }
+
     /* RANGE DRAGGABLE */
     var trackStep = $('.map__radius_track').width();
-
-
+    var mapRadius = 1000
+    var productType = 1;
     $(".map__radius_draggable").draggable({
         containment: "parent",
         axis: "x",
@@ -446,30 +526,59 @@ function initMap() {
                 $('.range__price').text(value.price + ' €')
                 $('.map__price_count span').text(value.discount)
                 $('.search__map_radius').text(targetReach + ' + ' + value.impressions)
+                productType = $('.range__km').text().replace(' km', '')
                 cityCircle.setRadius(Number(radiusKM + '000'));
+
+                if (cityCircleNew) {
+                    cityCircleNew.setRadius(Number(radiusKM + '000'));
+                }
             }
         })
     }
-    $('.dash__places_items').delegate('.dash__places_block', 'click', function() {
-        if ($(this).attr('on-map') == 'true') {
-            map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
-        } else {
-            map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
-            cityCircle.setMap(null);
-            $(this).attr('on-map', 'true')
-            cityCircle = new google.maps.Circle({
-                strokeColor: "#F8A35B",
-                strokeOpacity: 0.8,
-                strokeWeight: 2,
-                fillColor: "#F8A35B",
-                fillOpacity: 0.3,
-                clickable: false,
-                map,
-                center: { lat: Number($(this).attr('lat')), lng: Number($(this).attr('lng')) },
-                radius: Number($(this).attr('radius') + '000'),
-            });
 
-        }
+    /* MAP ADD LOCATION */
+
+    $('.dash__places_button button').click(function() {
+        $('.dash__places_lists').attr('style', 'display: none')
+        $('.dash__places_select').attr('style', 'display: flex')
+        $(this).addClass('select__new_zone')
+    })
+
+    $('.select__new_zone').click(function() {
+        adressSelect()
+
+        $.ajax({
+            url: 'https://server.kattenradar.nl/get-extension-product-types',
+            method: 'get',
+            dataType: 'json',
+            async: false,
+            data: productTypes,
+            success: function(data) {
+                productTypes = data.newArea;
+                console.log(productTypes)
+            }
+        });
+    })
+
+    $('#map__button_top').click(function() {
+        var settings = {
+            "url": "https://server.kattenradar.nl/test-payment-extension",
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            "data": {
+                "id": userID,
+                "catName": catName,
+                "productType": productType
+            }
+
+        };
+        console.log(settings.data)
+        $.ajax(settings).done(function(response) {
+            window.open(response.redirectLink);
+        });
     })
 }
 
