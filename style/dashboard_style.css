@@ -403,11 +403,14 @@
 }
 
 .dash__places {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.dash__places_lists {
     display: flex;
     text-align: center;
     justify-content: space-between;
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 .dash__places_block {
@@ -484,7 +487,7 @@
     width: 220px;
     height: 52px;
     color: #F8A35B;
-    background: transparent;
+    background: #f8a45b34;
     border: solid 2px #F8A35B;
     border-radius: 10px;
     font-weight: bold;
@@ -1715,6 +1718,100 @@
     max-width: 100%;
     max-height: 300px;
     overflow: hidden;
+}
+
+.dash__places_select {
+    align-items: center;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.dash__places_select {
+    height: 70px;
+}
+
+.dash__places__input {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.dash__places__input img {
+    margin-right: 20px;
+}
+
+.search__map_adress {
+    height: 40px;
+    width: 100px;
+    width: 340px;
+    padding-bottom: 5px;
+    background: white;
+    padding-left: 0px;
+    color: #000000;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    outline: none;
+}
+
+.pac-icon {
+    margin-right: 7px;
+    margin-top: 6px;
+    display: inline-block;
+    vertical-align: top;
+    width: 14px;
+    background-image: url(../img/icons/map.svg) !important;
+    background-size: auto;
+    box-sizing: border-box;
+    height: 19px;
+    padding-top: 0px;
+}
+
+.pac-container {
+    width: 1110px !important;
+    transform: translateX(-65px) translateY(20px);
+}
+
+.pac-container {
+    border-top: 1px solid #d9d9d9;
+}
+
+.pac-item {
+    cursor: default;
+    padding: 0 4px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 30px;
+    text-align: left;
+    border-top: 1px solid #f8a45b34;
+    color: #000000;
+    padding-top: 10px;
+    box-sizing: border-box;
+    height: 50px;
+}
+
+.pac-logo:after {
+    display: none !important;
+}
+
+.pac-item-query {
+    font-weight: 600;
+    font-family: 'Inglobal';
+    color: black;
+    font-size: 16px;
+}
+
+.pac-item {
+    padding-left: 15px;
+}
+
+.pac-item>span:last-child {
+    font-weight: 600;
+    font-family: 'Inglobal';
+    color: rgba(63, 43, 79, 0.3);
+    font-size: 16px;
 }
 
 @media (max-width: 1024px) {
