@@ -48,9 +48,6 @@
                         </li>
                     </ul>
                 </li>
-                <li>
-                    <button class="header__start_search">Zoekactie starten</button>
-                </li>
             </ul>
         </div>
     </div>
@@ -87,9 +84,6 @@
                             </div>
                         </li>
                     </ul>
-                </li>
-                <li>
-                    <button class="header__start_search">Zoekactie starten</button>
                 </li>
             </ul>
         </div>
@@ -203,7 +197,7 @@
                                         <div class="dash__info_circle">3</div>
                                         <p class="dash__info__title"><span class="targetReach"></span> buurtgenoten bereikt</p>
                                     </div>
-                                    <p class="dash__info_desc">Het vermist bericht van <span></span> heeft <span class="targetReach"></span> buurtgenoten bereikt. De zoekactie is nog te vinden op Facebook en Instagram, maar de versnelde promotie is afgelopen. Bij nieuwe tips stellen
+                                    <p class="dash__info_desc" id="targetReach__text">Het vermist bericht van <span></span> heeft <span class="targetReach"></span> buurtgenoten bereikt. De zoekactie is nog te vinden op Facebook en Instagram, maar de versnelde promotie is afgelopen. Bij nieuwe tips stellen
                                         we je meteen op de hoogte.</p>
                                 </div>
                             </div>
@@ -216,44 +210,25 @@
                             <p id="dash__edit_button" style="color: #F8A35B; margin-right: 20px; cursor: pointer;">Edit</p>
                         </div>
                         <div class="dash__ads_items">
-                            <div class="dash__ad">
-                                <div class="chat__right_phone dash__phone">
-                                    <div class="chat__phone__body">
-                                        <div class="chat__phone_text">
-                                            <p class="chat__catname">Vermist <span>Simba</span></p>
-                                            <p class="chat__last_loc">Laatst gezien: <span>Noorderstraat in
-                                                    Amsterdam</span></p>
-                                            <p class="chat__info">Bekijk schuurtjes en afsluitbare ruimtes</p>
-                                            <p class="chat__see_cat"><span>Simba</span> gezien? Reageer via </p>
-                                        </div>
-                                        <img class="chat__phone__left" src="img/phone__left.svg" alt="Left Side">
-
-                                        <img class="chat__phone__cat" src="img/cat.png" alt="Cat">
+                            <a class="facebook_ad" href="#" target="_blank">
+                                <div class="dash__ad">
+                                    <div class="chat__right_phone dash__phone">
+                                        <img src="img/mockup/fb.jpg" id="fb__phone" alt="FB">
+                                        <p class="chat__fb_text">Mogelijk opgesloten in schuren of bij gebou-wen. Erg mens vriendelijke kat makkelijk. Opgesloten in schuren of bij gebouwen. Erg mens vriendelijke kat makkelijk</p>
                                     </div>
-                                    <p class="chat__cat_desc"><span>kattenradar</span> Mogelijk opgesloten in schuren of bij gebou-wen. Erg mens vriendelijke kat makkelijk.</p>
-
-                                </div>
-                                <a id="facebook_ad" href="#" target="_blank"><button>Check het op Facebook</button></a>
+                                    <button>Check het op Facebook</button></a>
                             </div>
-                            <div class="dash__ad">
-                                <div class="chat__right_phone dash__phone">
-                                    <div class="chat__phone__body">
-                                        <div class="chat__phone_text">
-                                            <p class="chat__catname">Vermist <span>Simba</span></p>
-                                            <p class="chat__last_loc">Laatst gezien: <span>Noorderstraat in
-                                                    Amsterdam</span></p>
-                                            <p class="chat__info">Bekijk schuurtjes en afsluitbare ruimtes</p>
-                                            <p class="chat__see_cat"><span>Simba</span> gezien? Reageer via </p>
-                                        </div>
-                                        <img class="chat__phone__left" src="img/phone__left.svg" alt="Left Side">
-
-                                        <img class="chat__phone__cat" src="img/cat.png" alt="Cat">
+                            </a>
+                            <a id="insta_ad" href="#" target="_blank">
+                                <div class="dash__ad">
+                                    <div class="chat__right_phone dash__phone">
+                                        <img src="img/mockup/ig.jpg" id="insta__phone" alt="FB">
+                                        <p class="chat__inst_text">Mogelijk opgesloten in schuren of bij gebou-wen. Erg mens vriendelijke kat makkelijk. Opgesloten in schuren of bij gebouwen. Erg mens vriendelijke kat makkelijk</p>
                                     </div>
-                                    <p class="chat__cat_desc"><span>kattenradar</span> Mogelijk opgesloten in schuren of bij gebou-wen. Erg mens vriendelijke kat makkelijk.</p>
-
+                                    <button>Check het op Instagram</button>
                                 </div>
-                                <a id="insta_ad" href="#" target="_blank"><button>Check het op Instagram</button></a>
-                            </div>
+                            </a>
+
                         </div>
                     </div>
                     <div class="dash__controls_item dash__tips">
@@ -555,7 +530,7 @@
             </div>
 
             <div class="catfound_button" style="display: flex; position: relative;">
-                <button class="catfound_red"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <button class="catfound_red catfound_2"><svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path class="red__path" d="M11.9729 3.08117C12.5402 2.51394 12.5402 1.59428 11.9729 1.02706C11.4057 0.459829 10.4861 0.459829 9.91883 1.02706L6.5 4.44589L3.08117 1.02706C2.51394 0.459829 1.59428 0.459829 1.02706 1.02706C0.459829 1.59428 0.459829 2.51394 1.02706 3.08117L4.44589 6.5L1.02223 9.94532C0.45829 10.5128 0.462901 11.4306 1.03252 11.9924C1.59787 12.55 2.50725 12.5469 3.06873 11.9854L6.5 8.55411L9.93127 11.9854C10.4928 12.5469 11.4021 12.55 11.9675 11.9924C12.5371 11.4306 12.5417 10.5128 11.9778 9.94532L8.55411 6.5L11.9729 3.08117Z" fill="white"/>
             </svg>
              CATNAME is niet veilig thuis, stop de zoekactie</button>
@@ -576,6 +551,7 @@
             </div>
         </div>
         <div class="feedback__stars" style="display: none">
+            <p class="catfound__subtitle">Okee, de zoekactie wordt gestopt.</p>
             <p class="catfound__title">Hoe was je ervaring met KattenRadar?</p>
 
             <div class="stars_block">
@@ -718,9 +694,9 @@
                 </div>
                 <div class="data__edit_price">
                     <p>Verwerkingskosten</p>
-                    <p class="data_edit_price">€2</p>
+                    <p class="data_edit_price">€0</p>
                 </div>
-                <button class="data__edit_send">Betaal en start zoekactie</button>
+                <button class="data__edit_send" disabled="true">Betaal en start zoekactie</button>
             </div>
             <hr class="data__edit_line">
             <div class="data__edit_right">
@@ -752,7 +728,7 @@
         <div class="feedback_close">
             <img class="popup_close_tips" src="img/homepage/close.svg" alt="Close">
         </div>
-        <p class="catfound__title" style="text-align: left; margin-bottom: 20px;">Tip via website</p>
+        <p class="catfound__title tip__title_popup" style="text-align: left; margin-bottom: 20px;">Tip via website</p>
 
         <div class="tip__data">
             <p class="tip__data_title">Tip</p>

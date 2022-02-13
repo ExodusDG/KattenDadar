@@ -89,6 +89,7 @@
     display: flex;
     margin: 0 auto;
     justify-content: space-around;
+    user-select: none;
 }
 
 .dash_step {
@@ -253,7 +254,7 @@
     width: 230px;
     height: 60px;
     background: #F8A35B;
-    bottom: 70px;
+    bottom: 175px;
     position: relative;
     border: none;
     font-family: inglobal;
@@ -269,6 +270,31 @@
     position: relative;
     left: 10px;
     cursor: pointer;
+}
+
+.dash__ads_items a {
+    text-decoration: none;
+    color: black;
+}
+
+.dash__ad {
+    height: 500px;
+}
+
+.chat__fb_text {
+    position: relative;
+    font-size: 10px;
+    bottom: 390px;
+    left: 25px;
+    width: 200px;
+}
+
+.chat__inst_text {
+    position: relative;
+    font-size: 10px;
+    bottom: 120px;
+    left: 25px;
+    width: 200px;
 }
 
 .tips__list {
@@ -1206,7 +1232,6 @@
 }
 
 .chat__right_phone {
-    background-image: url(../img/phone.png);
     background-repeat: no-repeat;
     height: 616px;
     width: 314px;
@@ -1352,7 +1377,7 @@
     margin: 0 auto;
 }
 
-.chat__right_phone {
+.chat__right_phone img {
     height: 490px;
 }
 
@@ -1388,7 +1413,7 @@
 .data__edit {
     padding: 30px;
     width: 1140px;
-    height: 80vh;
+    height: 82vh;
     position: fixed;
     left: calc((100vw - 1140px)/2);
     top: 15vh;
@@ -1399,6 +1424,18 @@
     transform: scale(0);
     transition: 0.3s;
     z-index: 9999;
+}
+
+.catfound__subtitle {
+    font-family: inglobal;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 39px;
+    /* or 123% */
+    text-align: center;
+    color: #000000;
+    margin-bottom: 10px;
 }
 
 .tips__info {
@@ -1509,7 +1546,8 @@
 
 .dash__phone_edit {
     height: 600px;
-    width: 290px;
+    width: 315px;
+    background: url('../img/phone.png');
 }
 
 .dash__phone_edit .chat__phone__body {
@@ -1559,6 +1597,13 @@
 
 .imagebox button img {
     width: 14px;
+}
+
+.dash__phone_edit .chat__phone__left {
+    position: absolute;
+    left: 4px;
+    z-index: 2;
+    height: 275px;
 }
 
 .data_edit_price {
@@ -1812,6 +1857,47 @@
     font-family: 'Inglobal';
     color: rgba(63, 43, 79, 0.3);
     font-size: 16px;
+}
+
+.chat__phone__cat {
+    left: 100px;
+    height: 282px;
+}
+
+.dash__phone_edit .chat__phone__body {
+    position: absolute;
+    left: 20px;
+    top: 125px;
+    width: 270px;
+    overflow-x: hidden;
+    height: 265px;
+}
+
+.dash__phone_edit .chat__cat_desc {
+    top: 480px;
+    left: 30px;
+    width: 250px;
+    font-size: 10px;
+}
+
+.dash__phone_edit .chat__phone__cat {
+    height: 270px;
+}
+
+.dash__phone_edit .chat__phone__left {
+    position: absolute;
+    left: 4px;
+    z-index: 2;
+    height: 267px;
+}
+
+.chat__phone__body {
+    overflow: hidden;
+}
+
+.data__edit_right {
+    width: 400px;
+    margin-top: 50px;
 }
 
 @media (max-width: 1024px) {
