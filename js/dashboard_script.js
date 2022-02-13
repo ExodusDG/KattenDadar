@@ -89,8 +89,8 @@ function generateHTML(arr) {
     } else {
         $('#targetReach__text').attr('style', 'display:none')
     }
-    //   $('#fb__phone').attr('src', arr.fbMockup)
-    //  $('#insta__phone').attr('src', arr.igMockup)
+    $('#fb__phone').attr('src', arr.fbMockup)
+    $('#insta__phone').attr('src', arr.igMockup)
 }
 
 function searchAreas(arr) {
