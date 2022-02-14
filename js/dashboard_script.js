@@ -34,15 +34,19 @@ $.ajax(settings).done(function(response) {
     dashData = response
 
     generateHTML(dashData)
+    initMap(dashData)
 });
 
 /* GET DASHBOARD DATA END */
 var catName;
+var searchLocations = [];
 
 function generateHTML(arr) {
     var tipsArray = arr.tips
     var searchArray = arr.searchareas;
+    searchLocations = arr.searchareas;
     var statsArray = arr.stats
+
     targetReach = arr.targetReach
     tipsGenerate(tipsArray)
     searchAreas(searchArray)
@@ -61,7 +65,7 @@ function generateHTML(arr) {
         $('#dash_step_2').removeClass('step__incative')
         $('#dash_step_3').removeClass('step__incative')
     }
-
+    $('.catfound_button span').text(arr.catName)
     $('.dash__info_desc span').text(arr.catName)
     $('.targetReach').text(arr.targetReach)
 
@@ -163,17 +167,23 @@ function statsGenerate(arr) {
             Arrcounter++
         })
 
+        const titleTooltipViews = (tooltipItems) => {
+            return 'Views';
+        }
         const ctxViews = document.getElementById('viewsChart').getContext('2d');
         const chartViews = new Chart(ctxViews, {
             type: 'line',
             data: {
                 labels: ['1', '2', '3', '4', '5', '6', '7'],
                 datasets: [{
-                    label: '# of Votes',
-                    data: firstArray,
+                    label: '',
+                    data: secondArray,
 
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    borderWidth: 1,
+                    fill: 'start',
                     backgroundColor: [
-                        'rgba(248,163,91, 1)',
+                        'rgba(248,163,91, 0.3)',
                     ],
                     borderColor: [
                         'rgba(248,163,91, 1)',
@@ -190,6 +200,18 @@ function statsGenerate(arr) {
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        yAlign: 'bottom',
+                        backgroundColor: '#F8A35B',
+                        titleFontSize: 16,
+                        titleFontColor: 'red',
+                        bodyFontColor: 'red',
+                        bodyFontSize: 14,
+                        displayColors: false,
+                        callbacks: {
+                            title: titleTooltipViews
+                        }
                     }
                 }
             }
@@ -224,17 +246,20 @@ function statsGenerate(arr) {
                 Arrcounter++
             })
             //Likes
+        const titleTooltipLikes = (tooltipItems) => {
+            return 'Likes';
+        }
         const ctxLikes = document.getElementById('likesChart').getContext('2d');
         const chartLikes = new Chart(ctxLikes, {
             type: 'line',
             data: {
                 labels: ['1', '2', '3', '4', '5', '6', '7'],
                 datasets: [{
-                    label: '# of Votes',
-                    data: firstArray,
-
+                    label: '',
+                    data: secondArray,
+                    fill: 'start',
                     backgroundColor: [
-                        'rgba(248,163,91, 1)',
+                        'rgba(248,163,91, 0.3)',
                     ],
                     borderColor: [
                         'rgba(248,163,91, 1)',
@@ -251,6 +276,18 @@ function statsGenerate(arr) {
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        yAlign: 'bottom',
+                        backgroundColor: '#F8A35B',
+                        titleFontSize: 16,
+                        titleFontColor: 'red',
+                        bodyFontColor: 'red',
+                        bodyFontSize: 14,
+                        displayColors: false,
+                        callbacks: {
+                            title: titleTooltipLikes
+                        }
                     }
                 }
             }
@@ -283,17 +320,20 @@ function statsGenerate(arr) {
                 Arrcounter++
             })
             //Likes
+        const titleTooltipInteractions = (tooltipItems) => {
+            return 'Interactions';
+        }
         const ctxSmiles = document.getElementById('smilesChart').getContext('2d');
         const chartSmiles = new Chart(ctxSmiles, {
             type: 'line',
             data: {
                 labels: ['1', '2', '3', '4', '5', '6', '7'],
                 datasets: [{
-                    label: '# of Votes',
-                    data: firstArray,
-
+                    label: '',
+                    data: secondArray,
+                    fill: 'start',
                     backgroundColor: [
-                        'rgba(248,163,91, 1)',
+                        'rgba(248,163,91, 0.3)',
                     ],
                     borderColor: [
                         'rgba(248,163,91, 1)',
@@ -310,6 +350,18 @@ function statsGenerate(arr) {
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    tooltip: {
+                        yAlign: 'bottom',
+                        backgroundColor: '#F8A35B',
+                        titleFontSize: 16,
+                        titleFontColor: 'red',
+                        bodyFontColor: 'red',
+                        bodyFontSize: 14,
+                        displayColors: false,
+                        callbacks: {
+                            title: titleTooltipInteractions
+                        }
                     }
                 }
             }
@@ -349,61 +401,91 @@ setTimeout(() => {
 
 }, 1000);
 
+var circlesArray = []
+var currentCircle = [];
+var poly, map, bounds;
+var mapRadius;
+var cityCircleNew;
+
 function initMap() {
-    const componentForm = [
-        'location',
-        'locality',
-        'administrative_area_level_1',
-        'country',
-        'postal_code',
-    ];
-    var zoomNumber = 14;
 
-    map = new google.maps.Map(document.getElementById("dash_map"), {
-        zoom: Number(zoomNumber),
-        center: { lat: Number(52.370216), lng: Number(4.895168) },
-        mapTypeControl: false,
-        mapTypeId: "terrain",
-        fullscreenControl: false,
-        zoomControl: false,
-        draggable: false,
-        scrollwheel: false,
-        streetViewControl: false
-    });
+    let mapTimer = setInterval(() => {
+        if (searchLocations.length == 0) {
 
-    const cityCircle = new google.maps.Circle({
-        strokeColor: "#F8A35B",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#F8A35B",
-        fillOpacity: 0.3,
-        clickable: false,
-        map,
-        center: { lat: Number(52.370216), lng: Number(4.895168) },
-        radius: Number(1000),
-    });
-
-    var productTypes = [];
-
-    $.ajax({
-        url: 'https://server.kattenradar.nl/get-extension-product-types',
-        method: 'get',
-        dataType: 'json',
-        async: false,
-        data: productTypes,
-        success: function(data) {
-            productTypes = data.extendArea;
-            console.log(productTypes)
-        }
-    });
-
-    $('.dash__places_items').delegate('.dash__places_block', 'click', function() {
-        if ($(this).attr('on-map') == 'true') {
-            map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
         } else {
-            map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
-            cityCircle.setMap(null);
-            $(this).attr('on-map', 'true')
+            initMapDash()
+            clearInterval(mapTimer);
+        }
+    }, 100);
+
+    function initMapDash() {
+        const componentForm = [
+            'location',
+            'locality',
+            'administrative_area_level_1',
+            'country',
+            'postal_code',
+        ];
+        var zoomNumber = 13;
+
+        var mapConfig = {
+            center: {
+                lat: Number(searchLocations[0].lat),
+                lng: Number(searchLocations[0].lng),
+            },
+            radius: searchLocations[0].radius
+        }
+        map = new google.maps.Map(document.getElementById("dash_map"), {
+            zoom: Number(zoomNumber),
+            center: mapConfig.center,
+            mapTypeControl: false,
+            mapTypeId: "terrain",
+            fullscreenControl: false,
+            zoomControl: false,
+            draggable: false,
+            scrollwheel: false,
+            streetViewControl: false
+        });
+
+        var cityCircle = new google.maps.Circle({
+
+        });
+
+        setTimeout(() => {
+            $(".dash__places_block").trigger('click');
+        }, 500);
+        var productTypes = [];
+        var thisCircle;
+        $.ajax({
+            url: 'https://server.kattenradar.nl/get-extension-product-types',
+            method: 'get',
+            dataType: 'json',
+            async: false,
+            data: productTypes,
+            success: function(data) {
+                productTypes = data.extendArea;
+            }
+        });
+
+        $('.dash__places_items').delegate('.dash__places_block', 'click', function() {
+            if ($(this).attr('on-map') == 'true') {
+                map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
+                var currentLat = Number($(this).attr('lat'))
+                $.each(circlesArray, function(key, value) {
+                    if (currentLat == value.circleLat) {
+                        currentCircle = this.circleArray
+                        return false;
+                    }
+                })
+            } else {
+                thisCircle = $(this)
+                updateCircle(thisCircle)
+            }
+        })
+
+        function updateCircle(thisCircle) {
+            map.setCenter(new google.maps.LatLng(Number(thisCircle.attr('lat')), Number(thisCircle.attr('lng'))));
+            thisCircle.attr('on-map', 'true')
             cityCircle = new google.maps.Circle({
                 strokeColor: "#F8A35B",
                 strokeOpacity: 0.8,
@@ -412,24 +494,160 @@ function initMap() {
                 fillOpacity: 0.3,
                 clickable: false,
                 map,
-                center: { lat: Number($(this).attr('lat')), lng: Number($(this).attr('lng')) },
-                radius: Number($(this).attr('radius') + '000'),
+                center: { lat: Number(thisCircle.attr('lat')), lng: Number(thisCircle.attr('lng')) },
+                radius: Number(thisCircle.attr('radius') + '000'),
             });
-
+            var currentArray = {
+                circleLat: thisCircle.attr('lat'),
+                circleArray: cityCircle
+            }
+            circlesArray.push(currentArray)
         }
-    })
 
+        function currentCircleUpdate(radiusKM) {
+            currentCircle.setRadius(Number(radiusKM + '000'));
+        }
+
+        /* RANGE DRAGGABLE */
+        var trackStep = $('.map__radius_track').width();
+        mapRadius = 1000
+        var productType = 1;
+        $(".map__radius_draggable").draggable({
+            containment: "parent",
+            axis: "x",
+
+            drag: function(e, ui) {
+                x2 = ui.position.left;
+                var trackPercent = ((x2 * 110) / trackStep).toFixed(0)
+                if (trackPercent > (11 * 8.5)) {
+                    var radiusKM = 8;
+                    $('.range__km').text('8 km')
+                    map.setZoom(11)
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                } else if (trackPercent > (11 * 7)) {
+                    var radiusKM = 7;
+                    $('.range__km').text('7 km')
+                    map.setZoom(11)
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                } else if (trackPercent > (11 * 6)) {
+                    var radiusKM = 6;
+                    $('.range__km').text('6 km')
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                } else if (trackPercent > (10 * 5)) {
+                    var radiusKM = 5;
+                    $('.range__km').text('5 km')
+                    map.setZoom(11)
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                } else if (trackPercent > (10 * 4)) {
+                    var radiusKM = 4;
+                    $('.range__km').text('4 km')
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                } else if (trackPercent > (11 * 2)) {
+                    var radiusKM = 3;
+                    $('.range__km').text('3 km')
+                    map.setZoom(12)
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                } else if (trackPercent > (5 * 2)) {
+                    var radiusKM = 2;
+                    $('.range__km').text(radiusKM + ' km')
+                    map.setZoom(13.5)
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                } else if (trackPercent > (10 * 1)) {
+                    var radiusKM = 1;
+                    $('.range__km').text('1 km')
+                    map.setZoom(14)
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                } else if (trackPercent < (10 * 1)) {
+                    var radiusKM = 1;
+                    $('.range__km').text('1 km')
+                    map.setZoom(14)
+                    productTypesArr(radiusKM)
+                    currentCircleUpdate(radiusKM)
+                }
+
+            }
+        });
+
+        function productTypesArr(radiusKM) {
+            $.each(productTypes, function(key, value) {
+                if (value.radius == radiusKM) {
+                    $('.range__price').text(value.price + ' €')
+                    $('.map__price_count span').text(value.discount)
+                    $('.search__map_radius').text(targetReach + ' + ' + value.impressions)
+                    productType = $('.range__km').text().replace(' km', '')
+                    cityCircle.setRadius(Number(radiusKM + '000'));
+                    console.log(cityCircleNew)
+                    if (cityCircleNew) {
+                        cityCircleNew.setRadius(Number(radiusKM + '000'));
+                    }
+                }
+            })
+        }
+
+        /* MAP ADD LOCATION */
+
+        $('.dash__places_button button').click(function() {
+            $('.dash__places_lists').attr('style', 'display: none')
+            $('.dash__places_select').attr('style', 'display: flex')
+            $(this).addClass('select__new_zone')
+        })
+
+        $('.select__new_zone').click(function() {
+            $.ajax({
+                url: 'https://server.kattenradar.nl/get-extension-product-types',
+                method: 'get',
+                dataType: 'json',
+                async: false,
+                data: productTypes,
+                success: function(data) {
+                    productTypes = data.newArea;
+                }
+            });
+        })
+
+        $('#map__button_top').click(function() {
+            var settings = {
+                "url": "https://server.kattenradar.nl/test-payment-extension",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                "data": {
+                    "id": userID,
+                    "catName": catName,
+                    "productType": productType
+                }
+
+            };
+            $.ajax(settings).done(function(response) {
+                window.open(response.redirectLink);
+            });
+        })
+    }
     const autocompleteInput = document.getElementById('dash__location');
     const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
         fields: ["address_components", "geometry", "name"],
         types: ["address"],
-
     });
-    var cityCircleNew;
+
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        adressSelect()
+    });
+    var prevCircle;
 
     function adressSelect() {
-        //    marker.setVisible(false);
+
         const place = autocomplete.getPlace();
+        map.setCenter(place.geometry.location);
         if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
             // pressed the Enter key, or the Place Details request failed.
@@ -440,7 +658,6 @@ function initMap() {
         //  fillInAddress(place);
 
         var markersArray = [];
-
         markersArray.push(
             [
                 place.name, {
@@ -449,7 +666,6 @@ function initMap() {
                 }
             ]
         )
-        console.log(markersArray)
         cityCircleNew = new google.maps.Circle({
             strokeColor: "#F8A35B",
             strokeOpacity: 0.8,
@@ -460,6 +676,13 @@ function initMap() {
             center: markersArray[0][1].center,
             radius: Math.sqrt(markersArray[0][1].population) * 100,
         });
+        prevCircle = cityCircleNew;
+        var currentArray = {
+            circleLat: place.geometry.location.lat().toString(),
+            circleArray: cityCircleNew
+        }
+        circlesArray.push(currentArray)
+        console.log(circlesArray)
     }
 
 
@@ -469,146 +692,27 @@ function initMap() {
         //    marker.setPosition(place.geometry.location);
         //  marker.setVisible(true);
     }
-
-    /* RANGE DRAGGABLE */
-    var trackStep = $('.map__radius_track').width();
-    var mapRadius = 1000
-    var productType = 1;
-    $(".map__radius_draggable").draggable({
-        containment: "parent",
-        axis: "x",
-
-        drag: function(e, ui) {
-            x2 = ui.position.left;
-            var trackPercent = ((x2 * 110) / trackStep).toFixed(0)
-            if (trackPercent > (11 * 8.5)) {
-                var radiusKM = 8;
-                $('.range__km').text('8 km')
-                map.setZoom(11)
-                productTypesArr(radiusKM)
-            } else if (trackPercent > (11 * 7)) {
-                var radiusKM = 7;
-                $('.range__km').text('7 km')
-                map.setZoom(11)
-                productTypesArr(radiusKM)
-            } else if (trackPercent > (11 * 6)) {
-                var radiusKM = 6;
-                $('.range__km').text('6 km')
-                productTypesArr(radiusKM)
-            } else if (trackPercent > (10 * 5)) {
-                var radiusKM = 5;
-                $('.range__km').text('5 km')
-                map.setZoom(11)
-                productTypesArr(radiusKM)
-            } else if (trackPercent > (10 * 4)) {
-                var radiusKM = 4;
-                $('.range__km').text('4 km')
-                productTypesArr(radiusKM)
-            } else if (trackPercent > (11 * 2)) {
-                var radiusKM = 3;
-                $('.range__km').text('3 km')
-                map.setZoom(12)
-                productTypesArr(radiusKM)
-            } else if (trackPercent > (5 * 2)) {
-                var radiusKM = 2;
-                $('.range__km').text(radiusKM + ' km')
-                map.setZoom(13.5)
-                productTypesArr(radiusKM)
-            } else if (trackPercent > (10 * 1)) {
-                var radiusKM = 1;
-                $('.range__km').text('1 km')
-                map.setZoom(14)
-                productTypesArr(radiusKM)
-            } else if (trackPercent < (10 * 1)) {
-                var radiusKM = 1;
-                $('.range__km').text('1 km')
-                map.setZoom(14)
-                productTypesArr(radiusKM)
-            }
-
-        }
-    });
-
-    function productTypesArr(radiusKM) {
-        $.each(productTypes, function(key, value) {
-            if (value.radius == radiusKM) {
-                $('.range__price').text(value.price + ' €')
-                $('.map__price_count span').text(value.discount)
-                $('.search__map_radius').text(targetReach + ' + ' + value.impressions)
-                productType = $('.range__km').text().replace(' km', '')
-                cityCircle.setRadius(Number(radiusKM + '000'));
-
-                if (cityCircleNew) {
-                    cityCircleNew.setRadius(Number(radiusKM + '000'));
-                }
-            }
-        })
-    }
-
-    /* MAP ADD LOCATION */
-
-    $('.dash__places_button button').click(function() {
-        $('.dash__places_lists').attr('style', 'display: none')
-        $('.dash__places_select').attr('style', 'display: flex')
-        $(this).addClass('select__new_zone')
-    })
-
-    $('.select__new_zone').click(function() {
-        adressSelect()
-
-        $.ajax({
-            url: 'https://server.kattenradar.nl/get-extension-product-types',
-            method: 'get',
-            dataType: 'json',
-            async: false,
-            data: productTypes,
-            success: function(data) {
-                productTypes = data.newArea;
-                console.log(productTypes)
-            }
-        });
-    })
-
-    $('#map__button_top').click(function() {
-        var settings = {
-            "url": "https://server.kattenradar.nl/test-payment-extension",
-            "method": "POST",
-            "timeout": 0,
-            "headers": {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            "data": {
-                "id": userID,
-                "catName": catName,
-                "productType": productType
-            }
-
-        };
-        console.log(settings.data)
-        $.ajax(settings).done(function(response) {
-            window.open(response.redirectLink);
-        });
-    })
 }
 
 $('.dash__stats_link').click(function() {
     var clickedSlide;
-
     if ($(this).attr('id') == 'views_link') {
         clickedSlide = 0;
 
         $('.dash__stats_info > div').removeClass('stats__active')
         $('.views').addClass('stats__active')
+        $('.views__top_link').addClass('stats__active')
 
     } else if ($(this).attr('id') == 'likes_link') {
         clickedSlide = 1;
 
         $('.dash__stats_info > div').removeClass('stats__active')
         $('.likes').addClass('stats__active')
+        $('.likes__top_link').addClass('stats__active')
 
     } else {
         clickedSlide = 2;
-
+        $('.smiles__top_link').addClass('stats__active')
         $('.dash__stats_info > div').removeClass('stats__active')
         $('.smiles').addClass('stats__active')
     }
@@ -623,28 +727,24 @@ $('.dash__stats_link').click(function() {
 
 
 $('.dash__stats_info div').click(function() {
+    $('.dash__stats_link').removeClass('stats__active')
+    $('.dash__stats_info > div').removeClass('stats__active')
     var clickedSlide;
-
     if ($(this).attr('id') == 'views_link') {
         clickedSlide = 0;
-
-        $('.dash__stats_info > div').removeClass('stats__active')
         $('.views').addClass('stats__active')
+        $('.views__top_link').addClass('stats__active')
 
     } else if ($(this).attr('id') == 'likes_link') {
         clickedSlide = 1;
 
-        $('.dash__stats_info > div').removeClass('stats__active')
         $('.likes').addClass('stats__active')
-
+        $('.likes__top_link').addClass('stats__active')
     } else {
         clickedSlide = 2;
-
-        $('.dash__stats_info > div').removeClass('stats__active')
         $('.smiles').addClass('stats__active')
+        $('.smiles__top_link').addClass('stats__active')
     }
-
-    $('.dash__stats_link').removeClass('stats__active')
     $(this).addClass('stats__active')
 
     var translateWidth = clickedSlide * $('canvas').width();
@@ -665,6 +765,10 @@ $('.popup_close_cat').click(function() {
 })
 
 $('.feedback').click(function() {
+    catFoundClose()
+})
+
+$('.catfound_red_back').click(function() {
     catFoundClose()
 })
 $('.blur__wrapper').click(function() {
@@ -749,9 +853,16 @@ function leaveFeedback() {
 
     $('.feedback_reviews').attr('style', 'display: block')
 }
-
+$('.catfound__2_button').click(function() {
+    leaveFeedback()
+})
 $('.feedback__send').click(function() {
-    catFoundClose()
+    var typedText = $('#feedback').val();
+    $('.feedback__input').attr('style', 'display: none')
+    $('#bot__msg_1').attr('style', 'display: flex')
+    $('.chat__user_text_body p ').text(typedText);
+    $('.cat__name_chat').attr('style', 'display: flex')
+    $('.cat__name_chat').addClass('user__msg_show');
 })
 
 
@@ -805,7 +916,6 @@ $('.data__edit_send').click(function() {
     urlencoded.append("id", 'nw9Ih938nGl');
     urlencoded.append("text", $('#desc__change').val());
 
-    console.log($('#desc__change').val())
 
     var requestOptions = {
         method: 'POST',
@@ -913,11 +1023,9 @@ function tipsGenerate(arr) {
         lastTipDate = dateDay + '.' + dateMonth + '.' + dateYear;
     })
     var thisTip;
-    console.log(thisTip)
     $('.tips__list > div').click(function() {
         var clikedTip = Number($(this).attr('id').replace('tip_', ''))
         thisTip = tipAray[clikedTip]
-        console.log(thisTip)
 
         if (typeof thisTip.location != 'undefined') {
             $('.tip_map').attr('style', 'display: block')
@@ -955,14 +1063,12 @@ function tipsGenerate(arr) {
             $('.tip__data_time').attr('style', 'display: flex')
 
             var date = thisTip.sightingDate;
-            console.log(date)
             var dateYear = date.substr(0, 4)
             date = date.replace(dateYear + '-', '')
             var dateMonth = date.substr(0, 2)
             date = date.replace(dateMonth + '-', '')
             var dateDay = date.substr(0, 2)
             date = date.replace(dateDay, '')
-            console.log(date)
             var timeDay = date.substr(1, 5)
 
             $('#tip_day').text(dateDay)
