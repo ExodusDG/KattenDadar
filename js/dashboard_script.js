@@ -231,7 +231,6 @@ function statsGenerate(arr) {
             chartViews.update();
         })
     }
-    $('.search__map_radius').text(targetReach + ' + ' + 4000)
 
     function likesGenerate() {
         var firstArray = [];
@@ -406,6 +405,7 @@ var currentCircle = [];
 var poly, map, bounds;
 var mapRadius;
 var cityCircleNew;
+var targetReach;
 
 function initMap() {
 
@@ -471,6 +471,37 @@ function initMap() {
             if ($(this).attr('on-map') == 'true') {
                 map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
                 var currentLat = Number($(this).attr('lat'))
+                $('.search__map_radius span').text($(this).attr('targetReach'))
+                var radius = Number($(this).attr('radius'));
+                var scrollWidth = radius * 55;
+                $('.map__radius_draggable').attr('style', 'left:' + scrollWidth + 'px')
+
+                $.each(productTypes, function(key, value) {
+                    if (value.radius == radius) {
+                        $('.range__km').text(Number($(this).attr('radius')) + ' km')
+                        $('.range__price').text(value.price + ' €')
+                        return false;
+                    }
+                })
+
+                if (radius == 1) {
+                    map.setZoom(13.5)
+                } else if (radius == 2) {
+                    map.setZoom(13)
+                } else if (radius == 3) {
+                    map.setZoom(13)
+                } else if (radius == 4) {
+                    map.setZoom(12)
+                } else if (radius == 5) {
+                    map.setZoom(11.5)
+                } else if (radius == 6) {
+                    map.setZoom(11.5)
+                } else if (radius == 7) {
+                    map.setZoom(11.5)
+                } else if (radius == 8) {
+                    map.setZoom(11)
+                }
+
                 $.each(circlesArray, function(key, value) {
                     if (currentLat == value.circleLat) {
                         currentCircle = this.circleArray
@@ -482,6 +513,7 @@ function initMap() {
                 updateCircle(thisCircle)
             }
         })
+        var currentArray = []
 
         function updateCircle(thisCircle) {
             map.setCenter(new google.maps.LatLng(Number(thisCircle.attr('lat')), Number(thisCircle.attr('lng'))));
@@ -497,16 +529,28 @@ function initMap() {
                 center: { lat: Number(thisCircle.attr('lat')), lng: Number(thisCircle.attr('lng')) },
                 radius: Number(thisCircle.attr('radius') + '000'),
             });
-            var currentArray = {
+            currentArray = {
                 circleLat: thisCircle.attr('lat'),
+                targetReach: thisCircle.attr('targetReach'),
                 circleArray: cityCircle
             }
-            circlesArray.push(currentArray)
+            targetReach = thisCircle.attr('targetReach'),
+                circlesArray.push(currentArray)
+
+            var scrollWidth = Number(thisCircle[0].attributes.radius.value) * 50;
+            $('.map__radius_draggable').attr('style', 'left:' + scrollWidth + 'px')
+
+            $.each(productTypes, function(key, value) {
+                if (value.radius == Number(thisCircle[0].attributes.radius.value)) {
+                    $('.range__km').text(Number(thisCircle[0].attributes.radius.value) + ' km')
+                    $('.range__price').text(value.price + ' €')
+
+                    return false;
+                }
+            })
         }
 
-        function currentCircleUpdate(radiusKM) {
-            currentCircle.setRadius(Number(radiusKM + '000'));
-        }
+
 
         /* RANGE DRAGGABLE */
         var trackStep = $('.map__radius_track').width();
@@ -576,12 +620,17 @@ function initMap() {
             }
         });
 
+        function currentCircleUpdate(radiusKM) {
+            currentCircle.setRadius(Number(radiusKM + '000'));
+        }
+
         function productTypesArr(radiusKM) {
             $.each(productTypes, function(key, value) {
                 if (value.radius == radiusKM) {
                     $('.range__price').text(value.price + ' €')
                     $('.map__price_count span').text(value.discount)
-                    $('.search__map_radius').text(targetReach + ' + ' + value.impressions)
+
+                    $('.dash__radius_number').text(value.impressions)
                     productType = $('.range__km').text().replace(' km', '')
                     cityCircle.setRadius(Number(radiusKM + '000'));
                     console.log(cityCircleNew)
@@ -674,8 +723,9 @@ function initMap() {
             fillOpacity: 0.3,
             map,
             center: markersArray[0][1].center,
-            radius: Math.sqrt(markersArray[0][1].population) * 100,
+            radius: 1000,
         });
+        map.setZoom(14.5)
         prevCircle = cityCircleNew;
         var currentArray = {
             circleLat: place.geometry.location.lat().toString(),
