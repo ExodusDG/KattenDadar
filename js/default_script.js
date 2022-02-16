@@ -133,5 +133,29 @@ function dashboardClose() {
 }
 
 /* DASHBOARD POPUP END */
+/* REVIEWS SLIDER */
 
-/* DEFAULT SCRIPTS END */
+var numberSlider = 1;
+
+setInterval(() => {
+    var revItemWidth = 380;
+    var firstSlide = $('#review-' + numberSlider).html()
+    var translateWidth = numberSlider * revItemWidth;
+    $('.reviews__items').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
+    $('.reviews__items').append("<div class='review__item' id='review-" + (numberSlider + 6) + "'>" + firstSlide + "</div>")
+    numberSlider++
+}, 3000);
+
+/* REVIEWS SLIDER END */
+$('.faq__item').click(function() {
+        var currentFaq = $(this)
+        currentFaq.find('.faq__item_answer').toggleClass('faq_ans_open')
+        currentFaq.toggleClass('faq_open');
+
+        if (currentFaq.hasClass('faq_open')) {
+            $(this).find('.faq__open').attr('src', 'img/homepage/faq_minus.svg')
+        } else {
+            $(this).find('.faq__open').attr('src', 'img/homepage/faq_plus.svg')
+        }
+    })
+    /* DEFAULT SCRIPTS END */
