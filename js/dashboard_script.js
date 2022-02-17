@@ -40,6 +40,8 @@ $.ajax(settings).done(function(response) {
 /* GET DASHBOARD DATA END */
 var catName;
 var searchLocations = [];
+var defCatImage;
+var defCatDesc;
 
 function generateHTML(arr) {
     var tipsArray = arr.tips
@@ -52,8 +54,10 @@ function generateHTML(arr) {
     searchAreas(searchArray)
     statsGenerate(statsArray)
     console.log(arr)
+    defCatImage = arr.catImage
     $('.edit__cat_image').attr('src', arr.catImage)
     $('.chat__inst_text').html('<span>kattenradar </span>' + arr.textContent)
+    defCatDesc = arr.textContent;
     $('.chat__fb_text').html(arr.textContent)
     $('.dash__title span').text(arr.userName)
     $('.facebook_ad').attr('href', arr.fbPost)
@@ -467,21 +471,29 @@ function initMap() {
                 productTypes = data.extendArea;
             }
         });
-
+        var prevCircle = [];
+        var prevRadius;
         $('.dash__places_items').delegate('.dash__places_block', 'click', function() {
             if ($(this).attr('on-map') == 'true') {
                 map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
                 var currentLat = Number($(this).attr('lat'))
-                $('.search__map_radius span').text($(this).attr('targetReach'))
-                var radius = Number($(this).attr('radius'));
-                minCircleRadius = radius
-                var scrollWidth = radius * 55;
-                $('.map__radius_draggable').attr('style', 'left:' + scrollWidth + 'px')
 
+                $.each(circlesArray, function(key, value) {
+                    if (currentLat == value.circleLat) {} else {
+                        value.circleArray.setRadius(Number(value.circleRadius + '000'))
+                    }
+                })
+
+                $('.search__map_population').text($(this).attr('targetReach') + ' + ')
+                var radius = Number($(this).attr('radius'));
+                minCircleRadius = radius;
+                prevRadius = minCircleRadius;
+                var scrollWidth = radius * 55;
+                //    $('.map__radius_draggable').attr('style', 'left:' + scrollWidth + 'px')
                 $.each(productTypes, function(key, value) {
                     if (value.radius == radius) {
-                        $('.range__km').text(Number($(this).attr('radius')) + ' km')
-                        $('.range__price').text(value.price + ' €')
+                        //    $('.range__km').text(Number($(this).attr('radius')) + ' km')
+                        //    $('.range__price').text(value.price + ' €')
                         return false;
                     }
                 })
@@ -503,18 +515,23 @@ function initMap() {
                 } else if (radius == 8) {
                     map.setZoom(11)
                 }
-
                 $.each(circlesArray, function(key, value) {
                     if (currentLat == value.circleLat) {
                         currentCircle = this.circleArray
                         return false;
+                    } else {
+
                     }
                 })
+                prevCircle = currentCircle
+
+
             } else {
                 thisCircle = $(this)
                 updateCircle(thisCircle)
             }
         })
+
         var currentArray = []
 
         function updateCircle(thisCircle) {
@@ -536,19 +553,19 @@ function initMap() {
             currentArray = {
                 circleLat: thisCircle.attr('lat'),
                 targetReach: thisCircle.attr('targetReach'),
+                circleRadius: thisCircle.attr('radius'),
                 circleArray: cityCircle
             }
             targetReach = thisCircle.attr('targetReach'),
                 circlesArray.push(currentArray)
 
             var scrollWidth = Number(thisCircle[0].attributes.radius.value) * 50;
-            $('.map__radius_draggable').attr('style', 'left:' + scrollWidth + 'px')
+            //    $('.map__radius_draggable').attr('style', 'left:' + scrollWidth + 'px')
 
             $.each(productTypes, function(key, value) {
                 if (value.radius == Number(thisCircle[0].attributes.radius.value)) {
-                    $('.range__km').text(Number(thisCircle[0].attributes.radius.value) + ' km')
-                    $('.range__price').text(value.price + ' €')
-
+                    //    $('.range__km').text(Number(thisCircle[0].attributes.radius.value) + ' km')
+                    //    $('.range__price').text(value.price + ' €')
                     return false;
                 }
             })
@@ -624,14 +641,6 @@ function initMap() {
             }
         });
 
-        function currentCircleUpdate(radiusKM) {
-            if (radiusKM < minCircleRadius) {
-                return false;
-            } else {
-                currentCircle.setRadius(Number(radiusKM + '000'));
-            }
-        }
-
         function productTypesArr(radiusKM) {
             $.each(productTypes, function(key, value) {
                 if (value.radius == radiusKM) {
@@ -641,7 +650,6 @@ function initMap() {
                     $('.dash__radius_number').text(value.impressions)
                     productType = $('.range__km').text().replace(' km', '')
                     cityCircle.setRadius(Number(radiusKM + '000'));
-                    console.log(cityCircleNew)
                     if (cityCircleNew) {
                         cityCircleNew.setRadius(Number(radiusKM + '000'));
                     }
@@ -652,10 +660,28 @@ function initMap() {
         /* MAP ADD LOCATION */
 
         $('.dash__places_button button').click(function() {
+            $('.search__map_population').attr('style', 'display: none')
             $('.dash__places_lists').attr('style', 'display: none')
             $('.dash__places_select').attr('style', 'display: flex')
             $(this).addClass('select__new_zone')
         })
+
+        $('.select__new_zone').click(function() {
+            $('.search__map_population').attr('style', 'display: inline-block')
+            $('.dash__places_lists').attr('style', 'display: flex')
+            $('.dash__places_select').attr('style', 'display: none')
+            $(this).removeClass('select__new_zone')
+        })
+
+        function currentCircleUpdate(radiusKM) {
+            if (radiusKM < minCircleRadius) {
+                return false;
+            } else {
+                if ($('.dash__places_lists').attr('style') == 'display: none') {} else {
+                    currentCircle.setRadius(Number(radiusKM + '000'));
+                }
+            }
+        }
 
         $('.select__new_zone').click(function() {
             $.ajax({
@@ -722,16 +748,23 @@ function initMap() {
                 }
             ]
         )
-        cityCircleNew = new google.maps.Circle({
-            strokeColor: "#F8A35B",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#F8A35B",
-            fillOpacity: 0.3,
-            map,
-            center: markersArray[0][1].center,
-            radius: 1000,
-        });
+        console.log(cityCircleNew)
+        if (cityCircleNew == null) {
+            cityCircleNew = new google.maps.Circle({
+                strokeColor: "#F8A35B",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#F8A35B",
+                fillOpacity: 0.3,
+                map,
+                center: markersArray[0][1].center,
+                radius: 1000,
+            });
+        } else {
+            return false;
+        }
+
+
         map.setZoom(14.5)
         prevCircle = cityCircleNew;
         var currentArray = {
@@ -740,6 +773,7 @@ function initMap() {
         }
         circlesArray.push(currentArray)
         console.log(circlesArray)
+
     }
 
 
@@ -962,7 +996,9 @@ $('#removeImg').click(function() {
     $('#file').prop('value', null);
     $('.imagebox').attr('style', 'display: none')
     $('.image__photo_upload').attr('style', 'display: block')
-
+    var price = $('.data_edit_price').text().replace('€', '')
+    $('.data_edit_price').text('€' + (price - 2))
+    $('.edit__cat_image').attr('src', defCatImage)
 })
 
 $('.data__edit_send').click(function() {
@@ -1179,12 +1215,18 @@ $('.popup_close_cat').click(function() {
 })
 
 var backendText = $('.chat_edit_cat_text').text()
-$('#desc__change').val(backendText.replace('kattenradar ', ''))
 
+$('#desc__change').val(backendText.replace('kattenradar ', ''))
+var originalText = backendText.replace('kattenradar ', '');
+price = 0;
 $('#desc__change').keyup(function() {
     var userText = $(this).val();
-
     $('.chat_edit_cat_text').html('<span>kattenradar</span>' + userText)
+
+    if (userText == originalText) {
+        price = $('.data_edit_price').text().replace('€', '')
+        $('.data_edit_price').text('€' + (price - 2))
+    }
 });
 
 var editText = $('#desc__change').val();
@@ -1204,3 +1246,14 @@ $('#desc__change').keyup(function() {
         $('.data__edit_send').prop("disabled", false);
     }
 });
+
+
+$('#dash__edit_button').click(function() {
+    $('#desc__change').val(defCatDesc);
+    $('#edit__cat_image').attr('src', defCatImage);
+    $('.data_edit_price').text('€0')
+})
+
+$('.stars_skip_wrapper').click(function() {
+    leaveFeedback()
+})
