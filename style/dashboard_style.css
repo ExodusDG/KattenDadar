@@ -445,6 +445,12 @@
     line-height: 25px;
     margin-left: 20px;
     cursor: pointer;
+    opacity: 0.5;
+    transition: 0.3s;
+}
+
+.dash__places_active {
+    opacity: 1;
 }
 
 #dash_map {

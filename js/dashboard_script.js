@@ -101,8 +101,10 @@ function generateHTML(arr) {
     $('#insta__phone').attr('src', arr.igMockup)
 }
 
-function searchAreas(arr) {
+var circleList = [];
 
+function searchAreas(arr) {
+    circleList = arr
     $.each(arr, function(key, value) {
         var searchNumber = key + 1;
         $('.dash__places_items').append(`
@@ -458,7 +460,11 @@ function initMap() {
 
         setTimeout(() => {
             $(".dash__places_block").trigger('click');
+
+            $(".dash__places_block").first().trigger('click');
+            $(".dash__places_block").first().addClass('dash__places_active')
         }, 500);
+
         var productTypes = [];
         var thisCircle;
         $.ajax({
@@ -471,9 +477,12 @@ function initMap() {
                 productTypes = data.extendArea;
             }
         });
-        var prevCircle = [];
-        var prevRadius;
+
+        circlesArray.reverse()
+
         $('.dash__places_items').delegate('.dash__places_block', 'click', function() {
+            $(".dash__places_block").removeClass('dash__places_active')
+            $(this).addClass('dash__places_active')
             if ($(this).attr('on-map') == 'true') {
                 map.setCenter(new google.maps.LatLng(Number($(this).attr('lat')), Number($(this).attr('lng'))));
                 var currentLat = Number($(this).attr('lat'))
@@ -507,9 +516,9 @@ function initMap() {
                 } else if (radius == 4) {
                     map.setZoom(12)
                 } else if (radius == 5) {
-                    map.setZoom(11.5)
+                    map.setZoom(12)
                 } else if (radius == 6) {
-                    map.setZoom(11.5)
+                    map.setZoom(11.7)
                 } else if (radius == 7) {
                     map.setZoom(11.5)
                 } else if (radius == 8) {
@@ -531,6 +540,8 @@ function initMap() {
                 updateCircle(thisCircle)
             }
         })
+
+
 
         var currentArray = []
 
@@ -577,6 +588,8 @@ function initMap() {
         var trackStep = $('.map__radius_track').width();
         mapRadius = 1000
         var productType = 1;
+        var mapZoom;
+        var radiusZoom;
         $(".map__radius_draggable").draggable({
             containment: "parent",
             axis: "x",
@@ -584,16 +597,38 @@ function initMap() {
             drag: function(e, ui) {
                 x2 = ui.position.left;
                 var trackPercent = ((x2 * 110) / trackStep).toFixed(0)
+
+                if ($('.dash__places_select').attr('style') == 'display: flex') {
+                    radiusZoom = 1;
+                } else {
+                    radiusZoom = (currentCircle.radius / 1000) - 1
+                }
+
+
                 if (trackPercent > (11 * 8.5)) {
                     var radiusKM = 8;
                     $('.range__km').text('8 km')
-                    map.setZoom(11)
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
+
+                    if (radiusZoom < radiusKM) {
+                        console.log(radiusZoom < radiusKM)
+                        map.setZoom(11)
+                        mapZoom = 11;
+                    } else {
+                        map.setZoom(mapZoom)
+                    }
+
                 } else if (trackPercent > (11 * 7)) {
                     var radiusKM = 7;
                     $('.range__km').text('7 km')
-                    map.setZoom(11)
+                    if (radiusZoom < radiusKM) {
+                        console.log(radiusZoom < radiusKM)
+                        map.setZoom(11.5)
+                        mapZoom = 11.5;
+                    } else {
+                        map.setZoom(mapZoom)
+                    }
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
                 } else if (trackPercent > (11 * 6)) {
@@ -601,10 +636,24 @@ function initMap() {
                     $('.range__km').text('6 km')
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
+
+                    if (radiusZoom < radiusKM) {
+                        console.log(radiusZoom < radiusKM)
+                        map.setZoom(11.5)
+                        mapZoom = 11.5;
+                    } else {
+                        map.setZoom(mapZoom)
+                    }
                 } else if (trackPercent > (10 * 5)) {
                     var radiusKM = 5;
                     $('.range__km').text('5 km')
-                    map.setZoom(11)
+                    if (radiusZoom < radiusKM) {
+                        console.log(radiusZoom < radiusKM)
+                        map.setZoom(12)
+                        mapZoom = 12;
+                    } else {
+                        map.setZoom(mapZoom)
+                    }
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
                 } else if (trackPercent > (10 * 4)) {
@@ -612,28 +661,59 @@ function initMap() {
                     $('.range__km').text('4 km')
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
+                    if (radiusZoom < radiusKM) {
+                        console.log(radiusZoom < radiusKM)
+                        map.setZoom(12)
+                        mapZoom = 12;
+                    } else {
+                        map.setZoom(mapZoom)
+                    }
                 } else if (trackPercent > (11 * 2)) {
                     var radiusKM = 3;
                     $('.range__km').text('3 km')
-                    map.setZoom(12)
+                    if (radiusZoom < radiusKM) {
+                        console.log(radiusZoom < radiusKM)
+                        map.setZoom(12.5)
+                        mapZoom = 12.5;
+                    } else {
+                        map.setZoom(mapZoom)
+                    }
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
                 } else if (trackPercent > (5 * 2)) {
                     var radiusKM = 2;
                     $('.range__km').text(radiusKM + ' km')
-                    map.setZoom(13.5)
+                    if (radiusZoom < radiusKM) {
+
+                        map.setZoom(13.5)
+                        mapZoom = 13.5;
+                    } else {
+                        map.setZoom(mapZoom)
+                    }
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
                 } else if (trackPercent > (10 * 1)) {
                     var radiusKM = 1;
                     $('.range__km').text('1 km')
-                    map.setZoom(14)
+                    if (radiusZoom < radiusKM) {
+
+                        map.setZoom(14)
+                        mapZoom = 14;
+                    } else {
+                        map.setZoom(mapZoom)
+                    }
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
                 } else if (trackPercent < (10 * 1)) {
                     var radiusKM = 1;
                     $('.range__km').text('1 km')
-                    map.setZoom(14)
+                    if (radiusZoom < radiusKM) {
+                        map.setZoom(16)
+                        mapZoom = 16;
+                    } else {
+                        map.setZoom(mapZoom)
+
+                    }
                     productTypesArr(radiusKM)
                     currentCircleUpdate(radiusKM)
                 }
@@ -660,17 +740,21 @@ function initMap() {
         /* MAP ADD LOCATION */
 
         $('.dash__places_button button').click(function() {
+
             $('.search__map_population').attr('style', 'display: none')
             $('.dash__places_lists').attr('style', 'display: none')
             $('.dash__places_select').attr('style', 'display: flex')
             $(this).addClass('select__new_zone')
+
         })
 
         $('.select__new_zone').click(function() {
+            $(".dash__places_block").first().trigger('click');
             $('.search__map_population').attr('style', 'display: inline-block')
             $('.dash__places_lists').attr('style', 'display: flex')
             $('.dash__places_select').attr('style', 'display: none')
             $(this).removeClass('select__new_zone')
+
         })
 
         function currentCircleUpdate(radiusKM) {
@@ -764,8 +848,6 @@ function initMap() {
             return false;
         }
 
-
-        map.setZoom(14.5)
         prevCircle = cityCircleNew;
         var currentArray = {
             circleLat: place.geometry.location.lat().toString(),
