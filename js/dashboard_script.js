@@ -582,8 +582,6 @@ function initMap() {
             })
         }
 
-
-
         /* RANGE DRAGGABLE */
         var trackStep = $('.map__radius_track').width();
         mapRadius = 1000
@@ -740,7 +738,7 @@ function initMap() {
         /* MAP ADD LOCATION */
 
         $('.dash__places_button button').click(function() {
-
+            $('.search__map_center').attr('style', 'display: none')
             $('.search__map_population').attr('style', 'display: none')
             $('.dash__places_lists').attr('style', 'display: none')
             $('.dash__places_select').attr('style', 'display: flex')
@@ -749,6 +747,7 @@ function initMap() {
         })
 
         $('.select__new_zone').click(function() {
+            $('.search__map_center').attr('style', 'display: block')
             $(".dash__places_block").first().trigger('click');
             $('.search__map_population').attr('style', 'display: inline-block')
             $('.dash__places_lists').attr('style', 'display: flex')
@@ -811,7 +810,7 @@ function initMap() {
     });
 
     function adressSelect() {
-
+        $('.search__map_center').attr('style', 'display: block')
         const place = autocomplete.getPlace();
         map.setCenter(place.geometry.location);
         if (!place.geometry) {
@@ -832,7 +831,7 @@ function initMap() {
                 }
             ]
         )
-        console.log(cityCircleNew)
+
         if (cityCircleNew == null) {
             cityCircleNew = new google.maps.Circle({
                 strokeColor: "#F8A35B",
@@ -845,7 +844,18 @@ function initMap() {
                 radius: 1000,
             });
         } else {
-            return false;
+            cityCircleNew.setMap(null)
+            cityCircleNew = new google.maps.Circle({
+                strokeColor: "#F8A35B",
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: "#F8A35B",
+                fillOpacity: 0.3,
+                map,
+                center: markersArray[0][1].center,
+                radius: 1000,
+            });
+
         }
 
         prevCircle = cityCircleNew;
