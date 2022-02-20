@@ -217,6 +217,29 @@ $(document).ready(function() {
             });
         } // Конец, если
     });
-});
 
-/* DEFAULT SCRIPTS END */
+
+    /* DEFAULT SCRIPTS END */
+
+
+    $.fn.isInViewport = function() {
+        var elementTop = $(this).offset().top;
+        var elementBottom = elementTop + $(this).outerHeight();
+
+        var viewportTop = $(window).scrollTop() - 900;
+        var viewportBottom = viewportTop + $(window).height();
+
+        return elementBottom > viewportTop && elementTop < viewportBottom;
+    };
+
+    $(window).on('resize scroll', function() {
+        $.each($('h2'), function(key, value) {
+            if ($(this).isInViewport()) {
+                var currentBlog = $(this).attr('id').replace('nav_link_', '')
+                $('.blog__navigation__links a').removeClass('blog__navigation_active')
+                $('#blog_link_' + currentBlog).addClass('blog__navigation_active')
+            } else {}
+        })
+
+    });
+});
