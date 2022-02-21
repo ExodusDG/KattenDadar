@@ -1089,20 +1089,20 @@ function encodeImage(element) {
         fetch("https://server.kattenradar.nl/test-upload-edit-image", requestOptions)
             .then(response => response.text())
             .then(result => {
-                console.log(result)
-                $('.cat_image').attr('src', result)
-                $('.edit__cat_image').attr('src', result)
+                result = result.replace('"', '').replace('"', '')
+                $('.chat__phone__body').attr('style', 'background: url(' + result + ')')
+                $('.chat__phone__body').html('');
                 $('.image__photo_upload').attr('style', 'display: none')
                 $('.imagebox').attr('style', 'display: block')
                 $('#file').prop('value', null);
             })
             .catch(error => console.log('error', error));
-
         if (imageReplace == false) {
             var currentPrice = Number($('.data_edit_price').text().replace('€', ''))
             $('.data_edit_price').text('€' + Number(currentPrice + 2))
             imageReplace = true;
         }
+        $('.cat_image').attr('src', 'data:image/jpeg;base64' + reader.result)
     }
     reader.readAsDataURL(file);
 }
