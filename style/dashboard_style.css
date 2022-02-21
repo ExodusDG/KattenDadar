@@ -1568,11 +1568,12 @@
 
 .dash__phone_edit .chat__phone__body {
     position: absolute;
-    left: 20px;
-    top: 115px;
-    width: 248px;
+    left: 25px;
+    top: 125px;
+    width: 265px;
     overflow-x: hidden;
-    height: 280px;
+    height: 265px;
+    background-size: contain;
 }
 
 .dash__phone_edit .chat__phone__cat {
