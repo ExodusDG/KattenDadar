@@ -1071,12 +1071,32 @@ function encodeImage(element) {
     var file = element.files[0];
     var reader = new FileReader();
     reader.onloadend = function() {
-        $('.cat_image').attr('src', 'data:image/jpeg;base64' + reader.result)
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+        getCookie()
+        var urlencoded = new URLSearchParams();
 
-        $('.edit__cat_image').attr('src', 'data:image/jpeg;base64' + reader.result)
-        base64Img = reader.result;
-        $('.image__photo_upload').attr('style', 'display: none')
-        $('.imagebox').attr('style', 'display: block')
+        urlencoded.append("img", reader.result);
+        urlencoded.append("id", userID);
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
+        };
+
+        fetch("https://server.kattenradar.nl/test-upload-edit-image", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                console.log(result)
+                $('.cat_image').attr('src', result)
+                $('.edit__cat_image').attr('src', result)
+                $('.image__photo_upload').attr('style', 'display: none')
+                $('.imagebox').attr('style', 'display: block')
+                $('#file').prop('value', null);
+            })
+            .catch(error => console.log('error', error));
 
         if (imageReplace == false) {
             var currentPrice = Number($('.data_edit_price').text().replace('€', ''))
