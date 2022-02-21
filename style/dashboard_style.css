@@ -254,7 +254,7 @@
     width: 230px;
     height: 60px;
     background: #F8A35B;
-    bottom: 175px;
+    bottom: 25px;
     position: relative;
     border: none;
     font-family: inglobal;
@@ -1361,6 +1361,7 @@
 
 .dash__phone {
     width: 260px;
+    height: 450px;
 }
 
 .dash__phone .chat__phone__body {

@@ -93,6 +93,9 @@ function generateHTML(arr) {
     $('.likes > p > span').text(likes)
 
     if (arr.searchStatus == 3) {
+        $('#fb__phone').attr('src', arr.fbMockup)
+        $('#insta__phone').attr('src', arr.igMockup)
+        console.log(arr.fbMockup)
         return false;
     } else {
         $('#targetReach__text').attr('style', 'display:none')
@@ -865,7 +868,8 @@ function initMap() {
         }
         circlesArray.push(currentArray)
         console.log(circlesArray)
-
+        map.setZoom(14)
+        $('.map__radius_draggable').css('left', '0px')
     }
 
 
@@ -967,7 +971,8 @@ $('.catfound_orange').click(function() {
     $('.catfound__button, .dash__stop_button button').text('Geef ons een beoordeling')
 })
 $('.catfound_2').click(function() {
-
+    $('#chat__msg_1 p').text('Wat vervelend dat ' + catName + ' nog niet thuisgekomen is. We gaan wel de zoekactie voor je stopzetten.')
+    $('#chat__msg_2 p').text('Wil je ons nog iets laten weten of heb je feedback voor KattenRadar?')
     $('.catfound__button, .dash__stop_button button').text('Geef ons een beoordeling')
 })
 
@@ -1185,7 +1190,7 @@ function tipsGenerate(arr) {
         if (lastTipDate != dateDay + '.' + dateMonth + '.' + dateYear) {
             $('.tips__list').append(`<div class="tip__date">
             <div>
-                <p>` + dateDay + '.' + dateMonth + '.' + dateYear + `</p>
+                <p>` + dateDay + ' / ' + dateMonth + ' / ' + dateYear + `</p>
             </div>
             <hr>
         </div>`)
