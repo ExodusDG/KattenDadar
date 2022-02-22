@@ -1551,8 +1551,6 @@
     width: 1px;
 }
 
-.test {}
-
 .dash__phone_edit {
     height: 600px;
     width: 315px;
@@ -1566,16 +1564,6 @@
 .data__edit_right {
     width: 400px;
     margin-top: 100px;
-}
-
-.dash__phone_edit .chat__phone__body {
-    position: absolute;
-    left: 25px;
-    top: 125px;
-    width: 265px;
-    overflow-x: hidden;
-    height: 265px;
-    background-size: contain;
 }
 
 .dash__phone_edit .chat__phone__cat {
@@ -1908,6 +1896,16 @@
 .data__edit_right {
     width: 400px;
     margin-top: 50px;
+}
+
+.dash__phone_edit .chat__phone__body {
+    position: absolute;
+    left: 25px;
+    top: 125px;
+    width: 265px;
+    overflow-x: hidden;
+    height: 265px;
+    background-size: contain;
 }
 
 @media (max-width: 1024px) {
