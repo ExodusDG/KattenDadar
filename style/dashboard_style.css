@@ -1905,7 +1905,7 @@
     width: 265px;
     overflow-x: hidden;
     height: 265px;
-    background-size: contain;
+    background-size: contain !important;
 }
 
 @media (max-width: 1024px) {
