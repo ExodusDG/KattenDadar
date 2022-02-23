@@ -537,6 +537,9 @@ function initMap() {
                 })
                 prevCircle = currentCircle
 
+                $('.map__radius_draggable').css('left', '0px')
+                $('.range__km').text('1 km')
+                $('.range__price').text('29 €')
 
             } else {
                 thisCircle = $(this)
@@ -747,6 +750,9 @@ function initMap() {
             $('.dash__places_select').attr('style', 'display: flex')
             $(this).addClass('select__new_zone')
 
+            $('.map__radius_draggable').css('left', '0px')
+            $('.range__km').text('1 km')
+            $('.range__price').text('29 €')
         })
 
         $('.select__new_zone').click(function() {
@@ -860,7 +866,7 @@ function initMap() {
             });
 
         }
-
+        map.setZoom(14)
         prevCircle = cityCircleNew;
         var currentArray = {
             circleLat: place.geometry.location.lat().toString(),
@@ -868,8 +874,6 @@ function initMap() {
         }
         circlesArray.push(currentArray)
         console.log(circlesArray)
-        map.setZoom(14)
-        $('.map__radius_draggable').css('left', '0px')
     }
 
 
@@ -1067,6 +1071,9 @@ var base64Img;
 var imageReplace = false;
 var textReplace = false;
 
+var editPrice = 0;
+var ifImagePriced = false;
+
 function encodeImage(element) {
     var file = element.files[0];
     var reader = new FileReader();
@@ -1099,8 +1106,20 @@ function encodeImage(element) {
             .catch(error => console.log('error', error));
         if (imageReplace == false) {
             var currentPrice = Number($('.data_edit_price').text().replace('€', ''))
-            $('.data_edit_price').text('€' + Number(currentPrice + 2))
+
+
             imageReplace = true;
+
+            if (ifImagePriced == true) {
+                editPrice = editPrice;
+                $('.data_edit_price').text('€' + editPrice)
+
+            } else {
+                editPrice = editPrice + 2;
+                ifImagePriced = true;
+                $('.data_edit_price').text('€' + editPrice)
+                buttonActive()
+            }
         }
         $('.cat_image').attr('src', 'data:image/jpeg;base64' + reader.result)
     }
@@ -1114,8 +1133,13 @@ $('#removeImg').click(function() {
     $('.imagebox').attr('style', 'display: none')
     $('.image__photo_upload').attr('style', 'display: block')
     var price = $('.data_edit_price').text().replace('€', '')
-    $('.data_edit_price').text('€' + (price - 2))
     $('.edit__cat_image').attr('src', defCatImage)
+
+    editPrice = editPrice - 2;
+    $('.data_edit_price').text('€' + editPrice)
+    ifImagePriced = false;
+
+    buttonDisabled()
 })
 
 $('.data__edit_send').click(function() {
@@ -1332,41 +1356,71 @@ $('.popup_close_cat').click(function() {
 })
 
 var backendText = $('.chat_edit_cat_text').text()
+var originalText = defCatDesc;
 
-$('#desc__change').val(backendText.replace('kattenradar ', ''))
-var originalText = backendText.replace('kattenradar ', '');
+$('#desc__change').val(originalText)
+
 price = 0;
-$('#desc__change').keyup(function() {
-    var userText = $(this).val();
-    $('.chat_edit_cat_text').html('<span>kattenradar</span>' + userText)
+var isTextChanged = false;
+var isTextEmpty = false;
+var editText = defCatDesc;
+console.log(editText)
 
-    if (userText == originalText) {
-        price = $('.data_edit_price').text().replace('€', '')
-        $('.data_edit_price').text('€' + (price - 2))
+
+
+$('#desc__change').keyup(function() {
+    var userText = $('#desc__change').val();
+
+    $('.chat_edit_cat_text').html('<span>kattenradar </span>' + userText)
+        //    textSame()
+    if (userText != defCatDesc) {
+        textEdit()
+    }
+
+    function textEdit() {
+        if (userText.length == 0) {
+            buttonDisabled()
+            if (editPrice < 1) {
+
+                editPrice = 0
+            } else {
+                editPrice = editPrice - 2;
+            }
+
+            $('.data_edit_price').text('€' + editPrice)
+
+            isTextChanged = false;
+        } else {
+            if (isTextChanged == false) {
+                editPrice = editPrice + 2;
+                $('.data_edit_price').text('€' + editPrice)
+                isTextChanged = true;
+                buttonActive()
+            } else {
+                return false
+            }
+        }
+
+    }
+
+    function textSame() {
+        editPrice = editPrice - 2;
+        $('.data_edit_price').text('€' + editPrice)
+        buttonDisabled()
     }
 });
 
-var editText = $('#desc__change').val();
+function buttonDisabled() {
+    $('.data__edit_send').prop("disabled", true);
+}
 
-$('#desc__change').keyup(function() {
-    if (textReplace == false) {
-        var currentPrice = Number($('.data_edit_price').text().replace('€', ''))
-        $('.data_edit_price').text('€' + Number(currentPrice + 2))
-        textReplace = true;
-    }
-
-    var currentText = $(this).val();
-
-    if (currentText = !editText) {
-        $('.data__edit_send').prop("disabled", true);
-    } else {
-        $('.data__edit_send').prop("disabled", false);
-    }
-});
-
+function buttonActive() {
+    $('.data__edit_send').attr("disabled", null);
+}
 
 $('#dash__edit_button').click(function() {
     $('#desc__change').val(defCatDesc);
+    $('.chat_edit_cat_text').html('<span>kattenradar </span>' + defCatDesc)
     $('#edit__cat_image').attr('src', defCatImage);
     $('.data_edit_price').text('€0')
 })
