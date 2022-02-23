@@ -1356,15 +1356,12 @@ $('.popup_close_cat').click(function() {
 })
 
 var backendText = $('.chat_edit_cat_text').text()
-var originalText = defCatDesc;
-
-$('#desc__change').val(originalText)
 
 price = 0;
 var isTextChanged = false;
 var isTextEmpty = false;
+var isTextSame = false;
 var editText = defCatDesc;
-console.log(editText)
 
 
 
@@ -1372,16 +1369,18 @@ $('#desc__change').keyup(function() {
     var userText = $('#desc__change').val();
 
     $('.chat_edit_cat_text').html('<span>kattenradar </span>' + userText)
-        //    textSame()
-    if (userText != defCatDesc) {
+
+    if (userText != originalText) {
         textEdit()
+    } else if (userText == originalText) {
+        textSame()
     }
+
 
     function textEdit() {
         if (userText.length == 0) {
             buttonDisabled()
             if (editPrice < 1) {
-
                 editPrice = 0
             } else {
                 editPrice = editPrice - 2;
@@ -1390,11 +1389,13 @@ $('#desc__change').keyup(function() {
             $('.data_edit_price').text('€' + editPrice)
 
             isTextChanged = false;
+            isTextSame = true;
         } else {
             if (isTextChanged == false) {
                 editPrice = editPrice + 2;
                 $('.data_edit_price').text('€' + editPrice)
                 isTextChanged = true;
+                isTextSame = false;
                 buttonActive()
             } else {
                 return false
@@ -1404,9 +1405,16 @@ $('#desc__change').keyup(function() {
     }
 
     function textSame() {
-        editPrice = editPrice - 2;
-        $('.data_edit_price').text('€' + editPrice)
-        buttonDisabled()
+        if (isTextSame == false) {
+            editPrice = editPrice - 2;
+            $('.data_edit_price').text('€' + editPrice)
+            buttonDisabled()
+            isTextSame = true;
+            isTextChanged = false;
+        } else {
+            return false;
+        }
+
     }
 });
 
@@ -1417,12 +1425,14 @@ function buttonDisabled() {
 function buttonActive() {
     $('.data__edit_send').attr("disabled", null);
 }
-
+var originalText;
 $('#dash__edit_button').click(function() {
     $('#desc__change').val(defCatDesc);
     $('.chat_edit_cat_text').html('<span>kattenradar </span>' + defCatDesc)
     $('#edit__cat_image').attr('src', defCatImage);
     $('.data_edit_price').text('€0')
+
+    originalText = $('#desc__change').val()
 })
 
 $('.stars_skip_wrapper').click(function() {
