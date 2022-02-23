@@ -1074,6 +1074,8 @@ var textReplace = false;
 var editPrice = 0;
 var ifImagePriced = false;
 
+var originalImageBlock = $('.chat__phone__body').html()
+
 function encodeImage(element) {
     var file = element.files[0];
     var reader = new FileReader();
@@ -1138,7 +1140,7 @@ $('#removeImg').click(function() {
     editPrice = editPrice - 2;
     $('.data_edit_price').text('€' + editPrice)
     ifImagePriced = false;
-
+    $('.chat__phone__body').html(originalImageBlock)
     buttonDisabled()
 })
 
@@ -1427,6 +1429,7 @@ function buttonActive() {
 }
 var originalText;
 $('#dash__edit_button').click(function() {
+    $('.chat__phone__body').html(originalImageBlock)
     $('#desc__change').val(defCatDesc);
     $('.chat_edit_cat_text').html('<span>kattenradar </span>' + defCatDesc)
     $('#edit__cat_image').attr('src', defCatImage);
