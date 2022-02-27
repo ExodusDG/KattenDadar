@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KattenRadar - Homepage</title>
+    <title>KattenRadar - Blog</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;900&display=swap" rel="stylesheet">
@@ -149,23 +149,30 @@
         </div>
         <!-- MOBILE HEADER END -->
 
-        <!-- ТУТ ПИШЕШ КОД -->
         <section>
             <div class="blog__container">
                 <div class="blog__title">
                     KattenRadar Blog
                 </div>
                 <div class="blog__links">
-                    <p>Alle</p>
-                    <p>Categorie 1</p>
-                    <p>Categorie 2 </p>
+                    <p id="blog_all" class="blog__links_active">Alle</p>
+                    <p id="blog_category1">Categorie 1</p>
+                    <p id="blog_category2">Categorie 2 </p>
                 </div>
                 <div class="blog__sorteer">
-                    Sorteer op
-                    <img src="img/blog/sorteer_arrow.svg" alt="">
+                    <div class="blog__sorter_visible">
+                        Sorteer op
+                        <img src="img/blog/sorteer_arrow.svg" alt="">
+                    </div>
+                    <div class="blog__sorter_hidden">
+                        <div class="sorter__hidden_item" id="sort_a-b">a-b</div>
+                        <div class="sorter__hidden_item" id="sort_b-a">b-a</div>
+                        <div class="sorter__hidden_item" id="sort_new-old">new-old</div>
+                        <div class="sorter__hidden_item" id="sort_old-new">old-new</div>
+                    </div>
                 </div>
                 <div class="blog__table">
-                    <div class="blog__block">
+                    <div class="blog__block" data="26-02-2022" category="category1">
                         <img src="img/blog/cat 1.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_2">Categorie 2</p>
@@ -177,7 +184,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="blog__block">
+                    <div class="blog__block" data="23-02-2022" category="category1">
                         <img src="img/blog/cat 2.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_1">Categorie 1</p>
@@ -189,7 +196,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="blog__block">
+                    <div class="blog__block" data="26-02-2022" category="category2">
                         <img src="img/blog/cat 3.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_2">Categorie 2</p>
@@ -203,7 +210,7 @@
                     </div>
                 </div>
                 <div class="blog__table">
-                    <div class="blog__block">
+                    <div class="blog__block" data="26-02-2022" category="category2">
                         <img src="img/blog/cat 3.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_2">Categorie 2</p>
@@ -215,7 +222,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="blog__block">
+                    <div class="blog__block" data="23-02-2022" category="category2">
                         <img src="img/blog/cat 4.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_1">Categorie 1</p>
@@ -227,7 +234,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="blog__block">
+                    <div class="blog__block" data="26-02-2022" category="category1">
                         <img src="img/blog/cat 5.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_2">Categorie 2</p>
@@ -239,9 +246,10 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="blog__table">
-                    <div class="blog__block">
+                    <div class="blog__block" data="24-02-2022" category="category1">
                         <img src="img/blog/cat 2.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_1">Categorie 1</p>
@@ -253,7 +261,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="blog__block">
+                    <div class="blog__block" data="26-02-2022" category="category2">
                         <img src="img/blog/cat 1.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_2">Categorie 2</p>
@@ -265,7 +273,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="blog__block">
+                    <div class="blog__block" data="24-02-2022" category="category1">
                         <img src="img/blog/cat 3.png" alt="">
                         <div class="blog__block_contents">
                             <p class="categorie_2">Categorie 2</p>
