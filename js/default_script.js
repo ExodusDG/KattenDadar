@@ -1,3 +1,85 @@
+/* BLOG SLIDER */
+
+var sliderWidth = $('.blog__block').width()
+var slideCount = $('.blog__block').length
+var sliderCounter = 1;
+
+$('.slider_buttom_left').click(function() {
+
+    if (sliderCounter < 0) {
+
+        return false;
+    } else {
+        var translateWidth = sliderCounter * sliderWidth + 40;
+        $('.block__slider_wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
+        sliderCounter--
+    }
+})
+
+
+$('.slider_buttom_right').click(function() {
+    if ((sliderCounter + 3) > slideCount) {
+        return false;
+    } else {
+        var translateWidth = sliderCounter * sliderWidth + 40;
+        $('.block__slider_wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
+        sliderCounter++
+    }
+})
+
+/* BLOG CATEGORY */
+
+var categoryArray = [];
+
+$.each($('.blog__block'), function(key, value) {
+    categoryArray.push($(this).attr('category'))
+})
+var categoryArray = new Set(categoryArray)
+
+$.each(categoryArray, function(key, value) {
+    $('.blog__links').append('<p id=blog_' + value + '>' + value + '</p>')
+    console.log(value)
+})
+
+console.log(categoryArray)
+
+/* BLOG */
+
+$('.blog__sorter_visible').click(function() {
+    $('.blog__sorter_hidden').toggleClass('blog__sorter_active')
+})
+
+var blogPosts = []
+
+$.each($('.blog__block'), function(key, value) {
+    blogPosts.push(this)
+})
+
+$('.sorter__hidden_item').click(function() {
+    var sortMethod = $(this).attr('id')
+
+    if (sortMethod == 'sort_a-b') {
+        sortAB()
+    } else if (sortMethod == 'sort_b-a') {
+        sortBA()
+    } else if (sortMethod == 'sort_new-old') {
+        sortNewOld()
+    } else if (sortMethod == 'sort_old-new') {
+        sortOldNew()
+    }
+})
+
+function sortNewOld() {
+    $('.blog__table').html('')
+
+    var datesArray = [];
+
+    datesArray.sort(function(a, b) {
+        return a - b
+    });
+}
+
+
 /* DEFAULT SCRIPTS */
 $.fn.isInViewport = function() {
     var elementTop = $(this).offset().top;
@@ -71,7 +153,7 @@ $(window).on('resize scroll', function() {
 
 var feedbackH = $('.feedback__popup').height()
 
-$('.footer_contact').click(function() {
+$('.footer_contact, .about__contact_button').click(function() {
     $('.blur__wrapper').attr('style', 'filter: blur(10px)')
     $('.feedback').attr('style', 'display: block')
     header.removeClass('header__fixed')
