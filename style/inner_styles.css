@@ -143,6 +143,12 @@
     position: relative;
 }
 
+.blog__page_numbers {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+}
+
 .blog__block_contents {
     width: 90%;
     margin: 0 auto;
@@ -210,6 +216,10 @@
     font-size: 14px;
     font-family: Montserrat;
     padding-top: 2px;
+    padding-bottom: 2px;
+    display: initial;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .categorie_2 {
@@ -238,6 +248,7 @@
 
 .page_number p {
     opacity: 0.3;
+    width: 20%;
     cursor: pointer;
 }
 
