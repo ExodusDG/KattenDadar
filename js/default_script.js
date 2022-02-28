@@ -4,8 +4,9 @@ function clearBlogs() { //delete old blogs
     $('.blog__table').html('')
 }
 
+var currentBlogsArray = blogs.slice(0, 9)
 
-$.each(blogs, function(key, value) {
+$.each(currentBlogsArray, function(key, value) {
 
     var blogTitle = this.title;
     var blogImg = this.imgSrc;
@@ -35,6 +36,26 @@ function updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint
     </div>
 </div>
     `)
+}
+
+function changePage(pagenumber) {
+    var blogsFrom = (pagenumber - 1) * 9;
+    var blogsTo = pagenumber * 9;
+    currentBlogsArray = blogs.slice(blogsFrom, blogsTo)
+
+    clearBlogs()
+
+    $.each(currentBlogsArray, function(key, value) {
+
+        var blogTitle = this.title;
+        var blogImg = this.imgSrc;
+        var blogCategory = this.category;
+        var blogText = this.text;
+        var blogEndpoint = this.endpoint;
+        var blogDate = this.date;
+
+        updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate)
+    })
 }
 
 
@@ -78,7 +99,7 @@ $.each($('.blog__block'), function(key, value) {
     allBlogPosts.push(this)
 })
 
-var pageCount = Math.ceil((allBlogPosts.length / 9).toFixed(1))
+var pageCount = Math.ceil((blogs.length / 9).toFixed(1))
 
 
 $(".myPages").pxpaginate({
@@ -93,7 +114,7 @@ $(".myPages").pxpaginate({
     lastPageName: '',
     firstPageName: '',
     callback: function(pagenumber) {
-        //    $(".output").html("You Just Clicked: <span class='badge badge-danger'>" + pagenumber + "</span>");
+        changePage(pagenumber)
     }
 });
 
