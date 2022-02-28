@@ -1,13 +1,11 @@
 /* BLOG SLIDER */
 
-$('.block__slider_wrapper').slick({
-    infinite: true,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    arrows: true
-});
 
-/* BLOG CATEGORY */
+$('.current__map_buttons button').click(function() {
+        $('.current__map_buttons button').removeClass('current__button_active')
+        $(this).addClass('current__button_active')
+    })
+    /* BLOG CATEGORY */
 
 var categoryArray = [];
 
