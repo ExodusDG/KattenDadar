@@ -88,7 +88,7 @@
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
-    width: 230px;
+    width: 20%;
     font-weight: 600;
     font-size: 14px;
     color: #3F2B4F;
@@ -127,6 +127,9 @@
     display: flex;
     justify-content: space-between;
     margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .blog__block {
@@ -151,12 +154,17 @@
     position: absolute;
     width: 90%;
     bottom: 2%;
+    right: 5%;
 }
 
 .blog__block_contents h1 {
     font-weight: bold;
     font-size: 20px;
     margin-top: 10px;
+}
+
+.blog__table .blog__block {
+    margin-bottom: 40px;
 }
 
 .blog__block_subtitle {

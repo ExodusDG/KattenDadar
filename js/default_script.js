@@ -1,22 +1,32 @@
-/* BLOG SLIDER */
-
-
-$('.current__map_buttons button').click(function() {
-        $('.current__map_buttons button').removeClass('current__button_active')
-        $(this).addClass('current__button_active')
-    })
-    /* BLOG CATEGORY */
+/* BLOG CATEGORY */
 
 var categoryArray = [];
 
 $.each($('.blog__block'), function(key, value) {
     categoryArray.push($(this).attr('category'))
 })
-var categoryArray = new Set(categoryArray)
+var categoryArray = [...new Set(categoryArray)];
 
 $.each(categoryArray, function(key, value) {
     $('.blog__links').append('<p id=blog_' + value + '>' + value + '</p>')
     console.log(value)
+})
+
+$('.blog__links p').click(function() {
+    if ($(this).attr('id') == 'blog_all') {
+        $('.blog__block').attr('style', 'display: block')
+
+        $('.blog__links p').removeClass('blog__links_active')
+        $(this).addClass('blog__links_active')
+
+    } else {
+        var clickedCategory = $(this).attr('id').replace('blog_', '');
+        $('.blog__block').attr('style', 'display: none')
+        $('[category=' + clickedCategory + ']').attr('style', 'display: block');
+
+        $('.blog__links p').removeClass('blog__links_active')
+        $(this).addClass('blog__links_active')
+    }
 })
 
 console.log(categoryArray)
@@ -303,3 +313,7 @@ $(document).ready(function() {
 
     });
 });
+$('.current__map_buttons button').click(function() {
+    $('.current__map_buttons button').removeClass('current__button_active')
+    $(this).addClass('current__button_active')
+})
