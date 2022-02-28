@@ -523,7 +523,14 @@
         <script src="js/jquery-3.6.0.min.js"></script>
         <script type="text/javascript" src="slick/slick.min.js"></script>
         <script src="js/default_script.js"></script>
-
+        <script>
+            $('.block__slider_wrapper').slick({
+                infinite: true,
+                slidesToShow: 3,
+                slidesToScroll: 1,
+                arrows: true
+            });
+        </script>
 </body>
 
 </html>
