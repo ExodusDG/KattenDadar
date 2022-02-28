@@ -1,31 +1,11 @@
 /* BLOG SLIDER */
 
-var sliderWidth = $('.blog__block').width()
-var slideCount = $('.blog__block').length
-var sliderCounter = 1;
-
-$('.slider_buttom_left').click(function() {
-
-    if (sliderCounter < 0) {
-
-        return false;
-    } else {
-        var translateWidth = sliderCounter * sliderWidth + 40;
-        $('.block__slider_wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
-        sliderCounter--
-    }
-})
-
-
-$('.slider_buttom_right').click(function() {
-    if ((sliderCounter + 3) > slideCount) {
-        return false;
-    } else {
-        var translateWidth = sliderCounter * sliderWidth + 40;
-        $('.block__slider_wrapper').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
-        sliderCounter++
-    }
-})
+$('.block__slider_wrapper').slick({
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    arrows: true
+});
 
 /* BLOG CATEGORY */
 
