@@ -19,8 +19,6 @@ $.each(currentBlogsArray, function(key, value) {
 })
 
 function updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate) {
-
-
     $('.blog__table').append(`
 
     <div class="blog__block" data="` + blogDate + `" category="` + blogCategory + `">
@@ -37,6 +35,8 @@ function updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint
 </div>
     `)
 }
+
+
 
 function changePage(pagenumber) {
     var blogsFrom = (pagenumber - 1) * 9;
@@ -58,8 +58,21 @@ function changePage(pagenumber) {
     })
 }
 
+function changeCategory() {
+    clearBlogs()
 
-/* BLOG GENERATE END */
+    $.each(currentBlogsArray, function(key, value) {
+
+        var blogTitle = this.title;
+        var blogImg = this.imgSrc;
+        var blogCategory = this.category;
+        var blogText = this.text;
+        var blogEndpoint = this.endpoint;
+        var blogDate = this.date;
+
+        updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate)
+    })
+}
 
 /* BLOG CATEGORY */
 
@@ -74,22 +87,39 @@ $.each(categoryArray, function(key, value) {
     $('.blog__links').append('<p id=blog_' + value + '>' + value + '</p>')
 })
 
+/* BLOG CATEGORY END */
+
 $('.blog__links p').click(function() {
-    if ($(this).attr('id') == 'blog_all') {
-        $('.blog__block').attr('style', 'display: block')
 
-        $('.blog__links p').removeClass('blog__links_active')
-        $(this).addClass('blog__links_active')
+    var category = $(this).attr('id').replace('blog_', '')
+    $('.blog__links p').removeClass('blog__links_active')
+    $(this).addClass('blog__links_active')
 
+    if (category == 'all') {
+        currentBlogsArray = [];
+        currentBlogsArray = blogs.slice(0, 9)
+        changeCategory()
     } else {
-        var clickedCategory = $(this).attr('id').replace('blog_', '');
-        $('.blog__block').attr('style', 'display: none')
-        $('[category=' + clickedCategory + ']').attr('style', 'display: block');
+        currentBlogsArray = [];
 
-        $('.blog__links p').removeClass('blog__links_active')
-        $(this).addClass('blog__links_active')
+
+        $.each(blogs, function(key, value) {
+            if (currentBlogsArray.length == 9) {
+                changeCategory()
+                return false;
+            } else {
+                if (value.category == category) {
+                    currentBlogsArray.push(value)
+                }
+            }
+        })
     }
-})
+
+
+});
+
+/* BLOG GENERATE END */
+
 
 /* BLOG PAGES */
 
@@ -105,16 +135,17 @@ var pageCount = Math.ceil((blogs.length / 9).toFixed(1))
 $(".myPages").pxpaginate({
     currentpage: 1,
     totalPageCount: pageCount,
-    maxBtnCount: 5,
+    maxBtnCount: 3,
     align: 'center',
     nextPrevBtnShow: true,
-    firstLastBtnShow: false,
+    firstLastBtnShow: true,
     prevPageName: '<',
     nextPageName: '>',
     lastPageName: '',
     firstPageName: '',
     callback: function(pagenumber) {
         changePage(pagenumber)
+
     }
 });
 
