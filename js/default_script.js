@@ -1,3 +1,45 @@
+/* BLOG GENERATE */
+
+function clearBlogs() { //delete old blogs
+    $('.blog__table').html('')
+}
+
+
+$.each(blogs, function(key, value) {
+
+    var blogTitle = this.title;
+    var blogImg = this.imgSrc;
+    var blogCategory = this.category;
+    var blogText = this.text;
+    var blogEndpoint = this.endpoint;
+    var blogDate = this.date;
+
+    updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate)
+})
+
+function updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate) {
+
+
+    $('.blog__table').append(`
+
+    <div class="blog__block" data="` + blogDate + `" category="` + blogCategory + `">
+    <img src="` + blogImg + `" alt="">
+    <div class="blog__block_contents">
+        <p class="categorie_1">` + blogCategory + `</p>
+        <h1>` + blogTitle + `</h1>
+        <p class="blog__block_subtitle">` + blogText + `</p>
+        <div>
+            <p class="blog__block_date"></p>
+            <a href="https://kattenradar.com/blog/` + blogEndpoint + `">Artikel lezen <img src="img/blog/arrow.svg" alt=""> </a>
+        </div>
+    </div>
+</div>
+    `)
+}
+
+
+/* BLOG GENERATE END */
+
 /* BLOG CATEGORY */
 
 var categoryArray = [];
@@ -9,7 +51,6 @@ var categoryArray = [...new Set(categoryArray)];
 
 $.each(categoryArray, function(key, value) {
     $('.blog__links').append('<p id=blog_' + value + '>' + value + '</p>')
-    console.log(value)
 })
 
 $('.blog__links p').click(function() {
@@ -29,7 +70,32 @@ $('.blog__links p').click(function() {
     }
 })
 
-console.log(categoryArray)
+/* BLOG PAGES */
+
+var allBlogPosts = [];
+
+$.each($('.blog__block'), function(key, value) {
+    allBlogPosts.push(this)
+})
+
+var pageCount = Math.ceil((allBlogPosts.length / 9).toFixed(1))
+
+
+$(".myPages").pxpaginate({
+    currentpage: 1,
+    totalPageCount: pageCount,
+    maxBtnCount: 5,
+    align: 'center',
+    nextPrevBtnShow: true,
+    firstLastBtnShow: false,
+    prevPageName: '<',
+    nextPageName: '>',
+    lastPageName: '',
+    firstPageName: '',
+    callback: function(pagenumber) {
+        //    $(".output").html("You Just Clicked: <span class='badge badge-danger'>" + pagenumber + "</span>");
+    }
+});
 
 /* BLOG */
 
