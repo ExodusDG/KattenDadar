@@ -104,15 +104,17 @@ function changePage(pagenumber) {
     updateBlogsList()
 }
 
+$('#blog_all').trigger('click');
+
 
 function updatePagesCount(pageCount) {
     $(".myPages").pxpaginate({
         currentpage: 1,
         totalPageCount: pageCount,
-        maxBtnCount: 3,
+        maxBtnCount: 4,
         align: 'center',
         nextPrevBtnShow: true,
-        firstLastBtnShow: false,
+        firstLastBtnShow: true,
         prevPageName: '<',
         nextPageName: '>',
         lastPageName: 'first',
