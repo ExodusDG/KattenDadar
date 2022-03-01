@@ -1,25 +1,34 @@
-/* BLOG GENERATE */
+console.log(blogs)
+var currentBlogsArray;
+
 
 function clearBlogs() { //delete old blogs
     $('.blog__table').html('')
 }
 
+/* BLOGS FILTER & PAGINATION */
+
+/* FIRST TIME BLOGS LOAD */
+
 var currentBlogsArray = blogs.slice(0, 9)
 
-$.each(currentBlogsArray, function(key, value) {
+updateBlogsList()
 
-    var blogTitle = this.title;
-    var blogImg = this.imgSrc;
-    var blogCategory = this.category;
-    var blogText = this.text;
-    var blogEndpoint = this.endpoint;
-    var blogDate = this.date;
+/* UPDATE BLOG LIST */
 
-    updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate)
-})
+function updateBlogsList() {
+    clearBlogs()
 
-function updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate) {
-    $('.blog__table').append(`
+    $.each(currentBlogsArray.slice(0, 9), function(key, value) {
+
+        var blogTitle = this.title;
+        var blogImg = this.imgSrc;
+        var blogCategory = this.category;
+        var blogText = this.text;
+        var blogEndpoint = this.endpoint;
+        var blogDate = this.date;
+
+        $('.blog__table').append(`
 
     <div class="blog__block" data="` + blogDate + `" category="` + blogCategory + `">
     <img src="` + blogImg + `" alt="">
@@ -34,45 +43,9 @@ function updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint
     </div>
 </div>
     `)
-}
-
-
-
-function changePage(pagenumber) {
-    var blogsFrom = (pagenumber - 1) * 9;
-    var blogsTo = pagenumber * 9;
-    currentBlogsArray = blogs.slice(blogsFrom, blogsTo)
-
-    clearBlogs()
-
-    $.each(currentBlogsArray, function(key, value) {
-
-        var blogTitle = this.title;
-        var blogImg = this.imgSrc;
-        var blogCategory = this.category;
-        var blogText = this.text;
-        var blogEndpoint = this.endpoint;
-        var blogDate = this.date;
-
-        updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate)
     })
 }
 
-function changeCategory() {
-    clearBlogs()
-
-    $.each(currentBlogsArray, function(key, value) {
-
-        var blogTitle = this.title;
-        var blogImg = this.imgSrc;
-        var blogCategory = this.category;
-        var blogText = this.text;
-        var blogEndpoint = this.endpoint;
-        var blogDate = this.date;
-
-        updateBlogList(blogTitle, blogImg, blogCategory, blogText, blogEndpoint, blogDate)
-    })
-}
 
 /* BLOG CATEGORY */
 
@@ -88,66 +61,70 @@ $.each(categoryArray, function(key, value) {
 })
 
 /* BLOG CATEGORY END */
+pageCount = Math.ceil((blogs.length / 9).toFixed(1))
+updatePagesCount(pageCount)
 
 $('.blog__links p').click(function() {
-
+    clearBlogs()
+    originalBlogsArray = [];
     var category = $(this).attr('id').replace('blog_', '')
     $('.blog__links p').removeClass('blog__links_active')
     $(this).addClass('blog__links_active')
 
     if (category == 'all') {
-        currentBlogsArray = [];
-        currentBlogsArray = blogs.slice(0, 9)
-        changeCategory()
+        originalBlogsArray = blogs;
+        currentBlogsArray = []; //очищаем массив текущих блогов
+        currentBlogsArray = blogs.slice(0, 9) //подгружаем новые блоги
+        pageCount = Math.ceil((blogs.length / 9).toFixed(1))
+        updatePagesCount(pageCount)
+        updateBlogsList(pageCount)
     } else {
         currentBlogsArray = [];
 
-
         $.each(blogs, function(key, value) {
-            if (currentBlogsArray.length == 9) {
-                changeCategory()
-                return false;
-            } else {
-                if (value.category == category) {
-                    currentBlogsArray.push(value)
-                }
+            if (value.category == category) {
+                currentBlogsArray.push(value)
+                originalBlogsArray.push(value)
             }
         })
-    }
-
-
-});
-
-/* BLOG GENERATE END */
-
-
-/* BLOG PAGES */
-
-var allBlogPosts = [];
-
-$.each($('.blog__block'), function(key, value) {
-    allBlogPosts.push(this)
-})
-
-var pageCount = Math.ceil((blogs.length / 9).toFixed(1))
-
-
-$(".myPages").pxpaginate({
-    currentpage: 1,
-    totalPageCount: pageCount,
-    maxBtnCount: 3,
-    align: 'center',
-    nextPrevBtnShow: true,
-    firstLastBtnShow: true,
-    prevPageName: '<',
-    nextPageName: '>',
-    lastPageName: '',
-    firstPageName: '',
-    callback: function(pagenumber) {
-        changePage(pagenumber)
+        pageCount = Math.ceil((currentBlogsArray.length / 9).toFixed(1))
+        updatePagesCount(pageCount)
+        console.log(currentBlogsArray)
+        updateBlogsList(pageCount)
 
     }
 });
+var originalBlogsArray = [];
+
+function changePage(pagenumber) {
+    var blogsFrom = (pagenumber - 1) * 9;
+    var blogsTo = pagenumber * 9;
+    currentBlogsArray = originalBlogsArray;
+    currentBlogsArray = currentBlogsArray.slice(blogsFrom, blogsTo)
+    updateBlogsList()
+}
+
+
+function updatePagesCount(pageCount) {
+    $(".myPages").pxpaginate({
+        currentpage: 1,
+        totalPageCount: pageCount,
+        maxBtnCount: 3,
+        align: 'center',
+        nextPrevBtnShow: true,
+        firstLastBtnShow: false,
+        prevPageName: '<',
+        nextPageName: '>',
+        lastPageName: 'first',
+        firstPageName: 'last',
+        callback: function(pagenumber) {
+            console.log(pagenumber)
+            changePage(pagenumber)
+        }
+    });
+}
+
+
 
 /* BLOG */
 

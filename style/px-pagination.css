@@ -39,7 +39,7 @@
 } */
 
 .px-paginate-container .px-points {
-    background: #f4f4f4;
+    background: white;
     color: #3F2B4F;
     opacity: 1;
 }
@@ -50,6 +50,11 @@
 }
 
 .px-btn-prev {
+    opacity: 1 !important;
+    color: #F8A35B;
+}
+
+.px-btn-next {
     opacity: 1 !important;
     color: #F8A35B;
 }
