@@ -68,3 +68,20 @@
 .px-paginate-container .px-btn.selected {
     opacity: 1;
 }
+
+.px-btn-last,
+.px-btn-first {
+    color: #F8A35B;
+    opacity: 0.5 !important;
+    transition: 0.3s;
+}
+
+.px-btn-first:hover {
+    background: transparent !important;
+    opacity: 1 !important;
+}
+
+.px-btn-last:hover {
+    background: transparent !important;
+    opacity: 1 !important;
+}
