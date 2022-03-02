@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/default_styles.css">
-    <link rel="stylesheet" href="style/px-pagination.css">
     <link rel="stylesheet" href="style/inner_styles.css">
 </head>
 
@@ -175,7 +174,7 @@
 
                 </div>
                 <div class="page_number">
-                    <div class="myPages"></div>
+                    <ul id="pagination-demo" class="pagination-sm"></ul>
                 </div>
             </div>
         </section>
@@ -661,7 +660,7 @@
         }]
     </script>
     <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/px-pagination.js"></script>
+    <script src="js/jquery.twbsPagination.min.js"></script>
     <script src="js/default_script.js"></script>
     <script>
         console.log(blogs)
@@ -728,8 +727,16 @@
 
         /* BLOG CATEGORY END */
         pageCount = Math.ceil((blogs.length / 9).toFixed(1))
-        updatePagesCount(pageCount)
-
+            // updatePagesCount(pageCount)
+        var $pagination = $('#pagination-demo');
+        $pagination.twbsPagination({
+            totalPages: pageCount,
+            visiblePages: 7,
+            onPageClick: function(event, page) {
+                pagenumber = page;
+                //    changePage(pagenumber)
+            }
+        });
         $('.blog__links p').click(function() {
             clearBlogs()
             originalBlogsArray = [];
@@ -766,30 +773,24 @@
             var blogsFrom = (pagenumber - 1) * 9;
             var blogsTo = pagenumber * 9;
             currentBlogsArray = originalBlogsArray;
+            console.log(currentBlogsArray)
             currentBlogsArray = currentBlogsArray.slice(blogsFrom, blogsTo)
             updateBlogsList()
         }
 
         $('#blog_all').trigger('click');
 
-
         function updatePagesCount(pageCount) {
-            $(".myPages").pxpaginate({
-                currentpage: 1,
-                totalPageCount: pageCount,
-                maxBtnCount: 4,
-                align: 'center',
-                nextPrevBtnShow: true,
-                firstLastBtnShow: true,
-                prevPageName: '<',
-                nextPageName: '>',
-                lastPageName: 'first',
-                firstPageName: 'last',
-                callback: function(pagenumber) {
-                    console.log(pagenumber)
+            var currentPage = $pagination.twbsPagination('getCurrentPage');
+            $pagination.twbsPagination('destroy');
+            $pagination.twbsPagination($.extend({}, {
+                startPage: 1,
+                totalPages: pageCount,
+                onPageClick: function(event, page) {
+                    pagenumber = page;
                     changePage(pagenumber)
                 }
-            });
+            }));
         }
     </script>
 </body>
