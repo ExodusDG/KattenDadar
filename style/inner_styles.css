@@ -809,7 +809,7 @@
     margin-right: 40px;
 }
 
-.tip_date_block {
+#data__picker {
     background: #FFFFFF;
     box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.13);
     border-radius: 10px;
@@ -818,15 +818,49 @@
     height: 50px;
     justify-content: space-between;
     align-items: center;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    opacity: 0.6;
+    font-family: Montserrat;
+    padding-left: 10px;
 }
 
-.tip_date_block p {
+#data__picker p {
     width: 150px;
     margin: 0 auto;
     text-align: center;
 }
 
-.tip_date_block hr {
+#data__picker hr {
+    width: 0px;
+    height: 28px;
+}
+
+.time__picker {
+    background: #FFFFFF;
+    box-shadow: 0px 0px 9px rgba(0, 0, 0, 0.13);
+    border-radius: 10px;
+    display: flex;
+    width: 200px;
+    height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    border: none;
+    font-weight: 600;
+    font-size: 18px;
+    opacity: 0.6;
+    font-family: Montserrat;
+    padding-left: 10px;
+}
+
+.time__picker p {
+    width: 150px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.time__picker hr {
     width: 0px;
     height: 28px;
 }
@@ -1483,4 +1517,178 @@
     font-family: 'Inglobal';
     color: rgba(63, 43, 79, 0.3);
     font-size: 16px;
+}
+
+.ui-datepicker-title {
+    font-family: 'Inglobal';
+}
+
+.ui-datepicker th {
+    font-family: 'Inglobal';
+    color: #F8A35B;
+}
+
+.ui-state-default {
+    font-family: 'Inglobal';
+    color: #3F2B4F;
+    font-weight: 700 !important;
+    border: none !important;
+    background: transparent !important;
+}
+
+#ui-datepicker-div {
+    background: #FFFFFF;
+    box-shadow: 0px 3px 73px rgba(103, 103, 103, 0.09);
+    border-radius: 10px;
+}
+
+.ui-widget-header {
+    background: transparent;
+    border: none;
+}
+
+.ui-datepicker-current-day a {
+    color: #F8A35B !important;
+}
+
+.ui-widget-header .ui-icon {
+    background: url('../img/ui-icons_444444_256x240.png') no-repeat !important;
+    transform: rotate(90deg);
+}
+
+.ui-datepicker-prev .ui-icon {
+    transform: rotate(-90deg);
+}
+
+.ui-corner-all {
+    cursor: pointer;
+}
+
+.ui-timepicker-wrapper {
+    width: 200px;
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #FBC89C;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #F9B57C;
+}
+
+.tip_status {
+    position: fixed;
+    width: 40vw;
+    left: 30vw;
+    top: 30vh;
+    height: auto;
+    padding: 50px;
+    z-index: 999;
+    background: white;
+    z-index: 99999999999;
+    opacity: 0;
+    transform: scale(0);
+    transition: 0.3s;
+}
+
+.tip_status_active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.tip__status_content {
+    text-align: center;
+}
+
+.tip__status {
+    font-family: inglobal;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    line-height: 39px;
+    /* identical to box height, or 123% */
+    text-align: center;
+    color: #000000;
+}
+
+.tip__desc {
+    margin-top: 20px;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 26px;
+    /* or 144% */
+    text-align: center;
+    /* Headline Color */
+    color: #3F2B4F;
+}
+
+.tip__desc a {
+    color: #F8A35B;
+    text-decoration: none;
+}
+
+.tip_done button {
+    transition: 0.3s;
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+    color: white;
+    font-family: inglobal;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid #F8A35B;
+    background: #F8A35B;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.tip_done button:hover {
+    border: 2px solid #F8A35B;
+    background: transparent;
+    color: #F8A35B;
+}
+
+.tip_error button {
+    transition: 0.3s;
+    width: 100%;
+    height: 60px;
+    border-radius: 10px;
+    color: white;
+    font-family: inglobal;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid #F8A35B;
+    background: #F8A35B;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.tip_error button:hover {
+    border: 2px solid #F8A35B;
+    background: transparent;
+    color: #F8A35B;
 }
