@@ -17,12 +17,84 @@ $.ajax(settings).done(function(response) {
     $('.tip_photo img').attr('src', response)
 });
 
-$('.tip_menu input, textarea').keyup(function() {
-    if ($('#tip__message').val().length == 0) {
+
+function checkInput() {
+    if ($('#tip__message').val().length == 0 || $('#tips__location').val().length == 0 || $('#data__picker').val().length == 0 || $('#time__picker').val().length == 0) {
         $('.tip__send_button').prop("disabled", true);
     } else {
         $('.tip__send_button').attr("disabled", null);
     }
+}
+var catAdress;
+var catAdressCity;
+var adressLat;
+var adressLng;
+
+$('.tip__send_button').click(function() {
+    var settings = {
+        "url": "https://server.kattenradar.nl/test-submit-tip",
+        "method": "GET",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "data": {
+            "id": userID,
+            "text": $('#tip__message').val(),
+            "lat": adressLat,
+            "lng": adressLng,
+            "street": catAdress,
+            "city": catAdressCity,
+            "date": $('#data__picker').val(),
+            "time": $('#time__picker').val(),
+            "contact": $('#tip__contact').val()
+        }
+    };
+    console.log(settings.data)
+    $.ajax(settings).done(function(response) {
+        //  console.log(response);
+        if (response == 'failure') {
+            tipError()
+        } else if (response == 'success ') {
+            tipDone()
+        }
+    });
+})
+
+function tipError() {
+    $('.blur__wrapper').attr('style', 'filter: blur(10px)')
+    $('.feedback').attr('style', 'display: block')
+
+    header.removeClass('header__fixed')
+    header.addClass('header__hidden')
+
+    $('.tip_status').addClass('tip_status_active')
+    $('.tip_done').attr('style', 'display: none')
+    $('.tip_error').attr('style', 'display: block')
+}
+
+function tipDone() {
+    $('.blur__wrapper').attr('style', 'filter: blur(10px)')
+    $('.feedback').attr('style', 'display: block')
+
+    header.removeClass('header__fixed')
+    header.addClass('header__hidden')
+
+    $('.tip_status').addClass('tip_status_active')
+    $('.tip_done').attr('style', 'display: block')
+    $('.tip_error').attr('style', 'display: none')
+}
+
+$('.tips__map_close').click(function() {
+    $('.blur__wrapper').attr('style', 'filter: blur(0px)')
+    $('.feedback').attr('style', 'display: none')
+
+    header.addClass('header__fixed')
+    header.removeClass('header__hidden')
+
+    setTimeout(() => {
+        $('.tip_status').removeClass('tip_status_active');
+    }, 100);
 })
 
 $('#tips__location').click(function() {
@@ -64,6 +136,7 @@ $('.feedback').click(function() {
         $('.tips__map').removeClass('tipShow');
     }, 100);
 })
+
 
 function initMap() {
     const componentForm = [
@@ -113,10 +186,7 @@ function initMap() {
         }
     });
     var radiusOnMap;
-    var catAdress;
-    var catAdressCity;
-    var adressLat;
-    var adressLng;
+
 
     function adressSelect() {
         const place = autocomplete.getPlace();
@@ -201,4 +271,19 @@ function initMap() {
         $('#tips__location').val(catAdress + ', ' + catAdressCity)
         tipsMapClose()
     })
+
+
+    $(function() {
+        $("#data__picker").datepicker({
+            dateFormat: 'dd | mm | yy'
+        });
+    });
+
+    $('.tip_date_block').click(function() {
+        $("#data__picker").click();
+    })
+
+    $("#data__picker").click(function() {})
+
+    $('#time__picker').timepicker();
 }

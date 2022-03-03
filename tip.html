@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/jquery-ui.min.css">
+    <link rel="stylesheet" href="style/jquery.timepicker.min.css">
     <link rel="stylesheet" href="style/default_styles.css">
     <link rel="stylesheet" href="style/inner_styles.css">
 </head>
@@ -161,31 +163,21 @@
                     </div>
                     <div class="tip_menu">
                         <p>Tip</p>
-                        <div><textarea name="tip__message" id="tip__message" placeholder="Verplicht"></textarea></div>
+                        <div><textarea name="tip__message" id="tip__message" placeholder="Verplicht" onchange="checkInput()"></textarea></div>
                         <p>Locatie</p>
-                        <input class="tip_menu_location" id="tips__location" placeholder="Location" type="text" readonly>
+                        <input class="tip_menu_location" id="tips__location" placeholder="Location" type="text" onchange="checkInput()" readonly>
                         <div class="tip_menu_date">
                             <div>
                                 <p>Datum</p>
-                                <div class="tip_date_block">
-                                    <p>MM</p>
-                                    <hr>
-                                    <p>DD</p>
-                                    <hr>
-                                    <p>JJ</p>
-                                </div>
+                                <input type="text" name="data__picker" id="data__picker" readonly onchange="checkInput()" placeholder="MM | DD | JJ">
                             </div>
                             <div>
                                 <p>Tijd</p>
-                                <div class="tip_block_time">
-                                    <p>UU</p>
-                                    <hr>
-                                    <p>UU</p>
-                                </div>
+                                <input type="text" name="data__picker" class="time__picker" onchange="checkInput()" id="time__picker" placeholder="UU | UU">
                             </div>
                         </div>
                         <p>Contactgegevens</p>
-                        <input class="tip_menu_location" placeholder="Optioneel" type="text">
+                        <input class="tip_menu_location" id="tip__contact" placeholder="Optioneel" type="text">
                         <button class="tip__send_button" disabled>Stuur tip!</button>
                     </div>
                 </div>
@@ -352,7 +344,30 @@
         </div>
     </div>
 
+    <!-- TIP STATUS -->
+
+    <div class="tip_status">
+        <div class="tips__map_close"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.138 13.5104L15.1379 13.5105L15.1457 13.5179C15.6181 13.9649 15.6181 14.7066 15.1457 15.1536C14.8878 15.3976 14.6104 15.5 14.3545 15.5C14.0998 15.5 13.8238 15.3985 13.567 15.157L8.35131 10.0068L8 9.65994L7.64869 10.0068L2.43342 15.1566C2.29382 15.2864 1.96424 15.4467 1.64548 15.4467C1.32425 15.4467 0.992028 15.2839 0.854326 15.1536C0.381891 14.7066 0.381891 13.9649 0.854326 13.5179L0.854404 13.5179L0.861997 13.5104L6.0817 8.35576L6.44197 7.99998L6.08168 7.64422L0.861979 2.49007L0.862059 2.48999L0.854326 2.48267C0.381891 2.03562 0.381891 1.29344 0.854326 0.846399C1.11217 0.602412 1.38958 0.5 1.64548 0.5C1.90019 0.5 2.1762 0.601457 2.43302 0.842987L7.64867 5.99366L8 6.34061L8.35133 5.99366L13.567 0.842977C13.8238 0.601454 14.0998 0.5 14.3545 0.5C14.6104 0.5 14.8878 0.602412 15.1457 0.846399C15.6181 1.29344 15.6181 2.03562 15.1457 2.48267L15.1456 2.48259L15.138 2.49007L9.91832 7.64422L9.55803 7.99998L9.9183 8.35576L15.138 13.5104Z" fill="#3F2B4F" stroke="#3F2B4F"/>
+            </svg>
+        </div>
+        <div class="tip__status_content">
+            <div class="tip_done" style="display: none;">
+                <p class="tip__status">Success</p>
+                <p class="tip__desc">Je tip is verstuurd naar de eigenaar blablabla heel erg lief we waarderen je hulp.</p>
+                <a href="index.html"><button>Ga door</button></a>
+            </div>
+            <div class="tip_error">
+                <p class="tip__status">Failed</p>
+                <p class="tip__desc">Deze e-mail heeft geen gekoppelde zoekopdrachten. Probeer het nog eens of neem contact op met <a href="mailto:info@kattenradar.com">info@kattenradar.com</a> of <a href="tel:+31627655321">+31627655321</a>.</p>
+                <a href="index.html"><button>Ga door</button></a>
+            </div>
+        </div>
+    </div>
+
     <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/jquery.timepicker.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFA6udGwPSgJt_QacZp9tatCTazR32t2U&libraries=places&callback=initMap&solution_channel=GMP_QB_addressselection_v1_cABC" async defer></script>
     <script src="js/default_script.js"></script>
     <script src="js/tips_script.js"></script>
