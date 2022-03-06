@@ -165,7 +165,12 @@
                         <p>Tip</p>
                         <div><textarea name="tip__message" id="tip__message" placeholder="Verplicht" onchange="checkInput()"></textarea></div>
                         <p>Locatie</p>
-                        <input class="tip_menu_location" id="tips__location" placeholder="Location" type="text" onchange="checkInput()" readonly>
+                        <div class="location__input">
+                            <input class="tip_menu_location" id="tips__location" placeholder="Location" type="text" onchange="checkInput()" readonly>
+                            <div class="location__clear">
+                                <p>x</p>
+                            </div>
+                        </div>
                         <div class="tip_menu_date">
                             <div>
                                 <p>Datum</p>
