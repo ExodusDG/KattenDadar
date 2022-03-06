@@ -13,13 +13,12 @@ var settings = {
 };
 
 $.ajax(settings).done(function(response) {
-    response = response.replace('"', '').replace('"', '')
-    $('.tip_photo img').attr('src', response)
+    $('.tip_photo img').attr('src', response.img)
 });
 
 
 function checkInput() {
-    if ($('#tip__message').val().length == 0 || $('#tips__location').val().length == 0 || $('#data__picker').val().length == 0 || $('#time__picker').val().length == 0) {
+    if ($('#tip__message').val().length == 0 /*|| $('#tips__location').val().length == 0 || $('#data__picker').val().length == 0 || $('#time__picker').val().length == 0*/ ) {
         $('.tip__send_button').prop("disabled", true);
     } else {
         $('.tip__send_button').attr("disabled", null);
@@ -40,14 +39,14 @@ $('.tip__send_button').click(function() {
         },
         "data": {
             "id": userID,
-            "text": $('#tip__message').val(),
+            "content": $('#tip__message').val(),
             "lat": adressLat,
             "lng": adressLng,
             "street": catAdress,
             "city": catAdressCity,
             "date": $('#data__picker').val(),
             "time": $('#time__picker').val(),
-            "contact": $('#tip__contact').val()
+            "contactdata": $('#tip__contact').val()
         }
     };
     console.log(settings.data)
@@ -187,6 +186,11 @@ function initMap() {
     });
     var radiusOnMap;
 
+    const Marker = new google.maps.Marker({
+        position: { lat: -33.89, lng: 151.274 },
+        map,
+        icon: 'img/homepage/allSearches.svg',
+    });
 
     function adressSelect() {
         const place = autocomplete.getPlace();
@@ -210,17 +214,12 @@ function initMap() {
                 }
             ]
         )
-        const cityCircle = new google.maps.Circle({
-            strokeColor: "#F8A35B",
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: "#F8A35B",
-            fillOpacity: 0.3,
-            clickable: false,
+        const Marker = new google.maps.Marker({
+            position: markersArray[0][1].center,
             map,
-            center: markersArray[0][1].center,
-            radius: Math.sqrt(markersArray[0][1].population) * 100,
+            icon: 'img/tip_icon.svg',
         });
+
         console.log(markersArray[0][1].population)
         radiusOnMap = true;
 
@@ -286,4 +285,10 @@ function initMap() {
     $("#data__picker").click(function() {})
 
     $('#time__picker').timepicker();
+    $('#tip__message').keyup(function() {
+        checkInput()
+    })
 }
+$('.location__clear').click(function() {
+    $('#tips__location').prop('value', null);
+})
