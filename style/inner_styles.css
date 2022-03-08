@@ -767,6 +767,7 @@
 .tip_contents {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .tip_menu {
@@ -880,6 +881,15 @@
 .time__picker hr {
     width: 0px;
     height: 28px;
+}
+
+.tip_photo {
+    width: 600px;
+}
+
+.tip_photo img {
+    width: 100%;
+    border-radius: 10px;
 }
 
 .tip_block_time {
