@@ -32,7 +32,7 @@ var adressLng;
 $('.tip__send_button').click(function() {
     var settings = {
         "url": "https://server.kattenradar.nl/test-submit-tip",
-        "method": "GET",
+        "method": "POST",
         "timeout": 0,
         "headers": {
             "Content-Type": "application/x-www-form-urlencoded"
@@ -284,11 +284,28 @@ function initMap() {
 
     $("#data__picker").click(function() {})
 
-    $('#time__picker').timepicker();
     $('#tip__message').keyup(function() {
         checkInput()
     })
 }
 $('.location__clear').click(function() {
     $('#tips__location').prop('value', null);
+})
+
+$('.tip__time_selector svg').click(function() {
+    $('.tip__time').attr('style', 'display: none')
+    $('#time__picker').val($('.tip_time_active_number').text() + ' ' + $('.tip__time_active').text())
+})
+
+$('#time__picker').click(function() {
+    $('.tip__time').attr('style', 'display: flex')
+})
+
+$('.tip__time p').click(function() {
+    $('.tip__time p').removeClass('tip__time_active')
+    $(this).addClass('tip__time_active')
+})
+$('.tip_time_wrapper div').click(function() {
+    $('.tip_time_wrapper div').removeClass('tip_time_active_number')
+    $(this).addClass('tip_time_active_number')
 })
