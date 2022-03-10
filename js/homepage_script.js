@@ -352,7 +352,7 @@ $.each(markersList, (key, value) => {
     markersList[key].on('mouseout', function(e) {
         setTimeout(() => {
             this.closePopup();
-        }, 500000);
+        }, 5000);
     });
 })
 
