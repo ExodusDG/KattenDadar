@@ -5,7 +5,7 @@ getCookie()
 function getCookie() {
     var str = document.cookie;
 
-    cookieArray = str.split(/[;] */).reduce(function (result, pairStr) {
+    cookieArray = str.split(/[;] */).reduce(function(result, pairStr) {
         var arr = pairStr.split('=');
         if (arr.length === 2) { result[arr[0]] = arr[1]; }
         return result;
@@ -15,13 +15,13 @@ function getCookie() {
 console.log(cookieArray)
 
 /* DASHBOARD POPUP */
-$('#dashboard__send').click(function () {
+$('#dashboard__send').click(function() {
     var dashboardEmail = $('#dashboardEmail').val();
     // var dashboardEmail = 'exodusdevelop1@gmail.com';
-    grecaptcha.ready(function () {
+    grecaptcha.ready(function() {
         grecaptcha.execute('6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C', {
             action: 'submitEmail'
-        }).then(function (token) {
+        }).then(function(token) {
             var url = 'https://server.kattenradar.nl/test-recaptcha?token=' + token
             var requestOptions = {
                 method: 'POST',
@@ -76,69 +76,69 @@ function dashboardFailed() {
     $('.dashboard__popup_failed').attr('style', 'display: block')
 }
 
-$('#dashboard__failed_repeat').click(function () {
+$('#dashboard__failed_repeat').click(function() {
     $('.dashboard__popup_failed').attr('style', 'display: none')
     $('.dashboard__popup_start').attr('style', 'display: block')
 })
 
-$('.dashboard__top_button').click(function () {
-    dashboardClose()
-    $('html, body').animate({ scrollTop: '0px' }, 1000);
-})
-/* DASHBOARD POPUP END */
+$('.dashboard__top_button').click(function() {
+        dashboardClose()
+        $('html, body').animate({ scrollTop: '0px' }, 1000);
+    })
+    /* DASHBOARD POPUP END */
 
 /* FEEDBACK FORM  */
 
-$('.feedback__send').click(function () {
-    var formEmail = $('#form__email').val();
-    var formPhone = $('#form__phone').val();
-    var formMSG = $('#message').val();
-    var selectedLang = $('#language').text();
+$('.feedback__send').click(function() {
+        var formEmail = $('#form__email').val();
+        var formPhone = $('#form__phone').val();
+        var formMSG = $('#message').val();
+        var selectedLang = $('#language').text();
 
-    grecaptcha.ready(function () {
-        grecaptcha.execute('6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C', {
-            action: 'submitForm'
-        }).then(function (token) {
-            var url = 'https://server.kattenradar.nl/test-recaptcha?token=' + token
-            var requestOptions = {
-                method: 'POST',
-                redirect: 'follow',
-            };
-            fetch(url, requestOptions)
-                .then(response => response.text())
-                .then(result => {
-                    if (result == 'failed') {
-                        console.log('failed')
-                    } else {
-                        var myHeaders = new Headers();
-                        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LdBDO4dAAAAAHksjb-qcwb7j-Ke3cEJwkBgIF4C', {
+                action: 'submitForm'
+            }).then(function(token) {
+                var url = 'https://server.kattenradar.nl/test-recaptcha?token=' + token
+                var requestOptions = {
+                    method: 'POST',
+                    redirect: 'follow',
+                };
+                fetch(url, requestOptions)
+                    .then(response => response.text())
+                    .then(result => {
+                        if (result == 'failed') {
+                            console.log('failed')
+                        } else {
+                            var myHeaders = new Headers();
+                            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-                        var urlencoded = new URLSearchParams();
-                        urlencoded.append("email", formEmail);
-                        urlencoded.append("phone", formPhone);
-                        urlencoded.append("message", formMSG);
-                        urlencoded.append("language", selectedLang);
+                            var urlencoded = new URLSearchParams();
+                            urlencoded.append("email", formEmail);
+                            urlencoded.append("phone", formPhone);
+                            urlencoded.append("message", formMSG);
+                            urlencoded.append("language", selectedLang);
 
-                        var requestOptions = {
-                            method: 'POST',
-                            headers: myHeaders,
-                            body: urlencoded,
-                            redirect: 'follow'
-                        };
+                            var requestOptions = {
+                                method: 'POST',
+                                headers: myHeaders,
+                                body: urlencoded,
+                                redirect: 'follow'
+                            };
 
-                        fetch("https://server.kattenradar.nl/test-sm", requestOptions)
-                            .then(response => response.text())
-                            .then(result =>
-                                $('.form__send_status').css('display', 'block')
-                            )
-                            .catch(error => console.log('error', error));
-                    }
-                })
-                .catch(error => console.log('error', error));
+                            fetch("https://server.kattenradar.nl/test-sm", requestOptions)
+                                .then(response => response.text())
+                                .then(result =>
+                                    $('.form__send_status').css('display', 'block')
+                                )
+                                .catch(error => console.log('error', error));
+                        }
+                    })
+                    .catch(error => console.log('error', error));
+            });
         });
-    });
-})
-/* FEEDBACK FORM  END */
+    })
+    /* FEEDBACK FORM  END */
 
 /* REVIEWS SLIDER */
 
@@ -159,7 +159,7 @@ setInterval(() => {
 
 var feedbackH = $('.feedback__popup').height()
 
-$('.footer_contact').click(function () {
+$('.footer_contact').click(function() {
     $('.blur__wrapper').attr('style', 'filter: blur(10px)')
     $('.feedback').attr('style', 'display: block')
     header.removeClass('header__fixed')
@@ -169,13 +169,13 @@ $('.footer_contact').click(function () {
     }, 100);
 })
 
-$('.popup_close').click(function () {
+$('.popup_close').click(function() {
     feedbackClose()
 })
-$('.feedback__send').click(function () {
+$('.feedback__send').click(function() {
     //  feedbackClose()
 })
-$('.feedback').click(function () {
+$('.feedback').click(function() {
     feedbackClose()
 })
 
@@ -192,7 +192,7 @@ function feedbackClose() {
 
 /* DASHBOARD POPUP */
 
-$('.footer_dashboard').click(function () {
+$('.footer_dashboard').click(function() {
     $('.blur__wrapper').attr('style', 'filter: blur(10px)')
     $('.feedback').attr('style', 'display: block')
     header.removeClass('header__fixed')
@@ -202,13 +202,13 @@ $('.footer_dashboard').click(function () {
     }, 100);
 })
 
-$('.popup_close').click(function () {
+$('.popup_close').click(function() {
     dashboardClose()
 })
-$('.feedback__send').click(function () {
+$('.feedback__send').click(function() {
     //  dashboardClose()
 })
-$('.feedback').click(function () {
+$('.feedback').click(function() {
     dashboardClose()
 })
 
@@ -235,7 +235,7 @@ $.ajax({
     dataType: 'json',
     async: false,
     data: recentSearches,
-    success: function (data) {
+    success: function(data) {
         recentFound = data.Found;
         recentNotFound = data.notFound;
 
@@ -250,7 +250,7 @@ $.ajax({
     dataType: 'json',
     async: false,
     data: recentSearches,
-    success: function (data) {
+    success: function(data) {
         allFound = data.Found;
         allNotFound = data.notFound;
     }
@@ -258,7 +258,7 @@ $.ajax({
 
 var trackStep = $('.map__radius_track').width();
 
-$('.faq__item').click(function () {
+$('.faq__item').click(function() {
     var currentFaq = $(this)
     currentFaq.find('.faq__item_answer').toggleClass('faq_ans_open')
     currentFaq.toggleClass('faq_open');
@@ -270,7 +270,7 @@ $('.faq__item').click(function () {
     }
 })
 
-$('.current__map_buttons button').click(function () {
+$('.current__map_buttons button').click(function() {
     $('.current__map_buttons button').removeClass('current__button_active')
     $(this).addClass('current__button_active')
 })
@@ -300,13 +300,13 @@ var secondMap = L.map('current_map', {
 }).setView([52.1231241, 5.2773372], 8);
 
 // zoom in function
-$('#map_minus').click(function () {
+$('#map_minus').click(function() {
     secondMap.setZoom(secondMap.getZoom() + 1)
 });
 
 
 // zoom out function
-$('#map_plus').click(function () {
+$('#map_plus').click(function() {
     secondMap.setZoom(secondMap.getZoom() - 1)
 });
 //https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png
@@ -346,13 +346,13 @@ $.each(recentNotFound, (key, value) => {
 
 $.each(markersList, (key, value) => {
     markersList[key].bindPopup("<div class='map__popup_block'> <img class='map_popup__image' src='" + markersList[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div></div>", { closeButton: false });
-    markersList[key].on('mouseover', function (e) {
+    markersList[key].on('mouseover', function(e) {
         this.openPopup();
     });
-    markersList[key].on('mouseout', function (e) {
+    markersList[key].on('mouseout', function(e) {
         setTimeout(() => {
             this.closePopup();
-        }, 5000);
+        }, 500000);
     });
 })
 
@@ -370,10 +370,10 @@ function allMarkersPopup() {
     $.each(allMarkers, (key, value) => {
         allMarkers[key].bindPopup("<div class='map__popup_block map__popup_green'> <img class='map_popup__image' src='" + allMarkers[key].options.title + "'><div class='map__popup_bottom popup__green'><a href='#'><button class='map__popup_green map__popup_button'>Stuur tip!</button></a></div></div></div>", { closeButton: false });
         $('.test').hide()
-        allMarkers[key].on('mouseover', function (e) {
+        allMarkers[key].on('mouseover', function(e) {
             this.openPopup();
         });
-        allMarkers[key].on('mouseout', function (e) {
+        allMarkers[key].on('mouseout', function(e) {
             setTimeout(() => {
                 this.closePopup();
             }, 5000);
@@ -389,7 +389,7 @@ var AllmarkersList = [];
 var allMarker = [];
 
 
-$('.current_right_b').click(function () {
+$('.current_right_b').click(function() {
     $.each(greenMarker, (key, value) => {
         secondMap.removeLayer(greenMarker[key]);
     })
@@ -400,10 +400,10 @@ $('.current_right_b').click(function () {
     })
     $.each(AllmarkersList, (key, value) => {
         AllmarkersList[key].bindPopup("<div class='map__popup_block'><img class='map_popup__image' src='" + AllmarkersList[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div></div>", { closeButton: false });
-        AllmarkersList[key].on('mouseover', function (e) {
+        AllmarkersList[key].on('mouseover', function(e) {
             this.openPopup();
         });
-        AllmarkersList[key].on('mouseout', function (e) {
+        AllmarkersList[key].on('mouseout', function(e) {
             setTimeout(() => {
                 this.closePopup();
             }, 5000);
@@ -412,10 +412,10 @@ $('.current_right_b').click(function () {
     $.each(allMarker, (key, value) => {
         allMarker[key].bindPopup("<div class='map__popup_block'><img class='map_popup__image' src='" + allMarker[key].options.title + "'><div class='map__popup_bottom'><a href='#'><button class='map__popup_button'>Stuur tip!</button></a></div></div>", { closeButton: false });
         $('.green__popup').css('background-color', 'green !important')
-        allMarker[key].on('mouseover', function (e) {
+        allMarker[key].on('mouseover', function(e) {
             this.openPopup();
         });
-        allMarker[key].on('mouseout', function (e) {
+        allMarker[key].on('mouseout', function(e) {
             setTimeout(() => {
                 this.closePopup();
             }, 5000);
@@ -423,7 +423,7 @@ $('.current_right_b').click(function () {
     })
 })
 
-$('.current_left_b').click(function () {
+$('.current_left_b').click(function() {
     $.each(recentFound, (key, value) => {
         markerFoundGreen = L.marker([Number(recentFound[key].lat), Number(recentFound[key].lng)], { icon: mapMarkerGreen, title: recentFound[key].picLink }).addTo(secondMap);
         allMarkers.push(markerFoundGreen);
@@ -499,7 +499,7 @@ function initMap() {
 
     var radiusOnMap;
 
-    $('#location').keypress(function (e) {
+    $('#location').keypress(function(e) {
         if (e.which == 13) {
             adressSelect()
             return false; //prevent duplicate submission
@@ -511,7 +511,7 @@ function initMap() {
             containment: "parent",
             axis: "x",
 
-            drag: function (e, ui) {
+            drag: function(e, ui) {
                 x2 = ui.position.left;
                 var trackPercent = ((x2 * 100) / trackStep).toFixed(0)
                 if (trackPercent > 80) {
@@ -570,7 +570,7 @@ function initMap() {
             }
         });
     }
-    $('.map__radius_draggable').click(function () {
+    $('.map__radius_draggable').click(function() {
         mapZoom()
     })
 
@@ -621,13 +621,14 @@ function initMap() {
             }
         }
     }
-    $('#location').click(function () {
+    $('#location').click(function() {
         mapRadiusDraggeble()
     });
 
     var adressLat;
     var adressLng;
     var city;
+
     function adressSelect() {
         marker.setVisible(false);
         const place = autocomplete.getPlace();
@@ -676,7 +677,7 @@ function initMap() {
             var mapButton = $('.search__map_button')
             mapButton.css('background', '#f8a45b').css('color', 'white')
             mapButton.addClass('button__2step')
-            mapButton.click(function () {
+            mapButton.click(function() {
                 if (mapButton.hasClass('button__2step')) {
                     document.cookie = "steps=2";
                     document.cookie = "adress=" + catAdress;
@@ -705,7 +706,8 @@ function initMap() {
             };
         }
         sendData(sendedData)
-console.log(sendedData)
+        console.log(sendedData)
+
         function sendData(arr) {
             var settings = {
                 "url": "https://server.kattenradar.nl/test-su-data",
@@ -718,13 +720,13 @@ console.log(sendedData)
             };
             console.log(arr)
 
-            $.ajax(settings).done(function (response) {
+            $.ajax(settings).done(function(response) {
                 console.log(response);
                 document.cookie = "id=" + response.id;
             });
         }
     }
-    $('.search__map_button').click(function () {
+    $('.search__map_button').click(function() {
         adressSelect()
     })
 
@@ -737,7 +739,7 @@ console.log(sendedData)
             'country': 'long_name',
             'postal_code': 'short_name',
         };
-        const getAddressComp = function (type) {
+        const getAddressComp = function(type) {
             for (const component of place.address_components) {
                 if (component.types[0] === type) {
 
