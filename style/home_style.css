@@ -934,6 +934,12 @@
 
 .map_popup__image {
     width: 100%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 10px;
+    position: relative;
+    /* top: 5px; */
+    /* object-fit: contain; */
+    height: 10%;
 }
 
 .leaflet-popup-content-wrapper {
@@ -951,7 +957,7 @@
 }
 
 .map__popup_block {
-    padding: 25px;
+    /* padding: 25px; */
     background: #A61404;
     border-radius: 10px;
 }
@@ -1006,7 +1012,9 @@
     background: #A61404;
     border: none;
     height: 50px;
-    border: 2px solid white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border: 1px solid white;
     color: white;
     font-size: 18px;
     font-weight: 700;
