@@ -151,7 +151,7 @@ setInterval(() => {
     $('.reviews__items').attr('style', 'transform: translateX(-' + translateWidth + 'px)')
     $('.reviews__items').append("<div class='review__item' id='review-" + (numberSlider + 6) + "'>" + firstSlide + "</div>")
     numberSlider++
-}, 3000);
+}, 1500);
 
 /* REVIEWS SLIDER END */
 
@@ -258,17 +258,6 @@ $.ajax({
 
 var trackStep = $('.map__radius_track').width();
 
-$('.faq__item').click(function() {
-    var currentFaq = $(this)
-    currentFaq.find('.faq__item_answer').toggleClass('faq_ans_open')
-    currentFaq.toggleClass('faq_open');
-
-    if (currentFaq.hasClass('faq_open')) {
-        $(this).find('.faq__open').attr('src', 'img/homepage/faq_minus.svg')
-    } else {
-        $(this).find('.faq__open').attr('src', 'img/homepage/faq_plus.svg')
-    }
-})
 
 $('.current__map_buttons button').click(function() {
     $('.current__map_buttons button').removeClass('current__button_active')
@@ -277,7 +266,7 @@ $('.current__map_buttons button').click(function() {
 
 var slideNumber = 1;
 
-setInterval(() => {
+/*setInterval(() => {
     var slideWidth = $('.reviews__image_wrapper > img').width();
     var translateWidth = ((slideNumber - 1) * slideWidth)
     $('.review__slider_dot').removeClass('slider__dot_active')
@@ -291,7 +280,7 @@ setInterval(() => {
 
     slideNumber++
 }, 3000);
-
+*/
 /* LEAFLET MAP */
 
 var secondMap = L.map('current_map', {

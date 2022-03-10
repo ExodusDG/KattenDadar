@@ -541,8 +541,7 @@
 
 .reviews__items {
     margin-left: 20px;
-    transition: 0.7s;
-    transition-timing-function: cubic-bezier(1, 0.01, 0.31, 0.98);
+    transition: 25s;
 }
 
 .items__left_mask {
@@ -698,9 +697,18 @@
     border: none;
     width: 292px;
     height: 51px;
+    font-family: 'Inglobal';
+    font-weight: bold;
     position: relative;
     right: 120px;
+    align-items: center;
     cursor: pointer;
+}
+
+.cta__button img {
+    position: relative;
+    top: 3px;
+    left: 5px;
 }
 
 .search__map_button {
