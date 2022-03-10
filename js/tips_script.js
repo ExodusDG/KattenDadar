@@ -287,6 +287,16 @@ function initMap() {
     $('#tip__message').keyup(function() {
         checkInput()
     })
+
+    $(document).mouseup(function(e) { // событие клика по веб-документу
+        var div = $(".tip__time"); // тут указываем ID элемента
+        if (!div.is(e.target) // если клик был не по нашему блоку
+            &&
+            div.has(e.target).length === 0) { // и не по его дочерним элементам
+            $('.tip__time').attr('style', 'display: none')
+            $('#time__picker').val($('.tip_time_active_number').text() + ' ' + $('.tip__time_active').text())
+        }
+    });
 }
 $('.location__clear').click(function() {
     $('#tips__location').prop('value', null);
