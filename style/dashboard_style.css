@@ -1000,11 +1000,14 @@
 
 .catfound__big {
     width: 800px;
-    height: auto;
+    height: 73vh;
     left: calc((100vw - 800px) / 2);
     padding-bottom: 60px;
     padding-left: 60px;
     padding-right: 60px;
+    top: 15vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .feedback_button {
@@ -1913,6 +1916,10 @@
     overflow-x: hidden;
     height: 265px;
     background-size: contain !important;
+}
+
+#dash__location {
+    width: 700px !important;
 }
 
 @media (max-width: 1024px) {

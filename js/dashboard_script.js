@@ -748,6 +748,7 @@ function initMap() {
             $('.search__map_population').attr('style', 'display: none')
             $('.dash__places_lists').attr('style', 'display: none')
             $('.dash__places_select').attr('style', 'display: flex')
+            $('#dash__location').focus();
             $(this).addClass('select__new_zone')
 
             $('.map__radius_draggable').css('left', '0px')
@@ -1022,6 +1023,42 @@ $('.review_star').click(function() {
         $('#star_5').find('path').attr('fill-opacity', '1')
         reviewStep();
     }
+})
+
+
+$('.review_star').hover(function() {
+    var clickedStar = Number($(this).attr('id').replace('star_', ''))
+
+    if (clickedStar == 1) {
+        $('.review_star').find('path').attr('fill-opacity', '0.1')
+        $('#star_1').find('path').attr('fill-opacity', '1')
+    } else if (clickedStar == 2) {
+        $('.review_star').find('path').attr('fill-opacity', '0.1')
+        $('#star_1').find('path').attr('fill-opacity', '1')
+        $('#star_2').find('path').attr('fill-opacity', '1')
+
+    } else if (clickedStar == 3) {
+        $('.review_star').find('path').attr('fill-opacity', '0.1')
+        $('#star_1').find('path').attr('fill-opacity', '1')
+        $('#star_2').find('path').attr('fill-opacity', '1')
+        $('#star_3').find('path').attr('fill-opacity', '1')
+
+    } else if (clickedStar == 4) {
+        $('.review_star').find('path').attr('fill-opacity', '0.1')
+        $('#star_1').find('path').attr('fill-opacity', '1')
+        $('#star_2').find('path').attr('fill-opacity', '1')
+        $('#star_3').find('path').attr('fill-opacity', '1')
+        $('#star_4').find('path').attr('fill-opacity', '1')
+
+    } else if (clickedStar == 5) {
+        $('.review_star').find('path').attr('fill-opacity', '0.1')
+        $('#star_1').find('path').attr('fill-opacity', '1')
+        $('#star_2').find('path').attr('fill-opacity', '1')
+        $('#star_3').find('path').attr('fill-opacity', '1')
+        $('#star_4').find('path').attr('fill-opacity', '1')
+        $('#star_5').find('path').attr('fill-opacity', '1')
+    }
+}, function() {
 
 })
 
@@ -1051,7 +1088,10 @@ $('.catfound__2_button').click(function() {
 $('.feedback__send').click(function() {
     var typedText = $('#feedback').val();
     $('.feedback__input').attr('style', 'display: none')
-    $('#bot__msg_1').attr('style', 'display: flex')
+    setTimeout(() => {
+        $('#bot__msg_1').addClass('chat__msg_bot')
+        $('#bot__msg_1').attr('style', 'display: flex')
+    }, 500);
     $('.chat__user_text_body p ').text(typedText);
     $('.cat__name_chat').attr('style', 'display: flex')
     $('.cat__name_chat').addClass('user__msg_show');
