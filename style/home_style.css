@@ -1665,11 +1665,41 @@
     }
 }
 
-@media (-webkit-device-pixel-ratio: 1.25) {
-    * {
-        zoom: 0.98;
+
+/* SCALING % */
+
+@media (max-width: 1440px) {
+    body {
+        zoom: 70%;
+    }
+    .prefooter__body {
+        height: 570px;
+        background-repeat: no-repeat;
+        width: 100%;
+        background: url(../img/homepage/pre-footer.svg);
+        margin: 0 auto;
+        background-repeat: no-repeat;
+        background-size: initial;
+    }
+    .reviews {
+        margin-top: 50px;
+        width: 100%;
+        overflow-x: hidden;
+        /* text-align: center; */
+        display: flex;
+        justify-content: center;
+    }
+    .reviews__body {
+        margin-top: 50px;
+        margin: 0 auto;
+        justify-content: center;
+    }
+    .search__map {
+        width: 100%;
+        height: 650px;
     }
     .header__fixed {
-        left: 80px;
+        width: 100%;
+        transition: 0s;
     }
 }

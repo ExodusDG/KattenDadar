@@ -1,3 +1,7 @@
+var bodyWidth = $('body').width()
+
+
+
 /* COOKIE DATA  */
 var cookieArray;
 getCookie()
