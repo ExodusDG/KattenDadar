@@ -1,3 +1,14 @@
+jQuery(function($) {
+    $(document).mouseup(function(e) { // событие клика по веб-документу
+        var div = $(".header__lang"); // тут указываем ID элемента
+        if (!div.is(e.target) // если клик был не по нашему блоку
+            &&
+            div.has(e.target).length === 0) { // и не по его дочерним элементам
+            $('.header__lang').removeClass('header__lang_open')
+        }
+    });
+});
+
 /* BLOG */
 
 $('.blog__sorter_visible').click(function() {
@@ -48,11 +59,12 @@ $.fn.isInViewport = function() {
 
 var header = $('#sticky__header');
 
-$(window).on('resize scroll', function() {
-    if ($('.default_header').isInViewport()) {
+$(window).scroll(function() {
+    var $this = $(this),
+        $head = $('.default_header');
+    if ($this.scrollTop() < 400) {
         header.removeClass('header__fixed')
         header.addClass('header__hidden')
-
     } else {
         if ($('.blog_page').length != 0) {
             return false
@@ -115,6 +127,7 @@ $('.footer_contact, .about__contact_button').click(function() {
     header.addClass('header__hidden')
     setTimeout(() => {
         $('.feedback__popup').addClass('feedbackShow');
+        $('#form__email').focus()
     }, 100);
 })
 
@@ -148,6 +161,7 @@ $('.footer_dashboard').click(function() {
     header.addClass('header__hidden')
     setTimeout(() => {
         $('.dashboard__popup').addClass('feedbackShow');
+        $('#dashboardEmail').focus()
     }, 100);
 })
 

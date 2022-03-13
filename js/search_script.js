@@ -99,6 +99,7 @@ if (typeof cookieArray.steps != 'undefined') {
         $('#user_msg_1').addClass('user__msg_show');
         setTimeout(() => {
             $('.chat__left_input').attr('style', 'display:block');
+            $('#cat_name').focus()
             $('#bot_msg_1').attr('style', 'display:flex');
             $('#bot_msg_1').addClass('chat__msg_bot')
             $('.chat__left_start').attr('style', 'display:none')
@@ -121,6 +122,7 @@ function chatHistoryBuild() {
 
             if ($('#user_msg_2').find('p').text() == 'Cat') {
                 $('.chat__left_input').attr('style', 'display: flex')
+                $('#cat_name').focus()
             } else {
                 $('.chat__left_input').attr('style', 'display: none')
             }
@@ -172,6 +174,7 @@ function chatHistoryBuild() {
             }, 500);
 
             $('.chat__left_input').attr('style', 'display:flex');
+            $('#cat_name').focus()
             return false;
         }
     })
@@ -247,6 +250,7 @@ $('#map__button_top').click(function() {
             }, 500);
 
             $('.chat__left_input').attr('style', 'display:flex');
+            $('#cat_name').focus()
             getCookie()
             var sendedData = [];
             sendedData = {
@@ -770,6 +774,7 @@ $('#img__upload').click(function() {
     }, 500);
 
     $('.chat__left_input').attr('style', 'display:flex')
+    $('#cat_name').focus()
 })
 
 $('.chat__left_b_done').click(function() {
@@ -777,6 +782,7 @@ $('.chat__left_b_done').click(function() {
     $('#user_msg_5_1').addClass('user__msg_show');
     $('.chat__left_buttons').attr('style', 'display:none')
     $('.chat__input_big').attr('style', 'display:flex')
+    $('#cat_desc').focus()
     $('.chat__left_messages').css('bottom', '190px')
     $('#cat_desc').val(`opgesloten in schuren of bij  gebou-wen. Erg mens vriendelijke kat makkelijk. Opgesloten in schuren of bij gebouwen. Erg mens vriendelijke kat makkelijk. Mogelijk opgesloten in schuren of bij  gebou-wen. Erg mens vriendelijke kat makkelijk. Opgesloten in schuren of bij gebouwen. Erg mens vriendelijke kat makkelijk`)
 
@@ -787,7 +793,7 @@ $('#desc__back').click(function() {
 
     setTimeout(() => {
         $('#bot_msg_3').attr('style', 'display: flex');
-    }, 500);
+    }, 0);
     $('.chat__left_buttons').attr('style', 'display: flex');
 })
 
@@ -816,9 +822,10 @@ $('.chat__cat_send_1').click(function() {
         setTimeout(() => {
             $('#bot_msg_4').attr('style', 'display: flex')
             $('#bot_msg_4').addClass('chat__msg_bot')
-        }, 500);
+        }, 0);
 
         $('.chat__left_input_email').attr('style', 'display: block')
+        $('#email').focus()
     }, 500);
 })
 
@@ -830,7 +837,7 @@ $('#email__back').click(function() {
     setTimeout(() => {
         $('#bot_msg_4').attr('style', 'display: none')
         $('#bot_msg_4').removeClass('chat__msg_bot')
-    }, 500);
+    }, 0);
 
     $('.chat__left_input_email').attr('style', 'display: none')
 
@@ -899,8 +906,9 @@ $('.chat__left_e_error').click(function() {
     setTimeout(() => {
         $('#bot_msg_4').attr('style', 'display: flex')
         $('#bot_msg_4').addClass('chat__msg_bot')
-    }, 500);
+    }, 0);
     $('.chat__left_input_email').attr('style', 'display: block')
+    $('#cat_name').focus()
 })
 
 
@@ -932,6 +940,7 @@ $('#mob__back').click(function() {
     $('#phone').attr('readonly', false)
 
     $('.chat__left_input_email').attr('style', 'display: flex')
+    $('#cat_name').focus()
     $('.chat__left_buttons_phone').attr('style', 'display: none')
 
     setTimeout(() => {
@@ -956,9 +965,10 @@ $('.chat__left_n_done').click(function() {
         setTimeout(() => {
             $('#bot_msg_8').attr('style', 'display: flex')
             $('#bot_msg_8').addClass('chat__msg_bot')
-        }, 500);
+        }, 0);
         $('#user_msg_9').attr('style', 'display: flex')
         $('#user_msg_9').addClass('user__msg_show');
+        $('#phone').focus()
     }, 500);
 })
 
@@ -1038,8 +1048,9 @@ $('.chat__left_b_error').click(function() {
         setTimeout(() => {
             $('#bot_msg_4').attr('style', 'display: flex')
             $('#bot_msg_4').addClass('chat__msg_bot')
-        }, 500);
+        }, 0);
         $('.chat__left_input_email').attr('style', 'display: block')
+        $('#cat_name').focus()
 
         document.cookie = "steps=2";
     }, 500);
